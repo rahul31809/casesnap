@@ -596,7 +596,11 @@ async function doSignUp(e) {
       headers: { ...SBH, 'Prefer': 'return=minimal' },
       body: JSON.stringify({ id: userId, name, email_or_phone: id, password_hash: hash, is_admin: false })
     });
-    if (!uRes.ok) { showErr('up-err', 'Failed to create account — please try again'); return; }
+    if (!uRes.ok) {
+      const errBody = await uRes.json().catch(() => ({}));
+      showErr('up-err', 'Error ' + uRes.status + ': ' + (errBody.message || errBody.hint || JSON.stringify(errBody)));
+      return;
+    }
     await fetch(SB_URL + '/rest/v1/cs_progress', {
       method: 'POST',
       headers: { ...SBH, 'Prefer': 'return=minimal' },

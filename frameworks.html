@@ -1,63 +1,25 @@
 <title>CaseSnap — Frameworks</title>
 <style>
-/* ── Tokens ─────────────────────────────────────────────────────────── */
 :root {
-  --bg:          #F8F4EC;
-  --surface:     #FFFFFF;
-  --surface2:    #F2EDE4;
-  --ink:         #1A150D;
-  --ink-muted:   #6E5A3C;
-  --accent:      #B5580A;
-  --accent-h:    #CC6610;
-  --accent-text: #FFFFFF;
-  --border:      #DDD0B8;
-  --tag-bg:      rgba(181,88,10,.08);
-  --tag-bd:      rgba(181,88,10,.18);
-  --shadow:      0 2px 20px rgba(181,88,10,.10);
-  --sb-w:        214px;
-  --sb-bg:       #1A1208;
-  --sb-ink:      #D8C8A8;
-  --sb-muted:    #8A7458;
-  --sb-hover:    rgba(240,152,48,.09);
-  --sb-active:   rgba(240,152,48,.14);
-  --tb-h:        54px;
+  --bg:#F8F4EC;--surface:#FFFFFF;--surface2:#F2EDE4;--ink:#1A150D;--ink-muted:#6E5A3C;
+  --accent:#B5580A;--accent-h:#CC6610;--accent-text:#FFFFFF;--border:#DDD0B8;
+  --tag-bg:rgba(181,88,10,.08);--tag-bd:rgba(181,88,10,.18);--shadow:0 2px 20px rgba(181,88,10,.10);
+  --sb-w:214px;--sb-bg:#1A1208;--sb-ink:#D8C8A8;--sb-muted:#8A7458;
+  --sb-hover:rgba(240,152,48,.09);--sb-active:rgba(240,152,48,.14);--tb-h:54px;
 }
-@media (prefers-color-scheme: dark) { :root {
-  --bg:          #0F0B06;
-  --surface:     #1A1208;
-  --surface2:    #201608;
-  --ink:         #F0E8D8;
-  --ink-muted:   #A0845A;
-  --accent:      #F09830;
-  --accent-h:    #F5AA48;
-  --accent-text: #100C04;
-  --border:      #2E2214;
-  --tag-bg:      rgba(240,152,48,.10);
-  --tag-bd:      rgba(240,152,48,.22);
-  --shadow:      0 2px 36px rgba(0,0,0,.55);
-  --sb-bg:       #100C04;
-  --sb-ink:      #D8C8A8;
-  --sb-muted:    #7A6040;
-  --sb-hover:    rgba(240,152,48,.07);
-  --sb-active:   rgba(240,152,48,.13);
-}}
-:root[data-theme="dark"] {
+@media(prefers-color-scheme:dark){:root{
   --bg:#0F0B06;--surface:#1A1208;--surface2:#201608;--ink:#F0E8D8;--ink-muted:#A0845A;
   --accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;
   --tag-bg:rgba(240,152,48,.10);--tag-bd:rgba(240,152,48,.22);--shadow:0 2px 36px rgba(0,0,0,.55);
   --sb-bg:#100C04;--sb-ink:#D8C8A8;--sb-muted:#7A6040;--sb-hover:rgba(240,152,48,.07);--sb-active:rgba(240,152,48,.13);
-}
-:root[data-theme="light"] {
-  --bg:#F8F4EC;--surface:#FFFFFF;--surface2:#F2EDE4;--ink:#1A150D;--ink-muted:#6E5A3C;
-  --accent:#B5580A;--accent-h:#CC6610;--accent-text:#FFFFFF;--border:#DDD0B8;
-  --tag-bg:rgba(181,88,10,.08);--tag-bd:rgba(181,88,10,.18);--shadow:0 2px 20px rgba(181,88,10,.10);
-  --sb-bg:#1A1208;--sb-ink:#D8C8A8;--sb-muted:#8A7458;--sb-hover:rgba(240,152,48,.09);--sb-active:rgba(240,152,48,.14);
-}
+}}
+:root[data-theme="dark"]{--bg:#0F0B06;--surface:#1A1208;--surface2:#201608;--ink:#F0E8D8;--ink-muted:#A0845A;--accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;--tag-bg:rgba(240,152,48,.10);--tag-bd:rgba(240,152,48,.22);--shadow:0 2px 36px rgba(0,0,0,.55);--sb-bg:#100C04;--sb-ink:#D8C8A8;--sb-muted:#7A6040;--sb-hover:rgba(240,152,48,.07);--sb-active:rgba(240,152,48,.13);}
+:root[data-theme="light"]{--bg:#F8F4EC;--surface:#FFFFFF;--surface2:#F2EDE4;--ink:#1A150D;--ink-muted:#6E5A3C;--accent:#B5580A;--accent-h:#CC6610;--accent-text:#FFFFFF;--border:#DDD0B8;--tag-bg:rgba(181,88,10,.08);--tag-bd:rgba(181,88,10,.18);--shadow:0 2px 20px rgba(181,88,10,.10);--sb-bg:#1A1208;--sb-ink:#D8C8A8;--sb-muted:#8A7458;--sb-hover:rgba(240,152,48,.09);--sb-active:rgba(240,152,48,.14);}
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);height:100dvh;display:flex;overflow:hidden;}
 
-/* ── Sidebar ─────────────────────────────────────────────────────────── */
+/* Sidebar */
 .sidebar{width:var(--sb-w);flex-shrink:0;background:var(--sb-bg);display:flex;flex-direction:column;padding:20px 0 16px;overflow:hidden;}
 .sb-logo{display:flex;align-items:center;gap:9px;padding:0 18px 22px;border-bottom:1px solid rgba(255,255,255,.05);}
 .sb-mark{width:30px;height:30px;background:var(--accent);border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--accent-text);flex-shrink:0;}
@@ -76,117 +38,89 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .sb-logout{display:flex;align-items:center;gap:6px;width:calc(100% - 20px);margin:4px 10px 10px;padding:7px 10px;background:none;border:none;cursor:pointer;color:var(--sb-muted);font-size:11.5px;font-family:inherit;border-radius:7px;transition:background .12s,color .12s;text-align:left;}
 .sb-logout:hover{background:rgba(255,255,255,.06);color:var(--sb-ink);}
 
-/* ── Main ─────────────────────────────────────────────────────────────── */
+/* Main */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-.topbar{height:var(--tb-h);flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:14px;position:sticky;top:0;z-index:10;}
-.tb-title{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.3px;flex:1;}
-.tb-count{font-size:12px;font-weight:600;color:var(--ink-muted);background:var(--tag-bg);border:1px solid var(--tag-bd);border-radius:100px;padding:3px 10px;}
-.tb-streak{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--accent);background:var(--tag-bg);border:1px solid var(--tag-bd);border-radius:100px;padding:4px 11px;}
 
-.filterbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:10px;position:sticky;top:var(--tb-h);z-index:9;}
-.search-wrap{position:relative;flex:1;max-width:280px;}
-.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-muted);pointer-events:none;}
-.search-input{width:100%;padding:7px 10px 7px 32px;background:var(--bg);border:1px solid var(--border);border-radius:9px;font-size:13px;color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s;}
-.search-input::placeholder{color:var(--ink-muted);opacity:.5;}
-.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--tag-bg);}
-.cat-tabs{display:flex;align-items:center;gap:4px;overflow-x:auto;scrollbar-width:none;}
-.cat-tabs::-webkit-scrollbar{display:none;}
-.cat-tab{padding:6px 13px;border-radius:100px;font-size:12.5px;font-weight:500;color:var(--ink-muted);background:none;border:1px solid var(--border);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,border-color .15s;}
-.cat-tab:hover{color:var(--ink);border-color:var(--ink-muted);}
-.cat-tab.active{background:var(--accent);color:var(--accent-text);border-color:var(--accent);font-weight:600;}
+/* ── TRACK SELECTION VIEW ── */
+#view-tracks{flex:1;overflow-y:auto;padding:28px 28px 48px;}
+.tracks-header{margin-bottom:24px;}
+.tracks-title{font-size:20px;font-weight:800;letter-spacing:-.4px;color:var(--ink);}
+.tracks-sub{font-size:13px;color:var(--ink-muted);margin-top:4px;}
+.tracks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
 
-/* ── Content ──────────────────────────────────────────────────────────── */
-.content{flex:1;overflow-y:auto;padding:24px 24px 40px;}
+.track-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:0;cursor:pointer;transition:border-color .18s,box-shadow .18s,transform .15s;}
+.track-card:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--tag-bg);transform:translateY(-2px);}
+.track-icon{font-size:30px;margin-bottom:14px;display:block;line-height:1;}
+.track-name{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.3px;margin-bottom:5px;}
+.track-desc{font-size:12.5px;color:var(--ink-muted);line-height:1.55;margin-bottom:14px;}
+.track-progress-label{font-size:11.5px;color:var(--ink-muted);margin-bottom:5px;font-variant-numeric:tabular-nums;}
+.track-progress-bar{height:4px;background:var(--border);border-radius:100px;margin-bottom:14px;overflow:hidden;}
+.track-progress-fill{height:100%;background:var(--accent);border-radius:100px;transition:width .4s ease;}
+.track-meta{font-size:11.5px;color:var(--ink-muted);display:flex;justify-content:space-between;margin-bottom:16px;}
+.track-btn{width:100%;padding:11px;background:var(--ink);color:var(--bg);border:none;border-radius:10px;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.track-btn:hover{opacity:.85;}
 
-.fw-section{margin-bottom:32px;}
-.fw-section-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.fw-section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);}
-.fw-section-count{font-size:11px;font-weight:600;color:var(--accent);background:var(--tag-bg);border:1px solid var(--tag-bd);border-radius:100px;padding:2px 8px;}
+/* ── CARD LEARNING VIEW ── */
+#view-card{flex:1;display:none;flex-direction:column;overflow:hidden;}
 
-.fw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.card-topbar{height:var(--tb-h);flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;}
+.card-track-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);}
+.card-counter{font-size:13px;font-weight:700;color:var(--ink);}
+.card-mastered-count{font-size:12px;color:var(--ink-muted);margin-left:2px;}
+.card-exit{margin-left:auto;background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-muted);font-family:inherit;padding:6px 12px;border-radius:7px;transition:background .12s,color .12s;}
+.card-exit:hover{background:var(--surface2);color:var(--ink);}
 
-.fw-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column;gap:10px;}
-.fw-card:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--tag-bg);transform:translateY(-1px);}
-.fw-card.expanded{border-color:var(--accent);background:var(--surface);}
+.card-progress-bar{height:3px;background:var(--border);flex-shrink:0;}
+.card-progress-fill{height:100%;background:var(--accent);transition:width .3s ease;}
 
-.fw-card-top{display:flex;align-items:flex-start;gap:12px;}
-.fw-icon{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;font-size:16px;}
-.fw-card-meta{flex:1;min-width:0;}
-.fw-card-name{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-.2px;margin-bottom:3px;}
-.fw-card-sub{font-size:12px;color:var(--ink-muted);line-height:1.45;}
-.fw-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.fw-tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;background:var(--tag-bg);border:1px solid var(--tag-bd);color:var(--accent);}
-.fw-chevron-wrap{color:var(--ink-muted);transition:transform .2s;flex-shrink:0;margin-top:3px;}
-.fw-card.expanded .fw-chevron-wrap{transform:rotate(180deg);}
+.card-body{flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;}
 
-/* ── Expand body ───────────────────────────────────────────────────────── */
-.fw-expand-body{display:none;flex-direction:column;gap:14px;padding-top:12px;border-top:1px solid var(--border);animation:fadeDown .2s ease;}
-@keyframes fadeDown{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:translateY(0);}}
-.fw-card.expanded .fw-expand-body{display:flex;}
+.flash-card{width:100%;max-width:700px;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);}
 
-.fw-expand-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;}
+.card-front{padding:32px 36px 28px;}
+.card-diff{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.diff-easy{color:#1B7A4B;}
+.diff-medium{color:#C07D10;}
+.diff-hard{color:#C0392B;}
+@media(prefers-color-scheme:dark){.diff-easy{color:#34D399;}.diff-medium{color:#F59E0B;}.diff-hard{color:#F87171;}}
+:root[data-theme="dark"] .diff-easy{color:#34D399;}
+:root[data-theme="dark"] .diff-medium{color:#F59E0B;}
+:root[data-theme="dark"] .diff-hard{color:#F87171;}
 
-.fw-steps-list{display:flex;flex-direction:column;gap:6px;}
-.fw-step-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.55;color:var(--ink);}
-.fw-step-num{min-width:20px;height:20px;border-radius:50%;background:var(--tag-bg);border:1px solid var(--tag-bd);display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:1px;}
+.star-btn{background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink-muted);padding:0;transition:color .15s,transform .1s;}
+.star-btn:hover{transform:scale(1.2);}
+.star-btn.starred{color:#D4A017;}
 
-.fw-when{font-size:12.5px;line-height:1.6;color:var(--ink-muted);padding:9px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;}
-.fw-when strong{color:var(--ink);font-weight:600;}
+.card-title{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-.5px;line-height:1.2;margin-bottom:14px;}
+.card-question{font-size:15px;color:var(--ink-muted);line-height:1.65;}
 
-/* Example */
-.fw-example{font-size:12.5px;line-height:1.65;color:var(--ink);padding:10px 12px;background:var(--tag-bg);border:1px solid var(--tag-bd);border-radius:8px;border-left:3px solid var(--accent);}
+.card-answer{border-top:1px solid var(--border);padding:24px 36px 28px;display:none;}
+.answer-label{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:14px;}
+.answer-body{font-size:14px;line-height:1.75;color:var(--ink);}
+.answer-body strong{font-weight:700;color:var(--ink);}
+.answer-body .ans-point{margin-bottom:8px;}
+.answer-body .ans-point:last-child{margin-bottom:0;}
 
-/* Mistakes */
-.fw-mistakes-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
-.fw-mistakes-list li{font-size:12.5px;line-height:1.55;color:var(--ink);padding-left:16px;position:relative;}
-.fw-mistakes-list li::before{content:'✕';position:absolute;left:0;color:#C0392B;font-size:10px;font-weight:700;top:2px;}
-@media(prefers-color-scheme:dark){.fw-mistakes-list li::before{color:#E74C3C;}}
-:root[data-theme="dark"] .fw-mistakes-list li::before{color:#E74C3C;}
+/* Action buttons */
+.card-actions{width:100%;max-width:700px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.btn-reveal{padding:14px;background:var(--ink);color:var(--bg);border:none;border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:opacity .15s;}
+.btn-reveal:hover{opacity:.85;}
+.btn-know{padding:14px;background:none;color:var(--ink);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:border-color .15s;}
+.btn-know:hover{border-color:var(--ink);}
+.btn-mastered{padding:14px;background:var(--ink);color:var(--bg);border:none;border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:background .15s;}
+.btn-mastered:hover{background:var(--accent);}
+.btn-mastered.is-mastered{background:var(--accent);}
+.btn-still{padding:14px;background:none;color:var(--ink);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:border-color .15s;}
+.btn-still:hover{border-color:var(--ink);}
 
-/* Phrases */
-.fw-phrases-list{display:flex;flex-direction:column;gap:6px;}
-.fw-phrase{font-size:12.5px;line-height:1.55;color:var(--ink-muted);font-style:italic;padding:8px 11px;background:var(--surface2);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:0 8px 8px 0;}
-
-/* Combo tags */
-.fw-combo-tags{display:flex;flex-wrap:wrap;gap:5px;}
-.fw-combo-tag{font-size:11px;font-weight:500;padding:3px 9px;border-radius:100px;background:rgba(52,130,180,.08);border:1px solid rgba(52,130,180,.22);color:#2a7ab5;}
-@media(prefers-color-scheme:dark){.fw-combo-tag{background:rgba(80,160,220,.10);border-color:rgba(80,160,220,.25);color:#6ABEEF;}}
-:root[data-theme="dark"] .fw-combo-tag{background:rgba(80,160,220,.10);border-color:rgba(80,160,220,.25);color:#6ABEEF;}
-
-/* Practice prompt */
-.fw-prompt-box{display:flex;flex-direction:column;gap:9px;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;}
-.fw-prompt-q{font-size:13px;line-height:1.6;color:var(--ink);font-weight:500;}
-.fw-prompt-reveal{align-self:flex-start;padding:5px 13px;border-radius:100px;border:1px solid var(--accent);background:none;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;font-family:inherit;transition:background .15s,color .15s;}
-.fw-prompt-reveal:hover{background:var(--accent);color:var(--accent-text);}
-.fw-prompt-answer{font-size:12.5px;line-height:1.65;color:var(--ink-muted);padding-top:9px;border-top:1px solid var(--border);}
-
-/* Mastered */
-.fw-mastered{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;color:#0D6644;background:rgba(16,130,80,.09);border:1px solid rgba(16,130,80,.22);border-radius:100px;padding:3px 9px;}
-@media(prefers-color-scheme:dark){.fw-mastered{color:#1EBF78;background:rgba(30,191,120,.10);border-color:rgba(30,191,120,.24);}}
-:root[data-theme="dark"] .fw-mastered{color:#1EBF78;background:rgba(30,191,120,.10);border-color:rgba(30,191,120,.24);}
-:root[data-theme="light"] .fw-mastered{color:#0D6644;background:rgba(16,130,80,.09);border-color:rgba(16,130,80,.22);}
-
-.mastery-btn{align-self:flex-start;padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:none;font-size:12px;font-weight:600;color:var(--ink-muted);cursor:pointer;font-family:inherit;transition:background .15s,color .15s,border-color .15s;}
-.mastery-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--tag-bg);}
-.mastery-btn.mastery-btn-done{border-color:rgba(16,130,80,.3);color:#0D6644;background:rgba(16,130,80,.08);}
-@media(prefers-color-scheme:dark){.mastery-btn.mastery-btn-done{color:#1EBF78;background:rgba(30,191,120,.10);border-color:rgba(30,191,120,.24);}}
-:root[data-theme="dark"] .mastery-btn.mastery-btn-done{color:#1EBF78;background:rgba(30,191,120,.10);border-color:rgba(30,191,120,.24);}
-
-/* Category icon colours */
-.icon-prof{background:rgba(181,88,10,.12);}
-.icon-mktent{background:rgba(52,130,180,.12);}
-.icon-growth{background:rgba(16,130,80,.12);}
-.icon-pricing{background:rgba(150,60,180,.12);}
-.icon-ma{background:rgba(220,90,60,.12);}
-.icon-ops{background:rgba(180,140,20,.12);}
-.icon-gen{background:rgba(100,100,100,.12);}
-
-.empty{text-align:center;padding:60px 24px;color:var(--ink-muted);}
-.empty-icon{font-size:36px;margin-bottom:12px;}
-.empty h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.empty p{font-size:14px;}
+.card-nav{width:100%;max-width:700px;display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:0 2px;}
+.nav-btn{background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-muted);font-family:inherit;padding:6px 10px;border-radius:7px;transition:color .12s;display:flex;align-items:center;gap:5px;}
+.nav-btn:hover{color:var(--ink);}
+.nav-btn:disabled{opacity:.25;cursor:not-allowed;}
+.nav-hint{font-size:11.5px;color:var(--ink-muted);opacity:.6;text-align:center;}
 
 ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+@media(max-width:900px){.sidebar{display:none;}.card-front{padding:24px 20px 18px;}.card-answer{padding:18px 20px 20px;}}
 </style>
 
 <nav class="sidebar">
@@ -205,7 +139,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
   </div>
   <div class="sb-user">
     <div class="sb-avatar av">RA</div>
-    <div class="sb-user-info">
+    <div>
       <div class="sb-user-name un">User</div>
       <div class="sb-user-phase">Consulting Prep</div>
     </div>
@@ -217,538 +151,614 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 </nav>
 
 <div class="main">
-  <div class="topbar">
-    <span class="tb-title">Frameworks</span>
-    <span class="tb-count" id="fwCount">26 frameworks</span>
-    <span class="tb-streak">🔥 <span id="fw-streak-n">0</span></span>
-  </div>
-  <div class="filterbar">
-    <div class="search-wrap">
-      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <input class="search-input" id="searchInput" placeholder="Search frameworks…" oninput="render()" />
+  <!-- Track selection -->
+  <div id="view-tracks">
+    <div class="tracks-header">
+      <div class="tracks-title">Framework Tracks</div>
+      <div class="tracks-sub">Pick a track, learn card by card. Mark each one mastered as you go.</div>
     </div>
-    <div class="cat-tabs">
-      <button class="cat-tab active" data-cat="all" onclick="setTab(this)">All</button>
-      <button class="cat-tab" data-cat="profitability" onclick="setTab(this)">Profitability</button>
-      <button class="cat-tab" data-cat="market-entry" onclick="setTab(this)">Market Entry</button>
-      <button class="cat-tab" data-cat="growth" onclick="setTab(this)">Growth</button>
-      <button class="cat-tab" data-cat="pricing" onclick="setTab(this)">Pricing</button>
-      <button class="cat-tab" data-cat="ma" onclick="setTab(this)">M&amp;A</button>
-      <button class="cat-tab" data-cat="operations" onclick="setTab(this)">Operations</button>
-      <button class="cat-tab" data-cat="general" onclick="setTab(this)">General</button>
+    <div class="tracks-grid" id="tracks-grid"></div>
+  </div>
+
+  <!-- Card learning view -->
+  <div id="view-card">
+    <div class="card-topbar">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div class="card-track-label" id="cl-track"></div>
+        <div><span class="card-counter" id="cl-counter"></span> <span class="card-mastered-count" id="cl-mastered"></span></div>
+      </div>
+      <button class="card-exit" onclick="exitDeck()">Exit ×</button>
+    </div>
+    <div class="card-progress-bar"><div class="card-progress-fill" id="cl-progress"></div></div>
+    <div class="card-body">
+      <div class="flash-card" id="flash-card">
+        <div class="card-front" id="card-front">
+          <div class="card-diff">
+            <span id="cl-diff"></span>
+            <button class="star-btn" id="star-btn" onclick="toggleStar()" title="Star this card">☆</button>
+          </div>
+          <div class="card-title" id="cl-title"></div>
+          <div class="card-question" id="cl-question"></div>
+        </div>
+        <div class="card-answer" id="card-answer">
+          <div class="answer-label">Answer</div>
+          <div class="answer-body" id="cl-answer"></div>
+        </div>
+      </div>
+      <div class="card-actions" id="card-actions"></div>
+      <div class="card-nav">
+        <button class="nav-btn" id="btn-prev" onclick="navCard(-1)">← Previous</button>
+        <div class="nav-hint">Space to reveal &middot; M to master &middot; S to star</div>
+        <button class="nav-btn" id="btn-skip" onclick="navCard(1)">Skip →</button>
+      </div>
     </div>
   </div>
-  <div class="content" id="content"></div>
 </div>
 
 <script src="progress.js"></script>
 <script>
-const FRAMEWORKS = [
-  /* ── Profitability ── */
-  {
-    id:1, cat:'profitability', icon:'📉', iconClass:'icon-prof',
-    name:'Profitability Framework',
-    sub:'Core framework for any declining margin or loss-making client case.',
-    tags:['EBITDA','Margins','Cost vs Revenue'],
-    steps:['Clarify: EBITDA, PBT, or PAT? One-time or structural?','Split: Revenue vs. Cost — which is driving decline?','Revenue: Price × Volume — what moved and why?','Cost: Fixed vs. Variable — which category increased?','Benchmark against industry / historical trend','Identify root cause and recommend lever'],
-    when:'<strong>Use when:</strong> Client margins are shrinking, a business unit is loss-making, or you\'re asked to "diagnose profitability."',
-    example:'A cement manufacturer\'s EBITDA margin fell from 18% to 12%. Revenue grew 5% but COGS jumped 15% — coal and diesel costs spiked 40%. It was a variable cost problem, not a pricing failure. Fix: energy cost hedging + selective price pass-through.',
-    mistakes:['Jumping into cost analysis before confirming whether revenue also declined — split first, drill second','Not asking if the drop is one-time (asset write-off) vs. structural (permanent margin compression) — changes the entire recommendation','Skipping the industry benchmark — a 12% EBITDA margin may be perfectly normal in that sector'],
-    phrases:['"Before I structure, can I confirm — are we looking at EBITDA or PAT, and is this a recent drop or a multi-year trend?"','"I\'ll split into revenue and cost first, then go one level deeper on whichever is driving the decline."','"Is this company-wide, or is it isolated to one business unit or geography?"'],
-    combos:['Revenue Decomposition','Cost Structure Analysis','BCG Growth-Share Matrix'],
-    prompt:'A mid-size cement manufacturer\'s net margin fell from 14% to 8% over 2 years. The CEO believes it\'s a pricing problem. How do you approach this?',
-    promptAnswer:'First, validate the CEO\'s hypothesis: has realised price per tonne actually fallen? If yes — is it market-driven (competition undercutting) or self-inflicted (discounting to hold volume)? If price is stable, the issue is costs. In cement, energy (coal/petcoke) and freight are 50–60% of total costs and are commodity-linked — check if that\'s the driver. Benchmark: did peer margins also compress, or is this company-specific? Likely answer: it\'s a cost problem masked as a pricing concern. The fix is energy hedging, procurement renegotiation, or efficiency — not a price hike that could erode volume.'
-  },
-  {
-    id:2, cat:'profitability', icon:'💰', iconClass:'icon-prof',
-    name:'Revenue Decomposition',
-    sub:'Breaks revenue into levers — useful for diagnosing why top-line is stagnant or declining.',
-    tags:['ARPU','Volume','Mix shift'],
-    steps:['Revenue = Price × Quantity (or ARPU × Subscribers in B2C)','Segment revenue: product line, geography, customer type','Identify which segment is declining — mix shift or absolute drop?','Price driver: market pricing pressure vs. internal discounting?','Volume driver: demand weakness, churn, or distribution reach?','Cross-check with competitor revenue trends'],
-    when:'<strong>Use when:</strong> Revenue is flat or declining despite a stable or growing market, or the client asks "why is our top-line not growing?"',
-    example:'A B2C edtech platform\'s revenue was flat at ₹200Cr despite adding 50k new users. ARPU had fallen 30% — new cohorts chose the cheaper self-paced plan over live coaching. Volume grew, but mix shift to lower-value SKUs dragged overall revenue.',
-    mistakes:['Saying "revenue fell" without segmenting — which product, geography, or cohort is driving it?','Confusing price and mix: if customers shift to cheaper SKUs, that is a mix problem, not a price problem — they look identical at the top line','Ignoring churn — net user growth ≠ revenue growth if existing high-value users are leaving'],
-    phrases:['"Let me break revenue into price × volume, then segment by product line to find where the gap is."','"Has the customer mix changed — are we serving more lower-value segments than a year ago?"','"What is the churn rate and how does it compare to new customer acquisition cost?"'],
-    combos:['Profitability Framework','Pricing Strategy Framework','Growth Levers Framework'],
-    prompt:'A FMCG company\'s revenue grew 4% last year but they expected 12%. Walk through how you\'d diagnose this.',
-    promptAnswer:'Price × Volume split first. If volume grew but revenue didn\'t track, check whether price realisation fell (trade discounts, promotions eroding net realisations) or if mix shifted to lower-value SKUs. If volume is the issue — check distribution reach (new markets under-penetrated?) vs. demand weakness in core markets. Then benchmark: did the category grow at 12% and they underperformed, or did the whole category slow? Underperforming a growing market is a distribution/brand problem; a category slowdown is a different beast — pricing, demand stimulation, or adjacency expansion.'
-  },
-  {
-    id:3, cat:'profitability', icon:'🏗️', iconClass:'icon-prof',
-    name:'Cost Structure Analysis',
-    sub:'Diagnoses which cost buckets are driving margin erosion.',
-    tags:['Fixed costs','Variable costs','Opex'],
-    steps:['Split: Fixed vs. Variable costs','List cost categories: COGS, SG&A, R&D, D&A, interest','For each: has it grown in absolute terms? As % of revenue?','Identify one-time items vs. structural step-ups','Benchmark cost ratios vs. industry peers','Recommend cost takeout or restructuring lever'],
-    when:'<strong>Use when:</strong> Revenue is stable but margins are falling — costs are clearly the culprit.',
-    example:'A logistics company\'s margins fell despite flat revenue. Breakdown: fuel (40%, up 18% YoY), driver wages (25%, up 12% due to shortage), depreciation (stable). Two structural external drivers — not fixable by cutting headcount. Fix: rate revision clause in contracts + route optimisation to reduce fuel per delivery.',
-    mistakes:['Not separating fixed from variable — the levers are completely different (fixed costs require structural changes; variable costs respond to volume or sourcing)','Treating all cost increases as one problem rather than isolating each driver and sizing it','Recommending headcount cuts first — it\'s the lazy answer and interviewers deduct marks for it'],
-    phrases:['"I\'ll categorise costs into fixed and variable, then look at which bucket grew disproportionately relative to revenue."','"Has there been any step-change in the cost base — a new facility, an acquisition, or a regulatory compliance requirement?"','"Which single cost line has the most leverage — i.e., if we fixed it, would it move the needle on margins?"'],
-    combos:['Profitability Framework','Operations Improvement (Lean)','Supply Chain Framework'],
-    prompt:'A hospital chain\'s operating costs rose 22% while patient volumes grew only 8%. What\'s driving this and what do you do?',
-    promptAnswer:'Split costs: staff (typically 50–60% in healthcare) — has headcount grown faster than volumes, or are there high-cost contract hires filling a talent gap? Facility costs: new hospitals require fixed cost absorption before utilisation scales, so this could be a temporary drag. Consumables (PPE, drugs, equipment) — supply chain inflation post-2022 is material. Benchmark cost/bed vs. comparable hospitals. Likely it\'s a combination of new capacity fixed cost drag and staffing premium. Fix: drive utilisation of new facilities faster, renegotiate supply contracts at consolidated volumes, review non-clinical outsourcing opportunities.'
-  },
-
-  /* ── Market Entry ── */
-  {
-    id:4, cat:'market-entry', icon:'🌐', iconClass:'icon-mktent',
-    name:'4Cs Market Entry Framework',
-    sub:'Evaluate whether and how to enter a new market across Customer, Competition, Company, and Context.',
-    tags:['Market sizing','Competitive moat','Feasibility'],
-    steps:['Customer: Who are they? Size, WTP, unmet needs?','Competition: Who plays? What is the moat? Is there room?','Company: Do we have capabilities, brand, capital to win?','Context: Regulatory, economic, or macro tailwinds/headwinds?','Mode of entry: Organic, JV, acquisition, or licensing?','Recommendation: Go / No-go with conditions'],
-    when:'<strong>Use when:</strong> Client asks "should we enter market X?" or "how do we expand geographically or into a new segment?"',
-    example:'Indian FMCG company evaluating Vietnam. Customer: 97M, young, urbanising, price-sensitive but brand-aware. Competition: local players dominant, 2 global MNCs with strong distribution. Company: strong EM playbook but no local brand equity. Entry mode: JV with local distributor. Verdict: conditional go — requires 3-year brand-building before going independent.',
-    mistakes:['Spending all time on market sizing and skipping "can we win?" — market attractiveness ≠ right to win','Saying "enter" without specifying mode — organic build, JV, and acquisition have completely different risk/return profiles','Not addressing timing — is there a first-mover window closing, or is entry timing flexible?'],
-    phrases:['"I want to evaluate this across four dimensions: customer attractiveness, competitive dynamics, our capabilities, and external context."','"Even if the market is attractive, we need to ask — do we have a right to win here, and can we build it?"','"What mode of entry makes sense given our capital position and risk appetite — greenfield, acquisition, or JV?"'],
-    combos:['Porter\'s Five Forces','Market Sizing (TAM/SAM/SOM)','PESTLE Analysis'],
-    prompt:'An Indian steel manufacturer is considering entering the EV battery component market. Should they?',
-    promptAnswer:'Customer: OEMs are the primary buyers — limited counterparties, high volume, long-term contracts possible. Demand driven by EV adoption tailwind. Competition: currently dominated by Chinese and Korean suppliers with deep IP and cost advantages — high technical barrier. Company: steel metallurgy has some adjacency to battery casings and structural components, but the actual electrochemical know-how is entirely different — capability gap is real. Context: PLI scheme for ACC batteries creates a government incentive tailwind. Mode: technology JV or acquisition of a battery materials startup — don\'t build from scratch. Verdict: conditional go via partnership; independent entry would take 8–10 years and be prohibitively expensive.'
-  },
-  {
-    id:5, cat:'market-entry', icon:'📏', iconClass:'icon-mktent',
-    name:'Market Sizing (TAM/SAM/SOM)',
-    sub:'Estimate market size using top-down or bottom-up approach.',
-    tags:['TAM','SAM','Estimation'],
-    steps:['Define: What exactly counts as the market?','Choose approach: Top-down (population funnel) or Bottom-up (unit × frequency × price)','TAM: Total addressable market — if you had 100% share','SAM: Serviceable addressable — realistic geography/segment','SOM: Your realistic capture given competitive dynamics','Sanity check: Does the number make intuitive sense?'],
-    when:'<strong>Use when:</strong> Client needs to assess opportunity size before committing to a new market, or during guesstimate rounds.',
-    example:'EV public charging stations in India. Demand-side: 5M EVs on road, 20% need public charging = 1M users. At 1 charger per 20 users = 50,000 stations needed. Current installed base: ~12,000. Gap is significant. SOM for a new entrant targeting Tier-1 highways: 5% in 3 years = ~2,500 stations.',
-    mistakes:['Not clarifying what\'s being counted — revenue, units, users, or stations are all different markets','Using unreasonably precise numbers — 23.7% penetration is false precision; round to 1 sig fig and defend the logic','Skipping sanity check — if your answer is implausible relative to a known reference, stop and recalibrate'],
-    phrases:['"Let me define what we\'re estimating precisely, then choose between top-down and bottom-up."','"I\'ll state my assumptions explicitly — please push back on any that seem unreasonable."','"As a sanity check: that implies X per capita per year — which feels [right / too high, so let me adjust]...."'],
-    combos:['4Cs Market Entry Framework','Guesstimate Framework','Business Case / Investment Framework'],
-    prompt:'Estimate the size of the corporate wellness programme market in India.',
-    promptAnswer:'Demand-side: India has ~50M formal sector employees. Target segment: companies with 500+ employees in IT, BFSI, and manufacturing — roughly 15% of the formal workforce = 7.5M employees. Average corporate wellness spend at penetrated companies: ₹3,000–5,000 per employee per year. TAM = ₹22–37Bn. SAM = currently digitally serviceable = ~3M employees = ₹9–15Bn. Sanity check: the Indian corporate wellness market is commonly cited at ₹10–12Bn, which aligns with our SAM estimate. SOM for a new entrant with a digital platform: 3–5% in 3 years = ₹300–600Cr addressable opportunity.'
-  },
-  {
-    id:6, cat:'market-entry', icon:'🛡️', iconClass:'icon-mktent',
-    name:"Porter's Five Forces",
-    sub:'Assess industry attractiveness before recommending entry.',
-    tags:['Industry analysis','Competition','Barriers'],
-    steps:['Competitive rivalry: How intense is existing competition?','Supplier power: Can suppliers squeeze margins?','Buyer power: Can customers demand lower prices?','Threat of substitutes: What else can buyers switch to?','Threat of new entrants: How easy is it to enter?','Synthesise: Is this an attractive industry? Where does pricing power sit?'],
-    when:'<strong>Use when:</strong> Evaluating a new industry or explaining why margins in a sector are structurally low.',
-    example:'Indian cement. Rivalry: high — top 5 control 60%, aggressive regional pricing. Supplier power: high — coal and limestone are commodity inputs. Buyer power: low for retail, moderate for large infra projects. Substitutes: low. New entrants: very low — capital-intensive, 3–5 year setup time. Verdict: attractive for incumbents, structurally difficult for new entrants.',
-    mistakes:['Listing all five forces at equal weight — always identify which 2 forces dominate and what that implies for margin structure','Stopping at identification instead of linking forces to margin implications and a final verdict','Forgetting the synthesis: "Porter\'s says it\'s a tough industry — therefore the entry mode and margin expectation should be X"'],
-    phrases:['"I\'ll run through the five forces and then synthesise which ones dominate and what that means for margins and entry viability."','"The key question Porter answers is: why do some industries structurally earn higher margins than others?"','"After mapping the forces, I\'ll conclude: is this an attractive industry to enter, and where in the value chain does pricing power sit?"'],
-    combos:['4Cs Market Entry Framework','PESTLE Analysis','Value Chain Analysis'],
-    prompt:'A large hospital chain is considering entering the diagnostics (pathology labs) business. Use Porter\'s to assess the industry.',
-    promptAnswer:'Rivalry: high — Metropolis, SRL, Dr Lal Pathlab are dominant with aggressive price competition on commoditised basic tests. Supplier power: low — reagents and equipment from multiple vendors. Buyer power: high for walk-in consumers (price-sensitive, easy to switch for basic tests); low for referred/emergency diagnostics. Substitutes: moderate — in-hospital diagnostics, home testing kits growing. New entrants: moderate — capital needed but not prohibitive. Verdict: structurally competitive, thin-margin industry on standalone basis. However, the hospital chain has a critical advantage not captured in Porter\'s: captive patient referral flow from its own inpatient/OPD volumes fundamentally changes the competitive calculus — it bypasses the rivalry problem entirely.'
-  },
-
-  /* ── Growth ── */
-  {
-    id:7, cat:'growth', icon:'🚀', iconClass:'icon-growth',
-    name:'Ansoff Matrix',
-    sub:'Four growth strategies based on product and market combinations.',
-    tags:['Product','Market','Diversification'],
-    steps:['Market Penetration: Sell existing products to existing customers more','Market Development: Sell existing products to new geographies/segments','Product Development: Sell new products to existing customers','Diversification: New products for new markets (highest risk)','Evaluate feasibility for the client given risk appetite and capital','Recommend which strategy matches capability and constraints'],
-    when:'<strong>Use when:</strong> Client wants to grow but hasn\'t specified how — use to structure the options space.',
-    example:'A mid-market hotel chain. Penetration: loyalty programme to drive frequency. Development: expand same brand to Tier-2 cities. Product Dev: add branded serviced apartments. Diversification: enter airline lounges (furthest from core, highest risk). Recommendation: penetration + development first given capital constraints — diversification is Year 4+.',
-    mistakes:['Treating all four quadrants as equally viable — risk increases dramatically going bottom-right; make that explicit','Not linking the recommendation to the client\'s risk appetite and capital position — a startup and a conglomerate have different Ansoff answers','Using it as a labelling exercise without prioritising — the output should be a ranked recommendation, not a 2×2 diagram'],
-    phrases:['"The Ansoff Matrix gives us four options — I\'ll walk through each quickly, then recommend based on risk appetite."','"The safest lever is usually penetration — extracting more from what you already have before moving to new territory."','"Diversification carries the highest execution risk; I\'d recommend it only if organic options are exhausted or the strategic rationale is compelling."'],
-    combos:['Growth Levers Framework','4Cs Market Entry Framework','BCG Growth-Share Matrix'],
-    prompt:'A regional South Indian QSR chain wants to grow 3× in 5 years. Structure their options.',
-    promptAnswer:'Penetration: increase same-store sales via loyalty app, extended breakfast hours, combo deals. Market Development: enter North India and Tier-2 cities — same menu, adapt spice levels, franchise model to limit capital risk. Product Development: launch a delivery-only dark kitchen menu; create a premium dine-in sub-brand. Diversification: FMCG packaged foods (frozen idli batter, chutneys) — adjacency to brand but different supply chain. Recommendation: penetration + development as the core growth engine in Years 1–3; product development once unit economics in new markets are proven. The 3× target is achievable via development alone if Tier-2 execution is tight — no need to take diversification risk.'
-  },
-  {
-    id:8, cat:'growth', icon:'🔗', iconClass:'icon-growth',
-    name:'Value Chain Analysis',
-    sub:'Map activities to find where value is created and where there is room to capture more.',
-    tags:['Primary activities','Support activities','Margin pools'],
-    steps:['Map primary activities: Inbound → Ops → Outbound → Marketing → Service','Map support activities: HR, Tech, Procurement, Infrastructure','Identify where client is strong vs. weak vs. competitors','Find where margin pools are concentrated in the chain','Recommend: Invest in high-margin activities, outsource or fix weak links','Assess vertical integration or partnership opportunities'],
-    when:'<strong>Use when:</strong> Client wants to identify competitive advantage or find efficiency and growth in its operations.',
-    example:'A pharma company losing margin despite revenue growth. Value chain: R&D (strong IP) → Manufacturing (high cost vs. peers — inefficient batch processes) → Distribution (outsourced 3PL, margin drag) → Marketing (heavy field force cost). Margin pool sits in manufacturing and distribution. Fix: invest in continuous manufacturing; renegotiate 3PL rates at consolidated volume.',
-    mistakes:['Mapping the chain without identifying where the margin pool actually sits — the point is to find value, not to describe activities','Treating support activities (like procurement) as overhead — in FMCG or pharma, procurement is a strategic moat worth protecting','Not comparing the client\'s chain to best-in-class peers — the gaps are where the improvement opportunity lives'],
-    phrases:['"Let me map the primary and support activities first, then identify where value is being created, destroyed, or leaking vs. peers."','"The question isn\'t just what activities they do — it\'s where their relative advantage or disadvantage sits in the chain."','"Which parts of the chain should be core competency vs. outsourced — that is the strategic call."'],
-    combos:['Operations Improvement (Lean)','Supply Chain Framework','M&A Rationale Framework'],
-    prompt:'An Indian auto parts manufacturer wants to understand why its margins are lower than Chinese competitors. Structure the analysis.',
-    promptAnswer:'Map the value chain: raw material procurement → stamping/machining → assembly → quality control → export logistics. Compare each step against Chinese peers. Procurement: Chinese players have scale-based supplier leverage on steel — cost gap here. Manufacturing: labour cost gap is narrowing; the real difference is automation penetration and machine utilisation rates. Quality: rework rates and rejection costs are often higher in India. Logistics: export from China to EU is cheaper per unit due to container volume. Likely finding: the gap is primarily in manufacturing productivity and scale, not any single easy lever. Fix requires capex in automation (PLI subsidy available for this), supplier base consolidation for better terms, and potentially co-loading shipments with other exporters for logistics efficiency.'
-  },
-  {
-    id:9, cat:'growth', icon:'🎯', iconClass:'icon-growth',
-    name:'Growth Levers Framework',
-    sub:'Systematic approach to identifying organic and inorganic growth paths.',
-    tags:['Organic','Inorganic','Adjacencies'],
-    steps:['Organic — Revenue: pricing, volume, new segments, new geographies','Organic — Cost: efficiency, automation, procurement savings','Inorganic: M&A, partnerships, licensing, JVs','Evaluate each lever: impact vs. feasibility vs. time-to-value','Shortlist 2–3 high-priority levers with clear rationale','Outline sequenced roadmap with milestones'],
-    when:'<strong>Use when:</strong> Client asks "how do we grow 2× in 3 years?" — gives structure to an open-ended growth question.',
-    example:'A B2B SaaS company at ₹100Cr ARR asked for a 2× plan. Organic revenue: premium tier (current pricing undervalues the product), expand to SMB segment. Organic cost: automate onboarding to reduce CAC 30%. Inorganic: acquire a complementary analytics tool to defend against larger platforms. Priority: premium tier (90-day win) → SMB expansion (Year 1–2) → M&A (Year 3).',
-    mistakes:['Jumping to M&A without exhausting organic options — M&A is the most expensive and highest-risk lever','Not ranking levers by time-to-value — interviewers expect you to sequence, not just list','Treating cost reduction as a "growth" lever — it improves margins but not top-line; keep them in separate buckets'],
-    phrases:['"I\'ll structure growth into organic and inorganic; within organic, I\'ll split revenue and cost levers."','"Which lever can move the needle in 12 months vs. 3 years — that shapes the sequencing and resource allocation."','"What is the client\'s risk appetite? Are they open to dilution for an acquisition, or is this self-funded growth only?"'],
-    combos:['Ansoff Matrix','M&A Rationale Framework','Profitability Framework'],
-    prompt:'A private hospital chain with 8 hospitals wants to double EBITDA in 4 years without building new hospitals. What are the levers?',
-    promptAnswer:'Revenue levers: occupancy improvement — if beds are underutilised, the fastest lever is growing referring-doctor relationships and corporate tie-ups. Service mix shift: push higher-margin specialties (oncology, cardiac, neuro) vs. general medicine. Medical tourism for premium elective procedures (international patients pay 2–5× domestic rates). Price realisation: are they underpriced vs. comparable hospitals on elective surgeries? Cost levers: consumable procurement at consolidated group volumes — a 15% saving on drugs/devices drops straight to EBITDA. Admin staffing ratio vs. peer benchmarks. Technology: reduce unnecessary repeat diagnostics, reduce readmission rates. Inorganic: acquire a diagnostics chain to capture downstream revenue without new hospital capex. Sequencing: price + procurement (Year 1), specialty mix + occupancy (Year 1–2), medical tourism + inorganic (Year 3–4).'
-  },
-
-  /* ── Pricing ── */
-  {
-    id:10, cat:'pricing', icon:'🏷️', iconClass:'icon-pricing',
-    name:'Pricing Strategy Framework',
-    sub:'Three lenses for setting or changing price — cost, competition, value.',
-    tags:['Cost+','Value-based','Competitive'],
-    steps:['Cost-plus: Floor price = Cost + Minimum acceptable margin','Competitive: What are peers charging? Can you command a premium?','Value-based: What is the customer\'s actual willingness to pay?','Segment customers: Different WTP → tiered pricing architecture?','Consider price elasticity: How will volume respond to a price change?','Recommend: Optimal price given strategy and market position'],
-    when:'<strong>Use when:</strong> Client is launching a product, repricing, or facing margin compression. Common in PE due diligence and consumer cases.',
-    example:'A new electric motorcycle launching at ₹1.5L. Cost-plus: manufacturing ₹95k + 30% margin = floor ₹1.23L. Competitive: Ather/Ola EV at ₹1.1–1.6L. Value-based: TCO over 5 years saves ₹1.2L vs. petrol equivalents. Recommendation: price at ₹1.45L — below premium competition, justified by TCO argument, well above floor.',
-    mistakes:['Using only cost-plus — it ignores market context and customer WTP entirely, and often leaves money on the table','Setting price without segmenting customers — different segments have very different WTP and should be priced separately','Not thinking about pricing architecture — a single price vs. good/better/best tiers are fundamentally different strategies'],
-    phrases:['"I\'ll approach this from three angles: the cost floor, the competitive ceiling, and what the customer actually values."','"The most sustainable price is where customer WTP overlaps with our margin requirement — let me find that zone."','"Is there an opportunity to tier pricing — capturing high-WTP segments without cannibalising the volume base?"'],
-    combos:['Price Elasticity & Demand Analysis','Revenue Decomposition','Profitability Framework'],
-    prompt:'A B2B software company is significantly underpriced vs. competitors but afraid to raise prices. How do you approach this?',
-    promptAnswer:'First quantify the gap: current ARPU vs. peer benchmarks, and more importantly, what economic value does the software deliver to customers (cost saved, revenue enabled)? If delivered value >> current price, there is pricing headroom. Churn analysis: do customers currently switch on price signals, or on features and service quality? Low churn + high NPS = low price sensitivity. Approach: segment customers by size and use-case, run a controlled price test — pilot a 15% increase on a new cohort, measure churn and NPS delta over 60 days. If it holds, roll out to existing customers with a value narrative. Also test a premium tier with advanced features to capture the highest-WTP customers without forcing a blanket increase.'
-  },
-  {
-    id:11, cat:'pricing', icon:'📊', iconClass:'icon-pricing',
-    name:'Price Elasticity & Demand Analysis',
-    sub:'Quantify how sensitive demand is to price changes.',
-    tags:['WTP','Elasticity','Revenue optimisation'],
-    steps:['Define: Is demand elastic (price-sensitive) or inelastic for this product?','Gather or estimate historical price-volume data','Calculate elasticity: % ΔQ / % ΔP','If elastic: price cuts may grow revenue; increases risk volume loss','If inelastic: pricing power exists — raise price to expand margin','Recommend optimal price using revenue = P × Q relationship'],
-    when:'<strong>Use when:</strong> Client has a pricing power question — tolls, utilities, luxury goods, essential services, or subscription repricing.',
-    example:'A toll road operator raises toll from ₹60 to ₹80 (+33%). Traffic falls from 50,000 to 45,000 vehicles/day (-10%). Elasticity = -0.3 (inelastic — captive route, no bypass). Revenue: old = ₹30L/day, new = ₹36L/day. Raising the price was the right call. Inelastic demand on a monopoly route is a pricing power goldmine.',
-    mistakes:['Not distinguishing short-run vs. long-run elasticity — demand adjusts slowly, so a price hike looks fine initially but can erode volume over 12–18 months','Ignoring substitutes — elastic demand almost always requires viable alternatives to exist','Treating all customer segments as equally elastic — fleet operators and private car users respond differently to toll increases'],
-    phrases:['"First I want to establish whether demand is elastic or inelastic here — that determines the direction of the recommendation entirely."','"Are there substitutes available? Elastic demand almost always requires a realistic alternative."','"Has the company tested price changes before? Historical price-volume data is the best signal we have."'],
-    combos:['Pricing Strategy Framework','Revenue Decomposition'],
-    prompt:'A cinema chain wants to raise weekend ticket prices by 20%. How do you evaluate whether this is a good idea?',
-    promptAnswer:'Start with elasticity: weekend occupancy at multiplex chains runs 85%+, suggesting inelastic demand — people have committed to a specific out-of-home experience. OTT is the main substitute but serves a different occasion (home vs. social out). Historical check: have they raised prices before, and what happened to occupancy? Segment by format: IMAX/Dolby audience is the least price-sensitive, regular shows more sensitive. Recommendation: raise premium format prices (IMAX, Dolby) by 20% immediately — demand is effectively inelastic there. Test a 10% increase on regular shows first and track occupancy for 4 weeks before a full rollout. Avoid blanket pricing — segment the increase.'
-  },
-
-  /* ── M&A ── */
-  {
-    id:12, cat:'ma', icon:'🤝', iconClass:'icon-ma',
-    name:'M&A Rationale Framework',
-    sub:'Evaluate whether an acquisition makes strategic and financial sense.',
-    tags:['Synergies','Strategic fit','Due diligence'],
-    steps:['Strategic rationale: Why this target? Fill capability gap, buy growth, or neutralise a threat?','Market attractiveness: Is the target operating in a good industry?','Target assessment: Financials, competitive moat, management quality','Synergies: Revenue synergies (cross-sell, market access) + Cost synergies (shared overheads)','Integration risk: Cultural, systems, and operational complexity','Valuation: Does the deal price leave enough room for synergy upside?'],
-    when:'<strong>Use when:</strong> Client is considering buying a company or being acquired — very common in Big 4 strategy and deals cases.',
-    example:'HDFC Bank acquiring HDFC Ltd. Rationale: cross-sell home loans to 68M bank customers + capture insurance and asset management. Synergies: ₹5,000Cr revenue synergy + ₹1,200Cr cost synergy (overlapping branches). Integration risk: IT systems merger — highest execution risk. Valuation: 1.9× book — within range given synergy quantum.',
-    mistakes:['Overestimating synergies — 60–70% of M&A deals underdeliver; acknowledge this risk explicitly','Not separating revenue synergies (uncertain, long-dated, 3–5 years) from cost synergies (more certain, 12–18 months)','Ignoring integration complexity — cultural and systems friction is where deals die after signing'],
-    phrases:['"The first question is strategic rationale — why this target, why now, and why not build organically?"','"I\'d separate cost synergies (more certain, near-term) from revenue synergies (less certain, longer dated) — they require different confidence levels."','"Even if the deal is attractive on paper, integration execution risk can destroy the value — that\'s the hidden cost in most M&A."'],
-    combos:['Due Diligence Framework','Business Case / Investment Framework','Value Chain Analysis'],
-    prompt:'A large Indian IT services company is considering acquiring a mid-size US cybersecurity firm. Evaluate the deal.',
-    promptAnswer:'Strategic rationale: IT services are commoditising; cybersecurity is high-growth, high-margin, and increasingly bundled with IT contracts — fills a genuine white space. Market: US enterprises spend $250B+ on cyber annually; IT company has existing CXO relationships to cross-sell through. Synergies: revenue — bundle cyber assessments and managed security with current IT contracts; cost — shared sales and G&A. Valuation: cyber firms trade at 5–8× revenue — expensive; need to model whether cross-sell synergies justify the premium over a 3–5 year horizon. Key risk: cyber talent will walk post-acquisition unless equity retention packages and cultural autonomy are preserved. This is the #1 deal-killer in cyber acquisitions and needs to be addressed before signing.'
-  },
-  {
-    id:13, cat:'ma', icon:'🔍', iconClass:'icon-ma',
-    name:'Due Diligence Framework',
-    sub:'Structured checklist for evaluating a target before an acquisition.',
-    tags:['Commercial DD','Financial DD','Operational DD'],
-    steps:['Commercial DD: Market size, competition, customer concentration, churn','Financial DD: Revenue quality, cost structure, EBITDA bridge, working capital','Operational DD: Supply chain, IT systems, regulatory compliance','HR DD: Key man risk, cultural fit, attrition risk post-deal','Legal DD: Liabilities, IP ownership, contracts, ongoing litigation','Synthesise: Red flags vs. value creation thesis — proceed, reprice, or walk away'],
-    when:'<strong>Use when:</strong> PE or strategic client is acquiring a business and needs to validate assumptions before signing.',
-    example:'PE firm evaluating a QSR chain. Commercial: 60 outlets, 70% company-owned — franchise income is recurring. Financial: 18% EBITDA margin, but 3 outlets are loss-making and distorting the average. Legal: 2 active franchise disputes. Red flag: top 20 outlets = 65% of revenue — geographic concentration risk. Recommendation: proceed with adjusted valuation discounting loss-making outlets and provisioning for legal.',
-    mistakes:['Treating DD as a checkbox exercise rather than a hypothesis-testing process — you\'re trying to find what could break the thesis','Missing quality of earnings — is EBITDA based on sustainable recurring revenue, or distorted by one-time items, aggressive accounting, or related-party transactions?','Ignoring key man risk — if the founder walks, does the business model still work?'],
-    phrases:['"I\'d structure DD into four workstreams: commercial, financial, operational, and legal — then identify where the red flags are."','"Quality of earnings is the central financial DD question — is this EBITDA repeatable, and is the revenue recurring?"','"The goal of DD isn\'t to confirm the thesis — it\'s to find the things that could break it."'],
-    combos:['M&A Rationale Framework','Business Case / Investment Framework','Profitability Framework'],
-    prompt:'A PE client is buying a chain of 50 private schools in India. What are the top DD priorities?',
-    promptAnswer:'Commercial: enrolment trend per school — is it growing or declining? Fee realisation per student vs. local peers. Teacher attrition rate (leading indicator of school quality and reputational risk). Financial: EBITDA per school — which schools are profitable vs. dragging? Working capital is favourable (school fees are advance-collected), so cash flow typically leads P&L. What is the capex requirement to maintain/upgrade facilities? Legal/regulatory: land ownership vs. lease (leasehold schools have higher operational risk); RTE compliance — 25% free seats mandate has a real cost that may be understated. Key man: is the operating model institutional, or does each school run on the founder/principal\'s personal brand? If the latter, post-acquisition performance is highly dependent on retention.'
-  },
-
-  /* ── Operations ── */
-  {
-    id:14, cat:'operations', icon:'⚙️', iconClass:'icon-ops',
-    name:'Operations Improvement (Lean)',
-    sub:'Identify and eliminate waste across a process using Lean principles.',
-    tags:['Lean','Process efficiency','Waste'],
-    steps:['Map the end-to-end process (value stream map)','Identify 7 wastes: Overproduction, Waiting, Transport, Motion, Overprocessing, Inventory, Defects','Quantify the cost or time impact of each waste','Prioritise: High-impact, low-complexity improvements first','Propose process redesign or automation where relevant','Define KPIs to track improvement (OEE, cycle time, first-pass yield)'],
-    when:'<strong>Use when:</strong> Client has high costs or slow delivery and wants to improve operational efficiency.',
-    example:'A packaging manufacturer\'s on-time delivery was 72% vs. industry benchmark of 92%. Value stream mapping revealed: machine setup time was 4 hours between SKU changes (overprocessing waste). Implementing SMED (Single Minute Exchange of Die) cut setup to 45 minutes, freed 18% of capacity, OTD improved to 89% within 6 months.',
-    mistakes:['Jumping to automation before eliminating waste — automating a broken process makes it faster at being broken','Not quantifying the cost of each waste — "7 wastes" is a framework for finding the problem, not a conclusion','Underestimating change management — Lean fails in 70% of cases due to culture and adoption, not technical design'],
-    phrases:['"Before proposing solutions, let me map the end-to-end process and find where time and cost are being lost."','"I\'d prioritise high-impact, low-complexity improvements first — quick wins build organisational momentum for the harder changes."','"Every process has a single binding constraint — finding and relieving that bottleneck should be the first priority."'],
-    combos:['Supply Chain Framework','Root Cause Analysis (5 Whys)','Cost Structure Analysis'],
-    prompt:'A government hospital\'s average patient discharge time is 6 hours — double the private sector benchmark. How would you improve this?',
-    promptAnswer:'Map the discharge process: doctor sign-off → nursing clearance → pharmacy dispenses → billing clears → patient exits. Measure time spent at each step — the bottleneck is almost always billing or pharmacy (manual processes, separate queues). Apply Lean: run billing in parallel with the doctor\'s final round rather than sequentially; pre-pack standard discharge medication before the doctor sign-off; digitise discharge summaries to eliminate transcription lag. Quick win: dedicated discharge coordinators for each ward. Deeper fix: ERP integration between the billing, pharmacy, and nursing systems. Benchmark: a comparable private hospital likely has a 2.5-hour discharge because these steps run in parallel, not series.'
-  },
-  {
-    id:15, cat:'operations', icon:'📦', iconClass:'icon-ops',
-    name:'Supply Chain Framework',
-    sub:'Diagnose disruptions or inefficiencies across the supply chain.',
-    tags:['Procurement','Inventory','Logistics'],
-    steps:['Map: Supplier → Manufacturing → Warehouse → Distribution → Customer','Identify bottleneck: Where is delay or cost concentrated?','Supplier risk: Concentration, lead time variability, quality','Inventory: Optimal levels, holding cost, stockout risk','Logistics: Last-mile efficiency, modal choice, 3PL vs. own fleet','Recommend: Dual sourcing, hub strategy, automation, vendor consolidation'],
-    when:'<strong>Use when:</strong> Client faces supply disruption, rising logistics cost, or inventory build-up.',
-    example:'A food company\'s raw material costs spiked 25% and delivery times increased 8 days. Root cause: single-source soy supplier in MP facing drought. Fix: dual-source from Rajasthan supplier + build 45-day safety stock. Long-term: quarterly demand signal sharing with top 3 suppliers to reduce their uncertainty premium.',
-    mistakes:['Optimising purely for cost without considering resilience — low-cost supply chains are fragile, and the cost of a disruption often exceeds years of savings','Not identifying single points of failure — fragility is often concentrated in one supplier, one port, or one route','Recommending inventory buffers without first asking about working capital constraints — buffer stock has a cost'],
-    phrases:['"I\'ll map the supply chain end-to-end and identify where the bottleneck or risk concentration is."','"Supply chains involve three tensions: cost, speed, and resilience — which is the priority, and what is the current trade-off?"','"Dual-sourcing reduces supplier risk but increases procurement complexity — the trade-off is worth making above a certain spend or criticality threshold."'],
-    combos:['Operations Improvement (Lean)','Cost Structure Analysis','Value Chain Analysis'],
-    prompt:'A mid-size pharma company\'s API supply is unreliable — batches arrive late 40% of the time. What do you do?',
-    promptAnswer:'Diagnose first: is the 40% concentrated in one supplier or spread across all? Is it lead time variability (forecasting/planning issue) or actual production capacity constraints at the supplier? Is it concentrated in specific molecules or across all APIs? Root cause hypothesis: single-source Chinese supplier + no safety stock policy + reactive purchase orders triggered only when stock falls below minimum. Fix: calculate safety stock requirements for each critical API (demand × lead time standard deviation = buffer), establish dual-source for the top 5 APIs by revenue criticality, implement vendor-managed inventory for the highest-volume molecules. Strategic option: PLI scheme for API manufacturing makes backward integration (captive API unit) financially viable for highest-volume molecules — worth modelling.'
-  },
-  {
-    id:16, cat:'operations', icon:'💻', iconClass:'icon-ops',
-    name:'Digital Transformation Framework',
-    sub:'Assess readiness and build a roadmap for a company\'s digitisation journey.',
-    tags:['Technology','Automation','Change management'],
-    steps:['Current state: What processes are manual or inefficient?','Opportunity sizing: Revenue uplift + cost reduction from digitisation','Technology stack: Build vs. buy vs. partner decision','Data readiness: Is data clean, centralised, and governed?','Change management: Org readiness, skills gap, culture','Roadmap: Quick wins (0–6M) → Core transformation (6–18M) → Scale'],
-    when:'<strong>Use when:</strong> Tech consulting case or client wants to "digitise" — reframe the ask before jumping to solutions.',
-    example:'A 150-store retail chain doing manual inventory management. Opportunity: 3% shrinkage reduction = ₹12Cr, 15% labour efficiency = ₹8Cr. Technology: RFID + ERP integration. Data gap: POS data clean but no centralised SKU master. Change management: store managers resistant (feared job loss). Roadmap: 5-store pilot → data clean-up → phased 18-month rollout.',
-    mistakes:['Starting with technology choice without diagnosing the actual process problem — don\'t digitise waste, eliminate it first','Underestimating change management — most transformations fail on adoption, not technology; the hardest part is not building the system but getting people to use it','Not defining success metrics upfront — "digitise the business" is not measurable; "reduce order cycle time from 5 days to 1 day" is'],
-    phrases:['"Before recommending technology, I want to understand what business problem we\'re actually solving and what good looks like."','"Technology is the last mile — data readiness and change management are what determine whether it succeeds."','"I\'d structure the roadmap in three phases: quick wins in 0–6 months to prove value, core build in 6–18 months, then scale."'],
-    combos:['Operations Improvement (Lean)','Value Chain Analysis','Root Cause Analysis (5 Whys)'],
-    prompt:'A ₹500Cr traditional textile manufacturer wants to "go digital." The CEO is excited about AI. How do you structure this conversation?',
-    promptAnswer:'Reframe first: "go digital" is not a strategy — what is the business problem? Three most common in textiles: (1) demand forecasting failures causing overproduction and inventory write-offs, (2) customer ordering is still WhatsApp/phone based, (3) manufacturing downtime is untracked. Prioritise by impact × data readiness: if their ERP data is inconsistent, AI is premature — you need clean data before models. Quick wins: digital B2B ordering portal (replace phone/WhatsApp), real-time loom utilisation dashboard. Mid-term: demand forecasting model to reduce unsold inventory by 20–30%. AI layer: fabric defect detection using computer vision — high ROI if current rejection rates exceed 3%. Sequence: data infrastructure → automate basics → then AI, not the reverse.'
-  },
-
-  /* ── General ── */
-  {
-    id:17, cat:'general', icon:'🧠', iconClass:'icon-gen',
-    name:'MECE Issue Tree',
-    sub:'The foundation of structured consulting thinking — Mutually Exclusive, Collectively Exhaustive.',
-    tags:['MECE','Structuring','Issue tree'],
-    steps:['Define the problem precisely — avoid solving the wrong thing','Break into 2–4 branches that don\'t overlap (Mutually Exclusive)','Ensure branches together cover all possibilities (Collectively Exhaustive)','Each branch can be further split until hypotheses are testable','Test MECEness: "Can this go in two buckets?" → Not ME. "Is anything missing?" → Not CE','Use the issue tree as the backbone of every case structure'],
-    when:'<strong>Use when:</strong> Starting any case — structuring the problem space is always the first 2 minutes.',
-    example:'Problem: "Why is our app losing users?" MECE split: Acquisition (fewer new users coming in?) vs. Retention (existing users leaving faster?). If retention: Early churn (<7 days) vs. Late churn (>30 days). Early churn splits into: onboarding friction, value not perceived, wrong user segment acquired. Each branch is testable with data — no overlap, nothing missing.',
-    mistakes:['Making branches that overlap — "customer service issues" and "poor user experience" are not MECE (service is a subset of experience)','Using a generic structure (3Cs, 4Ps) without adapting it to the specific problem — frameworks are starting points, not the answer','Not going deep enough — a 2-level tree is usually insufficient; drill until each leaf is directly testable with available data'],
-    phrases:['"Let me structure this MECE — I\'ll make sure the branches don\'t overlap and together cover the full problem space."','"I\'d split this into [A] and [B] at the first level — does that feel exhaustive to you, or is there a third bucket?"','"Each branch should be directly testable — let me check that we have the data to confirm or reject each hypothesis."'],
-    combos:['Hypothesis-Driven Approach','Pyramid Principle','Root Cause Analysis (5 Whys)'],
-    prompt:'Build a MECE issue tree for: "A coffee chain\'s same-store sales are declining."',
-    promptAnswer:'Level 1: Revenue (price × volume) — park cost for now since the question is about sales. Level 2, Revenue: Price (has realisation per ticket fallen?) vs. Volume (fewer transactions or smaller basket?). Level 2, Volume: Traffic (fewer customers entering) vs. Conversion (customers entering but not buying — rare in food; mention and set aside). Level 2, Traffic: Acquisition (new customers down — awareness, competitive entry nearby, weaker location) vs. Retention (regulars visiting less — loyalty eroding, product quality, pricing perception). Level 2, Basket: Fewer items per transaction vs. mix shift to cheaper items. This tree is fully MECE at every level, and every leaf is testable with POS and loyalty data.'
-  },
-  {
-    id:18, cat:'general', icon:'📋', iconClass:'icon-gen',
-    name:'Hypothesis-Driven Approach',
-    sub:'Work from a leading hypothesis, then test and refine — the McKinsey way.',
-    tags:['Hypothesis','Top-down','Pyramid principle'],
-    steps:['Form an initial hypothesis from the data given at the start','State it clearly: "I believe the core issue is X because Y"','Design specific analyses to confirm or reject the hypothesis','Prune branches that data rules out; go deeper on those that hold','Update the hypothesis as new information emerges','Lead the final synthesis with the answer, not the analysis journey'],
-    when:'<strong>Use when:</strong> You need to show structured thinking and avoid "boiling the ocean" in open-ended cases.',
-    example:'An airline\'s load factor fell 8pp. Initial data: all routes affected, timing coincides with a fare restructuring. H1: the fare restructuring priced out price-sensitive leisure travellers. Test: compare load factor change on leisure vs. business routes. Result: leisure routes fell 14pp, business routes stable. H1 confirmed. Recommendation: restore promotional fares on leisure routes while maintaining business pricing.',
-    mistakes:['Stating a hypothesis too vague to test — "the problem is competition" is an observation, not a hypothesis; "we lost share because a new entrant undercut price by 20% in metros" is testable','Abandoning a disproved hypothesis without replacing it — if H1 is wrong, explicitly say "H1 is disproved; new hypothesis is H2 because the data now points to..."','Running analyses without a prior hypothesis — you will drown in data and the interviewer will think you are fishing'],
-    phrases:['"Based on the information given, my working hypothesis is [X] — I\'ll structure the analysis to test this specifically."','"I\'ll design analyses to confirm or reject this hypothesis, not to explore broadly."','"If this hypothesis is correct, we would expect to see [specific observable pattern] in the data — let me check."'],
-    combos:['MECE Issue Tree','Pyramid Principle','Root Cause Analysis (5 Whys)'],
-    prompt:'A retail bank\'s NPS dropped 12 points in Q3. Before seeing any data, what is your opening hypothesis and how do you test it?',
-    promptAnswer:'A 12-point NPS drop is large and fast — it suggests a specific triggering event, not a gradual drift. H1: a recent product or policy change (fee introduction, digital feature removal, branch closure) created a concentrated wave of detractors. Test: survey verbatim analysis from Q3 — what specific complaints drove the low scores? Is the drop concentrated in one product (home loans, credit cards, mobile app) or across the board? H2: a service failure in a specific channel or geography. Test: NPS by channel (branch vs. digital vs. call centre) and by region. Always: state the hypothesis first, then design a targeted data pull to test it — never start with a data dump and work backwards.'
-  },
-  {
-    id:19, cat:'general', icon:'🗺️', iconClass:'icon-gen',
-    name:'SWOT Analysis',
-    sub:'Quick situational audit — best used as input to strategy, not as the strategy itself.',
-    tags:['Strengths','Weaknesses','Opportunities','Threats'],
-    steps:['Strengths: Internal capabilities that give competitive advantage','Weaknesses: Internal gaps or vulnerabilities','Opportunities: External trends or gaps the client can exploit','Threats: External risks that could erode position','Match S→O (offensive moves) and W→T (defensive moves)','Translate findings into 2–3 specific strategic priorities'],
-    when:'<strong>Use when:</strong> Asked for a strategic overview, or as a framing tool before diving into a growth or market entry case.',
-    example:'Indian pharma company evaluating the US generics market. S: USFDA-approved facilities, R&D capability, 40% cost advantage. W: No US distribution network, zero brand recognition. O: US generic drug shortage, pricing reform increasing generics demand. T: USFDA warning letter risk (Ranbaxy precedent), intensifying Chinese price competition. SWOT-to-strategy: S+O → enter via contract manufacturing for US branded pharma first, build distribution later.',
-    mistakes:['Treating SWOT as the end product — it is an input to strategy; always follow it with a "therefore..." recommendation','Not distinguishing internal (S/W) from external (O/T) factors — conflating them is a visible structuring error','Listing 8 strengths and 7 weaknesses with no prioritisation — pick the 2–3 most decisive and go deep on those'],
-    phrases:['"I\'ll use SWOT as a diagnostic lens, then translate it into strategic priorities."','"The point isn\'t to list everything — it\'s to find the S-O matches (where do we go on offence?) and W-T matches (what do we need to defend?)"','"SWOT is the setup; the recommendation is where the value is."'],
-    combos:['4Cs Market Entry Framework','PESTLE Analysis','Ansoff Matrix'],
-    prompt:'Do a quick SWOT for an Indian public sector bank competing with fintech lenders in personal loans.',
-    promptAnswer:'S: 600M+ existing customers (Jan Dhan), lowest cost of funds (deposit franchise), regulatory trust and brand familiarity. W: Legacy IT (core banking on 15–20 year-old systems), credit decisioning takes 2–7 days vs. fintechs\' 30 seconds, risk-averse culture that struggles to move fast. O: UPI and OCEN stack makes digital lending infrastructure accessible; MSME credit gap of ₹25T is largely unserved; government push for PSB digitisation with funding. T: Fintechs with superior UX, co-lending NBFC models with lower regulatory burden, customer loyalty eroding among under-35s. Strategic implication: don\'t try to out-fintech the fintechs — play to the strength (trusted relationship + existing customer data) by offering instant pre-approved personal loans to current account holders via mobile, underwritten by proprietary transaction data.'
-  },
-  {
-    id:20, cat:'general', icon:'⚖️', iconClass:'icon-gen',
-    name:'Decision Matrix (Prioritisation)',
-    sub:'Score and rank initiatives by impact vs. feasibility.',
-    tags:['Impact','Feasibility','Prioritisation'],
-    steps:['List all initiatives or options on the table','Define scoring dimensions: impact (revenue/cost/risk) and feasibility (cost, time, complexity)','Score each option 1–3 on each dimension','Plot on a 2×2: High Impact / High Feasibility = quick wins','High Impact / Low Feasibility = strategic bets (resource carefully)','Low Impact = deprioritise regardless of ease'],
-    when:'<strong>Use when:</strong> Client has many options and needs to decide where to focus — typically the final slide of most cases.',
-    example:'Hospital chain evaluating 4 growth options: new specialty (Impact 3, Feasibility 2), medical tourism (3, 1), doctor referral programme (2, 3), price increase (1, 3). Quick wins: referral programme + price increase. Strategic bet: new specialty. Defer: medical tourism (requires 2–3 year build). Recommendation: start with quick wins to fund the strategic bet.',
-    mistakes:['Equal-weighting all dimensions — in most cases, revenue impact should be weighted higher than ease of implementation','Building the matrix but not translating it into a clear recommendation — the matrix is a means, not the answer','Using it as a substitute for strategic thinking — it should make a difficult choice clearer, not replace the judgement'],
-    phrases:['"Let me score each option on impact and feasibility, then plot to identify where we should focus first."','"Quick wins go first — they fund the strategic bets and build internal momentum."','"Even if something scores well on feasibility, I would only recommend it if the impact clears a minimum threshold."'],
-    combos:['Growth Levers Framework','Business Case / Investment Framework','Ansoff Matrix'],
-    prompt:'A startup has limited runway and 5 product features to build. How do you decide what to build first?',
-    promptAnswer:'Score each feature on: revenue impact (0–3), customer retention impact (0–3), and build effort inverted (simpler = higher score). Plot on a 2×2 (impact vs. effort). High impact, low effort: build in the next sprint. High impact, high effort: schedule with dedicated resources. Low impact, low effort: opportunistic — only if bandwidth allows. Low impact, high effort: kill or defer indefinitely — this is the hard conversation. Additional override: is any feature on the critical path to a committed customer promise or a fundraising milestone? Those jump the queue regardless of the scoring, because the cost of missing them (churn or failed raise) exceeds the cost of delaying another feature.'
-  },
-  {
-    id:21, cat:'general', icon:'🔺', iconClass:'icon-gen',
-    name:'Pyramid Principle (Communication)',
-    sub:'Structure your answer so the recommendation comes first, supported by evidence below.',
-    tags:['Top-down','Storyline','SCQA'],
-    steps:['Lead with the answer / recommendation — not the analysis','Support with 3 key arguments (the "pillars")','Each pillar is supported by data or analysis below it','Use SCQA: Situation → Complication → Question → Answer','In case interviews: state hypothesis → structure → findings → recommendation','Avoid the "journey" narrative — give the destination first'],
-    when:'<strong>Use when:</strong> Structuring verbal synthesis in a case interview, or building a final recommendation slide.',
-    example:'Question: "Should we enter Sri Lanka?" Wrong: "We looked at market size (large), then competition (fragmented), then capabilities... therefore yes." Right: "We recommend entering Sri Lanka via a JV with a local distributor. Three reasons: the market is attractively sized, competition is fragmented, and our manufacturing cost advantage translates directly. Here is the evidence."',
-    mistakes:['Narrating the journey rather than leading with the answer — interviewers and clients call this "bottom-up" and it signals junior thinking','Having three pillars that do not all independently support the recommendation — each pillar should be load-bearing; remove any that are just context','Ending with "so in conclusion, as I said earlier..." — that is not a synthesis, it is a repetition'],
-    phrases:['"My recommendation is [X]. There are three reasons: first... second... third... Let me walk through each."','"The situation is [S], the complication is [C], which raises the question of [Q]. Our answer is [A]."','"I\'ll lead with the answer and then support it — stop me if you\'d like to go deeper on any of the three pillars."'],
-    combos:['MECE Issue Tree','Hypothesis-Driven Approach','Decision Matrix (Prioritisation)'],
-    prompt:'Synthesise this in 30 seconds: A pharma company\'s profits fell 20%. You found revenue was stable, costs rose 18%, driven entirely by API price inflation from a single Chinese supplier.',
-    promptAnswer:'"The profitability decline is entirely a cost problem — revenue is stable, so the P&L fix is on the cost side. A single-source Chinese API supplier drove an 18% cost increase. We recommend three actions: dual-source the top 5 APIs by spend within 6 months, build a 60-day safety stock buffer, and open a conversation with the largest supplier about a fixed-price annual contract. This directly eliminates the concentration risk and protects against future supply shocks. No changes are needed on the revenue side at this time."'
-  },
-  {
-    id:22, cat:'general', icon:'📈', iconClass:'icon-gen',
-    name:'BCG Growth-Share Matrix',
-    sub:'Portfolio analysis tool — classify business units to allocate capital.',
-    tags:['Portfolio','Stars','Cash cows'],
-    steps:['Stars: High market share, high growth → invest to maintain','Cash Cows: High market share, low growth → harvest, fund others','Question Marks: Low share, high growth → selective investment','Dogs: Low share, low growth → divest or restructure','Map all BUs on the matrix using relative share and market growth rate','Recommend portfolio-level capital allocation strategy'],
-    when:'<strong>Use when:</strong> Client is a conglomerate asking which businesses to invest in vs. divest.',
-    example:'A conglomerate. Telecom: Cash Cow (high share, low growth). Renewables: Question Mark (low share, high growth — invest). Legacy Print Media: Dog (low share, low growth — divest). Digital Payments: Star (high share, high growth — protect moat). Recommendation: harvest Telecom to fund Renewables buildout, divest Print, protect Payments.',
-    mistakes:['Taking the labels too literally — a "Dog" is not always worth divesting; it may have strategic linkages or be genuinely profitable in a low-growth but stable market','Using only current position — trajectories matter more than snapshots; a Question Mark moving fast toward leadership is different from one stalling','Forgetting "relative to whom" — market share is always relative to the largest competitor, not market size'],
-    phrases:['"I\'ll map each BU on relative market share and market growth, then derive capital allocation implications."','"The portfolio should be self-funding — Cash Cows finance the Stars and selective Question Marks."','"The question isn\'t just where each BU sits today, but where it\'s heading and how fast."'],
-    combos:['Ansoff Matrix','Growth Levers Framework','Decision Matrix (Prioritisation)'],
-    prompt:'A large FMCG conglomerate is being pushed by investors to "unlock value". Use the BCG matrix to structure a portfolio review.',
-    promptAnswer:'Map BUs: personal care (high share, moderate growth) = mature Star / Cash Cow. Packaged foods (moderate share, high growth) = Question Mark — need to decide: invest aggressively or exit. Agri commodities (low share, low growth) = Dog — capital-intensive, low-margin, strategically non-core. Premium skincare (low share, high growth) = Question Mark with high potential if premiumisation tailwind continues. Recommendation: divest agri commodities (non-core, frees up capital), invest in premium skincare (high-growth, rides the same brand equity as personal care), harvest personal care to fund the investments. This refocuses the portfolio on high-margin branded businesses — the kind of portfolio that attracts a higher earnings multiple from public market investors.'
-  },
-  {
-    id:23, cat:'general', icon:'🌍', iconClass:'icon-gen',
-    name:'PESTLE Analysis',
-    sub:'Scan the external environment before a market entry or strategy recommendation.',
-    tags:['Political','Economic','Tech','ESG'],
-    steps:['Political: Regulatory risk, government stability, trade policy','Economic: GDP growth, inflation, interest rates, forex risk','Social: Demographics, consumer trends, urbanisation pace','Technological: Disruption risk, digitisation, infrastructure readiness','Legal: Compliance requirements, IP, labour law, sector regulation','Environmental: Climate risk, ESG pressure, carbon costs'],
-    when:'<strong>Use when:</strong> Starting a market entry, country expansion, or M&A case — set the macro context before diving in.',
-    example:'Green hydrogen in India. P: National Green Hydrogen Mission — ₹19,744Cr incentive. E: 4–5× more expensive than grey hydrogen now, but electrolyser costs falling 80% by 2030. S: Industrial adoption requires behaviour change. T: India behind EU on IP. L: New energy trading law needed. E: Critical for hard-to-abate sector decarbonisation. Verdict: 5-year window to build a position before cost parity changes the competitive landscape.',
-    mistakes:['Listing factors without linking them to business implications — "political risk exists" is useless; "regulatory reversal risk means the client should structure the JV to exit within 5 years" is actionable','Going equal depth on all 6 letters — in practice 2–3 factors dominate; identify and weight them explicitly','Doing PESTLE in isolation — it should feed into a Porter\'s or 4Cs framework, not be the final answer'],
-    phrases:['"Let me scan the macro environment across the six PESTLE dimensions, then flag the 2–3 factors that most determine whether this strategy succeeds."','"PESTLE sets the external context — it tells us what assumptions the business case is sitting on."','"Of these six, [X] and [Y] are the swing factors for this specific decision — let me go deeper there."'],
-    combos:['4Cs Market Entry Framework',"Porter's Five Forces",'Business Case / Investment Framework'],
-    prompt:'Your client is a European EV maker evaluating manufacturing in India. Run a quick PESTLE.',
-    promptAnswer:'P: PLI scheme for EVs and Make in India incentives are well-aligned. Political stability is moderate — policy reversal risk is a real consideration for 10-year capex decisions. E: India labour cost is 30% of EU, meaningful advantage; but logistics costs are higher and rupee/EUR volatility creates P&L uncertainty. S: Domestic EV penetration is <5% of auto sales — export-oriented model is essential; don\'t bet on India domestic demand alone in the near term. T: EV component ecosystem is immature; critical minerals (lithium, cobalt) still imported; charging infrastructure lagging. L: Land acquisition is complex and time-consuming. EU emissions standards diverge from India — dual compliance adds cost. E: Renewable energy availability supports green manufacturing; EU Carbon Border Adjustment Mechanism (CBAM) may actually favour India-made EVs with clean energy certificates for export. Verdict: Attractive for an export-focused, PLI-incentivised plant — risky if the business case relies on domestic EV adoption timing.'
-  },
-  {
-    id:24, cat:'general', icon:'📊', iconClass:'icon-gen',
-    name:'Business Case / Investment Framework',
-    sub:'Evaluate whether an investment or initiative is worth pursuing.',
-    tags:['NPV','Payback','Risk-adjusted return'],
-    steps:['Define the investment: Capex, timeline, strategic objective','Revenue case: Incremental revenue or cost savings generated','Cost case: Upfront + ongoing operating costs','Build simple P&L: Revenue − Costs over 5–10 years','Calculate NPV, IRR, or Payback period','Sensitivity: What if revenue is 20% lower? Is the case still viable?'],
-    when:'<strong>Use when:</strong> Client is deciding whether to build a plant, launch a product, or make a large capital investment.',
-    example:'New cement plant: ₹1,200Cr capex. Revenue: 3MT × ₹6,000/MT = ₹180Cr/year (ramped). EBITDA at 22% = ₹396Cr. NPV at 12% WACC = ₹820Cr. IRR = 19%. Payback = 7 years. Sensitivity: if realisations fall 10% → IRR = 14%, still above cost of capital. Decision: proceed.',
-    mistakes:['Building a complex 50-row model without articulating the investment thesis in one sentence first — always lead with the conclusion','Using a single-point estimate without sensitivity analysis — the ranges matter more than the base case number','Ignoring terminal value or not justifying the discount rate chosen — these two inputs can swing NPV more than the operating assumptions'],
-    phrases:['"The core question is whether the risk-adjusted return exceeds the cost of capital — let me build the case for that."','"I\'ll run a base case, then stress-test the two most sensitive assumptions — typically price and volume."','"NPV tells us absolute value creation; IRR tells us return on invested capital — both matter and they can occasionally conflict."'],
-    combos:['M&A Rationale Framework','Pricing Strategy Framework','Decision Matrix (Prioritisation)'],
-    prompt:'A solar developer is deciding whether to build a 100MW solar plant in Rajasthan for ₹400Cr. How do you evaluate this?',
-    promptAnswer:'Revenue: 100MW × 22% capacity factor × 8,760 hrs × ₹2.8/unit PPA tariff = ₹54Cr/year. Opex: ₹5–6Cr/year (O&M, insurance, land lease). EBITDA = ~₹48Cr/year. Simple payback: 400 ÷ 48 = 8.3 years. IRR over 25-year life = ~13%. Benchmark: typical utility solar IRR in India is 11–14% — this is in-range. Key risks: DISCOM offtaker creditworthiness (payment delays are endemic — build a 90-day receivable buffer into working capital), merchant revenue tail after the 25-year PPA expires, and land acquisition timeline risk. Sensitivity: if PPA tariff falls to ₹2.5/unit (possible in competitive auction), IRR drops to ~10% — check if that still clears your WACC. Verdict: viable at ₹400Cr, conditional on DISCOM credit quality and timely COD.'
-  },
-  {
-    id:25, cat:'general', icon:'🧩', iconClass:'icon-gen',
-    name:'Root Cause Analysis (5 Whys)',
-    sub:'Drill to the true underlying cause by asking "why" repeatedly.',
-    tags:['Causal chain','Problem diagnosis','Ops'],
-    steps:['State the observable problem precisely','Ask: Why is this happening? → Answer gives Level 1 cause','Ask Why again on Level 1 → Level 2 cause','Repeat 3–5 times until you hit a root cause you can actually act on','Validate: Does fixing this root cause prevent the surface symptom recurring?','Recommend the fix at root level, not symptom level'],
-    when:'<strong>Use when:</strong> Operations or process cases where the problem is visible but the underlying cause is hidden.',
-    example:'Manufacturing line\'s defect rate jumped from 1.2% to 4.8%. Why? → New raw material batch. Why different batch? → Primary supplier had a quality incident. Why wasn\'t it caught? → Incoming QC was skipped due to backlog. Why backlog? → Two QC inspectors on simultaneous leave. Why no cover? → No cross-training protocol existed. Root cause: absence of cross-training for critical QC roles — a people process gap, not a materials problem.',
-    mistakes:['Stopping at the surface symptom and treating it as the cause — "the machine broke down" is an observation, not a root cause','Taking a wrong branch in the causal chain — always ask "why" about the most specific, precise observation','Confusing correlation with causation — B following A doesn\'t mean A caused B; test each causal link explicitly'],
-    phrases:['"Let me trace the causal chain backwards from the symptom — I\'ll ask why until I reach something we can fix at the source."','"The root cause is the one where fixing it prevents recurrence — not just alleviates the immediate symptom."','"I want to avoid solving at the symptom level — that is expensive, temporary, and often masks a deeper structural issue."'],
-    combos:['Operations Improvement (Lean)','MECE Issue Tree','Hypothesis-Driven Approach'],
-    prompt:'A food delivery app\'s average delivery time increased from 32 to 44 minutes over 3 months. Use 5 Whys to find the root cause.',
-    promptAnswer:'Why is delivery time up? → More orders breaching the 45-minute SLA. Why? → Delivery partners taking longer per route. Why? → Average drops per partner per hour fell from 2.1 to 1.6. Why did drops per hour fall? → Average delivery distance per order grew, and traffic density in key zones increased. Why did average delivery distance grow? → New restaurant onboarding was concentrated in suburban areas far from the highest customer density clusters. Root cause: the restaurant onboarding strategy (optimised for acquisition volume) did not account for geographic proximity to demand density. Fix: onboarding policy to prioritise restaurants within 3km of high-order density zones; implement zone-based delivery partner allocation to reduce cross-zone dispatch.'
-  },
-  {
-    id:26, cat:'general', icon:'🎲', iconClass:'icon-gen',
-    name:'Guesstimate Framework',
-    sub:'Estimate any quantity using structured segmentation and reasonable assumptions.',
-    tags:['Estimation','Fermi','Market sizing'],
-    steps:['Clarify what exactly is being estimated (units, geography, time period)','Choose approach: Demand-side (population funnel) or Supply-side (capacity × utilisation)','Build a chain of logical multiplications with round, defensible numbers','State every assumption explicitly — interviewers judge logic, not precision','Sanity check: Compare your answer to a known reference point','Present a range, not a single-point estimate'],
-    when:'<strong>Use when:</strong> Asked to estimate any quantity — EV chargers, piano tuners, ATMs, weddings — in a guesstimate round.',
-    example:'Weddings in India per day. 1.4B population ÷ average 45 years of marriageable life = ~31M marriages/year. ~60% are formal event weddings = 18.5M/year ÷ 365 = ~50,000 weddings/day. Sanity check: India\'s wedding industry is ₹4–5L Cr/year. At ₹5L average spend × 50,000/day × 365 = ₹9L Cr — slightly high, suggesting average spend is lower for rural weddings. Revised range: 45,000–55,000/day.',
-    mistakes:['Getting lost debating whether an assumption is 23% or 25% — make a call, state it, move on; the interviewer is evaluating your logic structure','Not sanity-checking the final number — if your answer implies every Indian adult goes to 8 weddings a year, recalibrate','Forgetting units — "the market is 50 million" means nothing without specifying rupees, units, or people'],
-    phrases:['"Let me define exactly what we\'re estimating first, then choose between demand-side and supply-side approach."','"I\'ll state my assumptions explicitly — please push back if any seem off the mark."','"As a sanity check: that implies [X] per person per year — which seems reasonable / too high, so let me adjust the [assumption]."'],
-    combos:['Market Sizing (TAM/SAM/SOM)','Business Case / Investment Framework'],
-    prompt:'Estimate the number of ATMs in India.',
-    promptAnswer:'Demand-side: India has ~500M active bank account holders who use ATMs (exclude digital-only urban users and Jan Dhan holders with no transactions). Average ATM visit: 1–2 times/month = 1.5 visits. ATM capacity in a busy location: 200–300 transactions/day = ~7,000/month. ATMs needed: 500M × 1.5 ÷ 7,000 = ~107,000. Sanity check: RBI data shows ~250,000 ATMs in India — our estimate is low by ~2×. Adjustment: we underestimated rural ATMs which run at 50–100 transactions/day (lower utilisation, higher count). Revised estimate: 180,000–250,000. This aligns with RBI data. The insight is that rural India has high ATM density relative to transaction volume because financial inclusion mandates require presence, not just utilisation efficiency.'
-  }
+const TRACKS = [
+{
+  id:'profitability', icon:'📉', name:'Profitability',
+  desc:'Revenue vs. cost decomposition, value chain diagnosis, and margin analysis.',
+  time:20,
+  cards:[
+    {id:'pf1',diff:'Easy',title:'Profitability Framework',
+     q:'How do you open a profitability case? What is the core framework structure?',
+     a:`<div class="ans-point"><strong>Core structure:</strong> Profit = Revenue − Cost. Always split into these two branches first before drilling down.</div>
+<div class="ans-point"><strong>Opening questions to ask:</strong> What product/service does the company offer? Is this a company-specific problem or industry-wide? What time period are we looking at? Are we talking EBITDA, PBT, or PAT?</div>
+<div class="ans-point"><strong>Profit vs Profitability distinction:</strong> Profit = Revenue − Cost (absolute number). Profitability = Profit ÷ Revenue (a ratio/%). Always clarify which is declining.</div>
+<div class="ans-point"><strong>Revenue side:</strong> Break down as Price × Volume. Then segment by product line, geography, or customer type to find where the decline sits.</div>
+<div class="ans-point"><strong>Cost side:</strong> Split into Fixed and Variable. Then go to the value chain — raw materials, production, logistics, distribution, marketing, after-sales — to find the specific cost line that grew.</div>
+<div class="ans-point"><strong>Interview rule:</strong> Never jump to cost cuts without ruling out a revenue problem first. The data should direct you, not an assumption.</div>`},
+    {id:'pf2',diff:'Easy',title:'Revenue Decomposition',
+     q:'How do you break down revenue and what are the most common traps?',
+     a:`<div class="ans-point"><strong>Formula:</strong> Revenue = Price × Units Sold. For B2C: Revenue = Revenue per Customer × Number of Customers.</div>
+<div class="ans-point"><strong>Demand-side (why units sold changed):</strong> Need (has customer need shifted?), Affordability (economic conditions, pricing), Accessibility (distribution reach), Availability (stock, supply), Awareness (marketing effectiveness), After-sales experience (NPS, churn).</div>
+<div class="ans-point"><strong>Supply-side (why price changed):</strong> Procurement issues affecting margins, production constraints limiting volume, distribution gaps limiting reach.</div>
+<div class="ans-point"><strong>Segmentation:</strong> Always segment by product mix, geography, and customer type. A flat top-line can hide a collapsing core product offset by a growing new one.</div>
+<div class="ans-point"><strong>Trap 1 — Mix shift:</strong> If cheaper SKUs gain share, average revenue per unit falls even if prices are unchanged. That's a mix problem, not a pricing problem.</div>
+<div class="ans-point"><strong>Trap 2 — Net vs Gross:</strong> Discounts, trade promotions, and returns reduce what hits the P&L. Always check net realisations, not list prices.</div>
+<div class="ans-point"><strong>Trap 3 — Churn:</strong> Volume can grow while revenue is flat if high-value customers are leaving and being replaced by lower-value ones.</div>`},
+    {id:'pf3',diff:'Medium',title:'Value Chain Cost Analysis',
+     q:'What is the value chain cost framework and how do you use it to diagnose a cost problem?',
+     a:`<div class="ans-point"><strong>Value chain stages (IIMA framework):</strong> R&D → Raw Material Procurement → Production → Storage & Transportation → Distribution → Marketing → After-Sales Support.</div>
+<div class="ans-point"><strong>R&D:</strong> Equipment, tech, human capital, patents — one-time vs ongoing spend.</div>
+<div class="ans-point"><strong>Raw Material Procurement:</strong> Cost of raw materials, supplier contracts, wastage/use efficiency.</div>
+<div class="ans-point"><strong>Production:</strong> Machinery, factory rent, electricity, labour hours, technology, capacity utilisation, defect rate.</div>
+<div class="ans-point"><strong>Storage & Transport:</strong> Route efficiency, vehicle costs, warehouse rent, electricity, inventory holding cost.</div>
+<div class="ans-point"><strong>Distribution:</strong> Sales force, sales channels, training, incentive structure.</div>
+<div class="ans-point"><strong>Marketing:</strong> Channel mix, spend per channel, digital vs physical conversion rates.</div>
+<div class="ans-point"><strong>After-Sales:</strong> Repairs, spare parts, returns, customer service cost.</div>
+<div class="ans-point"><strong>Cost classification:</strong> Also categorise as Fixed vs Variable, or Direct vs Indirect — whichever is most useful given the problem. Fixed cost issues require structural interventions; variable cost issues respond to sourcing or efficiency levers.</div>`},
+    {id:'pf4',diff:'Easy',title:'Profit vs Profitability',
+     q:'What is the difference between profit and profitability, and why does it matter in a case?',
+     a:`<div class="ans-point"><strong>Profit</strong> = Revenue − Cost. An absolute number. Can grow even as profitability falls (eg. revenue doubles, costs triple).</div>
+<div class="ans-point"><strong>Profitability</strong> = Profit ÷ Revenue. A ratio. Tells you efficiency of revenue conversion to profit.</div>
+<div class="ans-point"><strong>Why the distinction matters:</strong> A company can show growing profits year-on-year but declining profitability — which means it's becoming less efficient at converting revenue to earnings. This often signals an underlying structural cost problem not visible at the absolute profit level.</div>
+<div class="ans-point"><strong>Key metrics by level:</strong> Gross Margin = (Revenue − COGS) ÷ Revenue. EBITDA Margin = EBITDA ÷ Revenue. Net Margin = PAT ÷ Revenue.</div>
+<div class="ans-point"><strong>Interview move:</strong> Always clarify upfront — "When the client says profitability is declining, are we looking at absolute profit falling, or the margin percentage compressing, or both?"</div>`},
+    {id:'pf5',diff:'Medium',title:'Company vs Industry Problem',
+     q:'How do you determine whether a profitability problem is company-specific or industry-wide?',
+     a:`<div class="ans-point"><strong>Key diagnostic question:</strong> "Did competitors face the same decline in the same period?" If yes — industry-wide issue. If no — company-specific.</div>
+<div class="ans-point"><strong>If industry-wide:</strong> The root cause is likely external — commodity inflation, regulatory change, demand shift, new technology disrupting the sector. The fix is usually wait-and-watch, pass-through pricing, or structural reorientation.</div>
+<div class="ans-point"><strong>If company-specific:</strong> The company has underperformed its peers. Now diagnose why — pricing (did they discount more?), operations (higher cost structure?), mix (different customer/product portfolio?), or management decisions.</div>
+<div class="ans-point"><strong>Framework: Company Revenue Growth = Category Growth + Market Share Δ.</strong> If the market grew 8% and the company grew 2%, they lost 6 percentage points of market share — a competitive problem, not a macro one.</div>
+<div class="ans-point"><strong>PESTEL for external context:</strong> Political (regulations), Economic (inflation, rates), Social (demand shifts), Technological (disruption), Environmental (input costs), Legal (compliance costs).</div>
+<div class="ans-point"><strong>Always ask:</strong> "Do you have data on how the industry or key competitors performed in the same period?"</div>`},
+    {id:'pf6',diff:'Hard',title:'Fixed vs Variable Costs — Strategic Difference',
+     q:'What is the strategic difference between fixed and variable costs, and how does it change the recommendation?',
+     a:`<div class="ans-point"><strong>Fixed costs:</strong> Do not change with output in the short run. Rent, depreciation, base salaries, insurance. High fixed cost structures have operating leverage — when revenue grows, profits grow faster. When revenue falls, losses accelerate.</div>
+<div class="ans-point"><strong>Variable costs:</strong> Scale with output. Raw materials, fuel, commissions, packaging. Manageable through sourcing, efficiency, or volume.</div>
+<div class="ans-point"><strong>Semi-variable:</strong> Fixed up to a threshold, then variable. Overtime pay, utilities (base load fixed, incremental variable).</div>
+<div class="ans-point"><strong>Why it matters for recommendations:</strong></div>
+<div class="ans-point">• Variable cost problem → lever is sourcing (renegotiate contracts, find alternate suppliers), efficiency (reduce waste, improve yield), or volume (spread cost over more units).</div>
+<div class="ans-point">• Fixed cost problem → lever is utilisation (fill existing capacity), restructuring (close facilities, reduce headcount), or revenue growth (spread fixed costs over a larger base).</div>
+<div class="ans-point"><strong>Common interview trap:</strong> Recommending headcount cuts as the first answer is a red flag. It's the lazy answer. Always identify the root cause first — headcount may not even be the issue.</div>
+<div class="ans-point"><strong>India example:</strong> A logistics company with high fuel (variable) and fleet depreciation (fixed) costs facing margin pressure — the fix for fuel is route optimisation and fuel hedging; the fix for depreciation is higher utilisation of the fleet, not cutting trucks.</div>`},
+    {id:'pf7',diff:'Medium',title:'Benchmarking in Profitability',
+     q:'How do you use benchmarking in a profitability case?',
+     a:`<div class="ans-point"><strong>What benchmarking does:</strong> Converts "margins are low" from an opinion into a quantified gap with an evidence-based target.</div>
+<div class="ans-point"><strong>Three types:</strong></div>
+<div class="ans-point">• <strong>Internal benchmark:</strong> Same company, different time period. "EBITDA was 22% three years ago — now it's 15%. The 7-point gap needs explaining."</div>
+<div class="ans-point">• <strong>Competitor benchmark:</strong> Same metric, competing companies. "Industry leader operates at 28% EBITDA; our client is at 19% — 9-point gap. What explains it?"</div>
+<div class="ans-point">• <strong>Best-in-class benchmark:</strong> Cross-industry leader for a specific metric — used in operations (eg. Amazon's cost per fulfillment order as a warehouse efficiency benchmark).</div>
+<div class="ans-point"><strong>What to look for in the gap:</strong> Once you establish the benchmark gap, ask "what is different?" Compare revenue mix, cost structure, operational model, and geography. Each difference is a potential explanation for the gap.</div>
+<div class="ans-point"><strong>Interview move:</strong> "Before I go deeper, I'd like to establish a baseline — can you share how this metric compares to peers or to the company's own historical performance?"</div>`},
+    {id:'pf8',diff:'Hard',title:'Unit Economics for Startups',
+     q:'How does the profitability framework change for a loss-making startup or a new business unit?',
+     a:`<div class="ans-point"><strong>The shift:</strong> For established firms, you ask "why did margin fall?" For startups, you ask "is there a path to profitability, and when?"</div>
+<div class="ans-point"><strong>Key metrics (Unit Economics lens):</strong></div>
+<div class="ans-point">• <strong>CAC (Customer Acquisition Cost):</strong> Total sales & marketing spend ÷ new customers acquired. How much to get one customer?</div>
+<div class="ans-point">• <strong>LTV (Lifetime Value):</strong> Revenue per customer × gross margin × average customer lifespan. How much does one customer generate?</div>
+<div class="ans-point">• <strong>LTV:CAC ratio:</strong> >3x is healthy. <1x means you're spending more to acquire customers than they're worth.</div>
+<div class="ans-point">• <strong>Payback period:</strong> How many months until CAC is recovered from the margin generated?</div>
+<div class="ans-point">• <strong>Contribution margin per order:</strong> Does each transaction cover its variable cost? If not, scale makes things worse, not better.</div>
+<div class="ans-point"><strong>Break-even question:</strong> "At what volume does the business become EBITDA-positive?" This determines how much capital is needed and whether the business model is viable at all.</div>
+<div class="ans-point"><strong>Red flag:</strong> If losses grow proportionally with revenue (or faster), unit economics are broken. Scaling is destructive, not value-creating.</div>`}
+  ]
+},
+{
+  id:'market-entry', icon:'🌐', name:'Market Entry',
+  desc:'Assess market attractiveness, right to win, and optimal entry mode using the 4Cs.',
+  time:16,
+  cards:[
+    {id:'me1',diff:'Easy',title:'Market Entry Framework',
+     q:'What is the standard market entry framework and how do you open a market entry case?',
+     a:`<div class="ans-point"><strong>Core question:</strong> Is it worthwhile to enter this market, and if yes, what is the best way to enter?</div>
+<div class="ans-point"><strong>4C Framework (IIMA):</strong> Customer → Company → Competition → Context/Product.</div>
+<div class="ans-point"><strong>Customer:</strong> Who are the target segments? What are their needs? What is the market size and growth? What is WTP (willingness to pay)?</div>
+<div class="ans-point"><strong>Company:</strong> What is our product/service? What resources and key assets do we have? Is our value chain (procurement → production → distribution) feasible here? What does the break-even analysis look like?</div>
+<div class="ans-point"><strong>Competition:</strong> How many competitors? What are their market shares? What are barriers to entry/exit? Are there regulations protecting incumbents? SWOT analysis of key players.</div>
+<div class="ans-point"><strong>Context/Product:</strong> Is there a gap between customer expectations and available products? What macro factors (PESTEL) affect this market?</div>
+<div class="ans-point"><strong>Opening move:</strong> "Always ask about the company's objective for entering this market before structuring. Then I'd evaluate across four areas: customer attractiveness, our competitive position, the competitive landscape, and external context."</div>
+<div class="ans-point"><strong>Key rule:</strong> Market attractiveness ≠ right to win. A huge market is irrelevant if you can't build a defensible position.</div>`},
+    {id:'me2',diff:'Medium',title:'Entry Mode Decision',
+     q:'What are the different modes of market entry and how do you choose between them?',
+     a:`<div class="ans-point"><strong>Four modes (IIMA framework):</strong></div>
+<div class="ans-point">• <strong>Greenfield (Build own):</strong> Set up full operations from scratch. Highest control, highest cost, slowest. Use when: no suitable acquisition target, IP must be fully proprietary, long-term commitment justified.</div>
+<div class="ans-point">• <strong>Acquisition (Brownfield):</strong> Buy an existing player. Fastest entry, immediate market share. Use when: target has irreplaceable assets (brand, distribution, talent), time-to-market is critical.</div>
+<div class="ans-point">• <strong>Joint Venture:</strong> Share risk and capabilities with a local partner. Use when: local partner brings regulatory relationships, distribution, or market knowledge that takes years to build independently. Common in regulated sectors (insurance, defence, retail FDI).</div>
+<div class="ans-point">• <strong>Outsourcing/Licensing/Franchising:</strong> Asset-light entry. Use when: brand or IP is the core differentiator, not operations. Limits capital exposure but limits control too.</div>
+<div class="ans-point"><strong>Decision factors:</strong> Speed to market, capital availability, risk appetite, regulatory requirements, capability gap size.</div>
+<div class="ans-point"><strong>Interview tip:</strong> Always state WHY you chose a mode — not just what it is. "Given the regulatory complexity and the 5-year timeline to build distribution independently, a JV with a local FMCG firm would be the fastest and lowest-risk path."</div>`},
+    {id:'me3',diff:'Medium',title:'Market Sizing in Entry Cases',
+     q:'How do you size a market in a market entry context (TAM / SAM / SOM)?',
+     a:`<div class="ans-point"><strong>Three levels (IIMA framework):</strong></div>
+<div class="ans-point">• <strong>TAM (Total Addressable Market):</strong> The entire market for the product/service if you had 100% share. Top-down: start from relevant population segment, apply penetration rate.</div>
+<div class="ans-point">• <strong>SAM (Serviceable Addressable Market):</strong> TAM × Market Penetration — the portion you can realistically target given your geography, segment focus, and distribution capability.</div>
+<div class="ans-point">• <strong>SOM (Serviceable Operable Market):</strong> SAM × Your Market Share — what you can realistically capture given competitive dynamics.</div>
+<div class="ans-point"><strong>Approach choices:</strong> Top-down (start from macro data, funnel down) vs Bottom-up (unit × frequency × price, build up from individual transactions). Use whichever you have data for; triangulate with the other.</div>
+<div class="ans-point"><strong>Sanity check always:</strong> After calculating, ask — does this number make intuitive sense? If your TAM implies every Indian spends ₹8,000/year on that product, is that plausible?</div>
+<div class="ans-point"><strong>State assumptions explicitly:</strong> "I'm assuming 30% of urban adults would be target customers, at an average annual spend of ₹2,000." Push back if wrong — the interviewer will correct you and you update.</div>
+<div class="ans-point"><strong>Economic test for entry:</strong> SOM × (Price − Variable Cost) − Fixed Cost > 0? If yes, the business is viable at realistic market share.</div>`},
+    {id:'me4',diff:'Hard',title:'Right to Win',
+     q:'What does "right to win" mean and how do you assess whether a company has it in a new market?',
+     a:`<div class="ans-point"><strong>Definition:</strong> Right to win = the ability to build a sustainable competitive advantage against incumbents in the target market. Market attractiveness is necessary but not sufficient — you must also have a right to win.</div>
+<div class="ans-point"><strong>Three questions to assess right to win:</strong></div>
+<div class="ans-point">• <strong>Capability match:</strong> Do we have the technology, brand, supply chain, or talent that this market requires? Is there a critical capability gap?</div>
+<div class="ans-point">• <strong>Transferable asset:</strong> Can we leverage something we already own — a customer base, distribution network, IP, or procurement scale — that gives us an advantage day one?</div>
+<div class="ans-point">• <strong>Minimum efficient scale:</strong> Does the market require a certain market share to be profitable? If incumbents have 60% and you need 30% to break even, entry is structurally challenged unless you have a differentiated value proposition.</div>
+<div class="ans-point"><strong>Strong right to win example:</strong> An FMCG company entering adjacent food categories using its existing kirana distribution and brand recognition — immediate distribution and brand trust transfer.</div>
+<div class="ans-point"><strong>Weak right to win example:</strong> A telecom company entering healthcare — capital is available but clinical expertise, regulatory relationships, and patient trust take decades to build.</div>
+<div class="ans-point"><strong>Red flag:</strong> "We have capital" is not a right to win. Capital delays the problem but doesn't solve it.</div>`},
+    {id:'me5',diff:'Medium',title:'New Product Introduction',
+     q:'How does the framework change when the case is about launching a new product (vs. entering a new geography)?',
+     a:`<div class="ans-point"><strong>Focus shift:</strong> New product cases add a product viability question — is the product good enough to succeed? — on top of the standard market entry questions.</div>
+<div class="ans-point"><strong>Three-stage framework (IIMA):</strong></div>
+<div class="ans-point">• <strong>Stage 1 — Viability:</strong> Does the product meet an unmet customer need? Is there a gap between existing products and what customers want? Will customers pay for it?</div>
+<div class="ans-point">• <strong>Stage 2 — Pricing & Target Market:</strong> What is the right price point? Who is the primary target segment? What is the channel strategy?</div>
+<div class="ans-point">• <strong>Stage 3 — Value Chain Feasibility:</strong> Can we build the procurement → production → distribution chain? What are the fixed and variable costs? At what volume do we break even?</div>
+<div class="ans-point"><strong>Financing question:</strong> Self-funded, debt-financed, or equity-financed? Each has different implications for risk and speed.</div>
+<div class="ans-point"><strong>Opening clarifiers:</strong> "What exactly is the new product? Who is the target customer? Has the company launched similar products before? Which part of the value chain will we operate in — will we manufacture or outsource?"</div>`},
+    {id:'me6',diff:'Hard',title:'Porter's Five Forces',
+     q:'What are Porter's Five Forces and when do you apply them in a case?',
+     a:`<div class="ans-point"><strong>Purpose:</strong> Assess structural profitability of an industry — why incumbents are profitable (or not) and whether that will persist.</div>
+<div class="ans-point"><strong>Five Forces (IIMA detail):</strong></div>
+<div class="ans-point">• <strong>Threat of New Entrants:</strong> Increases with low capital requirements, undifferentiated products, low brand value, no regulatory restrictions. Barriers protect incumbents.</div>
+<div class="ans-point">• <strong>Bargaining Power of Suppliers:</strong> High when: few suppliers, low substitutes for their input, suppliers can integrate forward. Squeezes company margins from the cost side.</div>
+<div class="ans-point">• <strong>Bargaining Power of Buyers:</strong> High when: many choices (low switching cost), standardised products, price-elastic demand, concentrated buyers (eg. a large retailer buying from many small manufacturers).</div>
+<div class="ans-point">• <strong>Threat of Substitutes:</strong> High when: alternatives serve the same job-to-be-done at lower cost or better performance. Caps pricing power of the industry.</div>
+<div class="ans-point">• <strong>Industry Rivalry:</strong> High when: many competitors, low differentiation, low switching costs, high exit barriers (stranded assets).</div>
+<div class="ans-point"><strong>When to use:</strong> Market entry assessment (is the industry worth entering?), industry attractiveness analysis, understanding why margins are structurally low.</div>
+<div class="ans-point"><strong>Limitation:</strong> Porter's is a static snapshot. Doesn't capture how platform economics, network effects, or technological disruption change competitive dynamics over time. Pair with a PESTEL or trend analysis.</div>`}
+  ]
+},
+{
+  id:'growth', icon:'📈', name:'Growth Strategy',
+  desc:'Organic and inorganic growth levers, Ansoff Matrix, and revenue growth structuring.',
+  time:14,
+  cards:[
+    {id:'gr1',diff:'Easy',title:'Growth Framework',
+     q:'What is the core structure for a growth strategy case?',
+     a:`<div class="ans-point"><strong>Core split:</strong> Organic Growth vs Inorganic Growth.</div>
+<div class="ans-point"><strong>Organic Growth — Revenue per User:</strong></div>
+<div class="ans-point">• Revenue per Transaction: Increase prices, upsell, cross-sell, bundle products.</div>
+<div class="ans-point">• Number of Transactions per User: Loyalty programs, discounts, subscription models, usage triggers.</div>
+<div class="ans-point"><strong>Organic Growth — Number of Users:</strong></div>
+<div class="ans-point">• Existing markets, existing products: Better marketing, improved distribution, reduce churn.</div>
+<div class="ans-point">• Existing markets, new products: Product development, line extension.</div>
+<div class="ans-point">• New markets, existing products: Geographic expansion, new customer segments.</div>
+<div class="ans-point">• New markets, new products: Diversification (highest risk).</div>
+<div class="ans-point"><strong>Inorganic Growth:</strong> Joint ventures (capabilities + market access without full commitment) or Acquisitions (fastest way to buy customers, technology, or market share).</div>
+<div class="ans-point"><strong>IIMA note:</strong> This framework is a comprehensive version of the Ansoff Matrix — think of Ansoff as the skeleton and the above as the muscle.</div>
+<div class="ans-point"><strong>Opening move:</strong> "I'd like to understand the growth target first — what % YoY are we aiming for and what's the timeline? That shapes whether organic levers are sufficient or we need inorganic options too."</div>`},
+    {id:'gr2',diff:'Easy',title:'Ansoff Matrix',
+     q:'What is the Ansoff Matrix and how do you use it to structure growth options?',
+     a:`<div class="ans-point"><strong>A 2×2 framework:</strong> Existing/New Products × Existing/New Markets.</div>
+<div class="ans-point">• <strong>Market Penetration</strong> (existing product, existing market): Least risky. Increase marketing, reduce prices, improve distribution, acquire a competitor in the same market. Fastest path to growth if the market has headroom.</div>
+<div class="ans-point">• <strong>Product Development</strong> (new product, existing market): Requires R&D investment. Leverages existing customer relationships with new offerings. Risk: new product may not succeed even with existing customers.</div>
+<div class="ans-point">• <strong>Market Development</strong> (existing product, new market): Enter new geography or new customer segment. No R&D required. Risk: market may have different dynamics — distribution, regulation, or cultural preferences.</div>
+<div class="ans-point">• <strong>Diversification</strong> (new product, new market): Highest risk. Requires both product development and market development simultaneously. Related diversification (synergies possible) is safer than unrelated.</div>
+<div class="ans-point"><strong>Key insight:</strong> Most companies underinvest in Market Penetration and over-reach into Diversification. The safest and often largest opportunity is usually bottom-left.</div>
+<div class="ans-point"><strong>In interviews:</strong> Use Ansoff to lay out the landscape of options, then recommend which quadrant(s) to pursue and why — based on capability, capital, and time horizon.</div>`},
+    {id:'gr3',diff:'Medium',title:'Organic vs Inorganic Growth',
+     q:'How do you decide between organic growth and inorganic growth (M&A)?',
+     a:`<div class="ans-point"><strong>Organic — when to choose:</strong> Capabilities can be built in reasonable time. Market is not moving so fast that first-mover advantage is critical. Integration risk of M&A is higher than build cost. Company has capital but not the management bandwidth for post-merger integration.</div>
+<div class="ans-point"><strong>Inorganic — when to choose:</strong> Target has irreplaceable assets (brand, tech, talent, regulatory approval) that would take too long to build. Time-to-market is critical — competitor is about to enter. The organic capability gap is structurally too large to close.</div>
+<div class="ans-point"><strong>Decision test:</strong> Compare cost of building organically over 3–5 years vs. acquisition cost + integration cost. If inorganic is faster AND cheaper on a risk-adjusted basis, M&A wins.</div>
+<div class="ans-point"><strong>India example:</strong> Reliance's ₹25,000Cr acquisition of Future Retail was faster than building equivalent kirana distribution from scratch — but integration challenges delayed the value realisation. Speed came with complexity.</div>
+<div class="ans-point"><strong>Hybrid option:</strong> Joint venture — share risk and capabilities without a full acquisition. Allows a test-and-learn before committing to full ownership. Common where local market knowledge is critical.</div>`},
+    {id:'gr4',diff:'Hard',title:'Unit Economics & Growth Viability',
+     q:'How do unit economics determine whether a growth strategy is viable or destructive?',
+     a:`<div class="ans-point"><strong>Growth is only valuable if it creates value at the unit level.</strong> Scaling a business with broken unit economics amplifies losses.</div>
+<div class="ans-point"><strong>Core metrics:</strong></div>
+<div class="ans-point">• <strong>CAC (Customer Acquisition Cost):</strong> Total sales & marketing spend ÷ new customers acquired in the period.</div>
+<div class="ans-point">• <strong>LTV (Lifetime Value):</strong> Average revenue per customer × gross margin % × average customer lifespan. The total economic value of one customer.</div>
+<div class="ans-point">• <strong>LTV:CAC ratio:</strong> >3x is a healthy business model. <1x means the company destroys value every time it acquires a customer — growth accelerates losses.</div>
+<div class="ans-point">• <strong>Payback period:</strong> Months for CAC to be recovered from the contribution margin generated per customer.</div>
+<div class="ans-point">• <strong>Contribution margin per order:</strong> Revenue per order − variable costs per order. Must be positive for any growth to be value-creating.</div>
+<div class="ans-point"><strong>Red flag in a case:</strong> "GMV grew 4x but losses also grew 3x." → Unit economics aren't improving with scale. That's a structural problem — more growth makes it worse unless the underlying model changes (raise prices, reduce CAC, improve retention).</div>
+<div class="ans-point"><strong>Growth recommendation test:</strong> Before recommending any growth lever, ask — at the new scale, are unit economics better or worse? If worse, the lever is destructive, not strategic.</div>`},
+    {id:'gr5',diff:'Medium',title:'Revenue Growth Levers',
+     q:'What are the specific revenue levers you can pull within each growth quadrant?',
+     a:`<div class="ans-point"><strong>1. Cross-selling:</strong> Sell additional products to existing customers. Best when: strong customer trust, complementary product portfolio, multi-touchpoint relationship. Example: A bank cross-selling insurance to loan customers.</div>
+<div class="ans-point"><strong>2. Upselling:</strong> Upgrade existing customers to a higher-value product or tier. Best when: clear premium product with visible value uplift. Example: SaaS companies moving users from Basic to Pro.</div>
+<div class="ans-point"><strong>3. Bundling:</strong> Package multiple products at a combined price. Increases perceived value and average transaction size. Example: Telecom offering data + voice + OTT bundles.</div>
+<div class="ans-point"><strong>4. Loyalty & retention programs:</strong> Increase purchase frequency and reduce churn. Most underutilised lever — retaining an existing customer is 5–7x cheaper than acquiring a new one.</div>
+<div class="ans-point"><strong>5. Price increase:</strong> Feasible only with pricing power — differentiated product, low competition, inelastic demand. Must be careful of volume elasticity.</div>
+<div class="ans-point"><strong>6. New channels:</strong> Add digital (D2C, marketplace), or expand physical reach (kirana, rural distributors, modern trade). Incremental distribution directly translates to incremental volume if product-market fit exists.</div>
+<div class="ans-point"><strong>Interviewer wants:</strong> Prioritise the 2–3 levers with highest impact and speed. Don't list all six — choose and defend.</div>`}
+  ]
+},
+{
+  id:'pricing-ma', icon:'💰', name:'Pricing & M&A',
+  desc:'Pricing strategy selection, value-based pricing, M&A framework, synergies, and due diligence.',
+  time:18,
+  cards:[
+    {id:'pr1',diff:'Easy',title:'Three Pricing Strategies',
+     q:'What are the three core pricing strategies and when do you apply each?',
+     a:`<div class="ans-point"><strong>Framework (IIMA):</strong> The pricing approach depends on the nature of the product — new invention, modification to existing product, or similar to existing products.</div>
+<div class="ans-point"><strong>1. Value-Based Pricing:</strong> Price = Customer's willingness to pay (WTP) based on the value delivered. Uses: opportunity cost of having no product, consumer surplus captured. Most profitable when defensible. Best for: new inventions, highly differentiated products, where competitive alternatives are weak.</div>
+<div class="ans-point"><strong>2. Cost-Plus Pricing:</strong> Price = Fixed Costs + Variable Costs + Target Margin. Ensures cost recovery. Best for: commodity markets, government contracts, when cost certainty is required. Weakness: ignores customer WTP and competitive dynamics — leaves money on the table if value > cost.</div>
+<div class="ans-point"><strong>3. Competitor-Based Pricing:</strong> Price relative to existing products/reference price in the market. Uses: existing product features, competitor pricing, WTP of current market. Best for: entering a market with established competitors, where customers comparison-shop. Risk: triggers price wars, margin compression for the whole industry.</div>
+<div class="ans-point"><strong>Company objectives matter:</strong> If objective is market share → price aggressively (competitive-based, below reference). If objective is profitability → price on value. If objective is break-even → cost-plus with minimum margin.</div>
+<div class="ans-point"><strong>Always clarify:</strong> "Before recommending a pricing approach, can you confirm the company's primary objective — market share capture, margin maximisation, or break-even recovery?"</div>`},
+    {id:'pr2',diff:'Medium',title:'Value-Based Pricing',
+     q:'How do you calculate a value-based price? Walk through the methodology.',
+     a:`<div class="ans-point"><strong>Three-step method:</strong></div>
+<div class="ans-point"><strong>Step 1 — Identify the reference point:</strong> What does the customer use today to solve this problem? What does that cost them (including all costs — price + time + effort + opportunity cost)?</div>
+<div class="ans-point"><strong>Step 2 — Quantify the value delta:</strong> How much better is your product vs. the reference? Quantify in the customer's currency: money saved, revenue gained, time saved (converted to money), risk reduced (converted to expected cost avoided).</div>
+<div class="ans-point"><strong>Step 3 — Capture a share of the delta:</strong> You set price between your cost (floor) and the customer's total value (ceiling). Typically, value is shared 50/50 — you get half, customer saves half vs. status quo. Adjust based on how many alternatives the customer has.</div>
+<div class="ans-point"><strong>Example:</strong> A SaaS tool reduces a client's manual finance reconciliation by ₹10L/year. Current manual cost: ₹12L/year. Value created = ₹10L savings. Price ceiling = ₹10L (customer still saves vs. manual). Typical price: ₹5–6L (customer saves ₹4–5L, you earn ₹5–6L). Your cost to deliver: ₹1L. Huge margin possible if you can defend the value.</div>
+<div class="ans-point"><strong>IIMA note:</strong> "WTP and opportunity cost may not be directly provided by the interviewer — develop creative proxies." Ask: "What does the customer currently pay for the alternative? What would it cost them if the product didn't exist?"</div>`},
+    {id:'pr3',diff:'Hard',title:'Pricing a New Product',
+     q:'How do you recommend a price for a product that has no direct comparables?',
+     a:`<div class="ans-point"><strong>The challenge:</strong> No reference price exists, so competitor-based pricing doesn't work. You must build from value and cost.</div>
+<div class="ans-point"><strong>Step 1 — Understand the customer's alternative:</strong> Even if there's no identical product, the customer has a status quo. What do they do today? What does that cost? This is your reference even if it's indirect.</div>
+<div class="ans-point"><strong>Step 2 — Segment by WTP:</strong> Different customer segments will value the product differently. Don't set one price — consider tiered pricing (Basic / Pro / Enterprise) to capture consumer surplus across segments.</div>
+<div class="ans-point"><strong>Step 3 — Penetration vs skimming decision:</strong> Penetration pricing (low initial price) to build market share fast → use when: network effects matter, scale drives down cost, market education is needed. Price skimming (high initial price) → use when: product is truly novel, early adopters have very high WTP, brand premium can be built.</div>
+<div class="ans-point"><strong>Step 4 — Break-even validation:</strong> At the recommended price, what market share is needed to break even? Is that achievable given the competitive context?</div>
+<div class="ans-point"><strong>India example:</strong> Jio's free data strategy (extreme penetration pricing) was designed to build a subscriber base that could then be monetised through devices, content, and commerce — the economics of the entry price only made sense in that long-term context.</div>`},
+    {id:'ma1',diff:'Easy',title:'M&A Framework',
+     q:'What is the core M&A framework and how do you structure an M&A case?',
+     a:`<div class="ans-point"><strong>Core question:</strong> Does the acquisition create more value than it costs? Net Benefit = Value Added − Costs.</div>
+<div class="ans-point"><strong>Financial dimension:</strong></div>
+<div class="ans-point">• <strong>Valuation:</strong> What is the target company worth? Based on future cash flows it can generate (DCF) or market comparables (EV/EBITDA multiples).</div>
+<div class="ans-point">• <strong>Synergies:</strong> Additional value from combining the two companies — revenue synergies + cost synergies.</div>
+<div class="ans-point">• <strong>Acquisition price:</strong> What is being paid? The premium over intrinsic value justified by synergies?</div>
+<div class="ans-point">• <strong>Integration costs:</strong> One-time costs of merging IT systems, operations, and organisational structure.</div>
+<div class="ans-point"><strong>Non-financial dimension:</strong></div>
+<div class="ans-point">• <strong>Strategic fit:</strong> Does the acquisition align with long-term growth strategy?</div>
+<div class="ans-point">• <strong>Acquirer fit:</strong> Cultural fit (working norms, countries, entrepreneur vs corporate culture). Organisational fit (org structure, talent, skillset overlap). Strategy fit (long-term alignment).</div>
+<div class="ans-point">• <strong>External risks:</strong> PESTEL analysis on macro factors — regulatory approval, political risk, economic conditions.</div>
+<div class="ans-point"><strong>Opening:</strong> "I'd structure this across three areas: the strategic rationale (why this deal and why now), the financial case (does the math work including synergies), and integration feasibility (can we execute)."</div>`},
+    {id:'ma2',diff:'Medium',title:'Types of Synergies',
+     q:'What are the different types of synergies in M&A and how do you quantify them?',
+     a:`<div class="ans-point"><strong>Operational Synergies — Revenue:</strong></div>
+<div class="ans-point">• Selling more volume (access to new distribution or customer base).</div>
+<div class="ans-point">• Higher pricing (combined brand justifies premium; reduced competition increases pricing power).</div>
+<div class="ans-point">• Cross-sell opportunities (target's customers buy acquirer's products and vice versa).</div>
+<div class="ans-point"><strong>Operational Synergies — Cost:</strong></div>
+<div class="ans-point">• Economies of scale in procurement (combined buying volume → better rates).</div>
+<div class="ans-point">• SG&A savings — eliminate duplicate functions (HR, Finance, Legal, IT teams).</div>
+<div class="ans-point">• R&D rationalisation — one shared research function instead of two.</div>
+<div class="ans-point">• Facility consolidation — close redundant factories, offices, distribution centres.</div>
+<div class="ans-point"><strong>Financial Synergies:</strong> Tax savings (utilise target's tax losses), improved leverage ratio (combined entity can take more debt at better rates), financial shield benefits.</div>
+<div class="ans-point"><strong>Critical rule:</strong> Cost synergies are more reliable and realise faster (12–24 months). Revenue synergies are speculative — customers may not cross-buy, distribution may not transfer. Discount revenue synergies heavily in your analysis (apply a 30–50% haircut).</div>
+<div class="ans-point"><strong>Interview question to ask:</strong> "What portion of the synergy case is cost-based vs revenue-based, and what is the expected timeline for each?"</div>`},
+    {id:'ma3',diff:'Medium',title:'Due Diligence Framework',
+     q:'What is the due diligence framework and what are the key areas to investigate before an acquisition?',
+     a:`<div class="ans-point"><strong>Purpose of DD:</strong> Verify what the seller is claiming. Discover risks that would change valuation or deal structure. Three phases: pre-diligence (investor profile, objectives) → diligence → post-diligence (valuation + transaction + exit options).</div>
+<div class="ans-point"><strong>Market DD:</strong> Market sizing — is the opportunity as large as claimed? Future outlook — is the market growing or consolidating? Key demand drivers — are they structural or cyclical?</div>
+<div class="ans-point"><strong>Competition DD:</strong> Benchmark the target vs competitors. How is it differentiated? Is that differentiation sustainable (does it have a moat)?</div>
+<div class="ans-point"><strong>Business DD:</strong></div>
+<div class="ans-point">• Financial: Quality of earnings (are profits recurring or one-time?), working capital adequacy, off-balance-sheet liabilities, capex trajectory.</div>
+<div class="ans-point">• Non-financial: Operations quality, technology stack, team strength, workforce culture.</div>
+<div class="ans-point"><strong>Customer DD:</strong> Segment customers behaviourally, psychographically, and firmographically. What is customer concentration (does 1 customer = 40% revenue — a major risk)? What are retention rates and NPS?</div>
+<div class="ans-point"><strong>Deal-breakers in DD:</strong> Customer concentration >30% in one client. Ongoing regulatory investigations. IP disputes or unclear ownership. Key-man dependency (would the CEO leave post-acquisition?). Undisclosed related-party transactions.</div>`},
+    {id:'ma4',diff:'Hard',title:'Valuation Methods',
+     q:'What are the three main valuation methods and when do you use each?',
+     a:`<div class="ans-point"><strong>Three methods — always triangulate:</strong></div>
+<div class="ans-point"><strong>1. DCF (Discounted Cash Flow):</strong> Value = Present Value of future free cash flows, discounted at WACC. Use when: business is stable with predictable cash flows. Requires: revenue growth assumptions, EBITDA margin trajectory, capex, working capital, terminal growth rate, WACC. Most sensitive to discount rate — a small change in WACC moves the valuation significantly.</div>
+<div class="ans-point"><strong>2. Comparable Companies (Comps):</strong> Value = EBITDA × industry multiple (from listed peer companies). Fast, market-grounded. Typical multiples: 6–12x EBITDA depending on sector. Risk: peers may not be truly comparable (different growth, margin profile, geography).</div>
+<div class="ans-point"><strong>3. Precedent Transactions:</strong> Value = price paid in recent similar acquisitions. Includes an acquisition premium (typically 20–40% above market value). Best comparator for what a buyer actually pays. Use when: recent transactions in the sector exist.</div>
+<div class="ans-point"><strong>Triangulation in a case:</strong> "I'd triangulate across all three — DCF for intrinsic value, comps for market context, and precedent transactions for what acquirers have actually paid. The fair acquisition price typically lands between comps and precedent transactions."</div>
+<div class="ans-point"><strong>Key insight:</strong> If the synergy value > acquisition premium, the deal is value-accretive for the acquirer. If not, the acquirer overpays and value transfers to the seller's shareholders.</div>`}
+  ]
+},
+{
+  id:'strategy', icon:'♟️', name:'Strategic Tools',
+  desc:'BCG Matrix, SWOT, PESTEL, Porter\'s Five Forces, Value Chain, and VRIO.',
+  time:16,
+  cards:[
+    {id:'st1',diff:'Easy',title:'SWOT Analysis',
+     q:'What is the SWOT framework and when do you use it in a consulting case?',
+     a:`<div class="ans-point"><strong>SWOT is a 2×2:</strong> Internal (Strengths, Weaknesses) × External (Opportunities, Threats). Internal = controllable. External = environmental.</div>
+<div class="ans-point"><strong>Strengths:</strong> Factors giving competitive advantage. Loyal customer base, strong brand, skilled employees, proprietary technology, strong distribution.</div>
+<div class="ans-point"><strong>Weaknesses:</strong> Factors limiting performance. Lack of capital, high leverage, higher-than-market attrition, weaker brand in target segment, technology debt.</div>
+<div class="ans-point"><strong>Opportunities:</strong> External factors favourably positioned. Favourable taxation shifts, falling raw material prices, new market trends, emerging technology that company can adopt, regulatory change opening new segments.</div>
+<div class="ans-point"><strong>Threats:</strong> External factors that could harm. Increasing competition, new entrant with disruptive model, natural calamities, supply chain disruptions, upcoming regulations, limited labour supply.</div>
+<div class="ans-point"><strong>When to use:</strong> To position a company at the start of a strategy case, to assess whether an M&A target has strategic fit, or to identify what risks to flag in a market entry recommendation.</div>
+<div class="ans-point"><strong>Limitation:</strong> SWOT is descriptive, not diagnostic. It lists factors but doesn't prioritise or quantify them. Always follow with "so what" — which strength is the most valuable to leverage? Which threat is most immediate?</div>`},
+    {id:'st2',diff:'Easy',title:'PESTEL Analysis',
+     q:'What is PESTEL and how do you apply it in a case?',
+     a:`<div class="ans-point"><strong>PESTEL = 6 external environment dimensions:</strong></div>
+<div class="ans-point"><strong>P — Political:</strong> Government actions, elections, fiscal policy, corporate taxation, trade policy, government stability.</div>
+<div class="ans-point"><strong>E — Economic:</strong> Inflation, interest rates, exchange rates, unemployment, GDP growth, consumer purchasing power.</div>
+<div class="ans-point"><strong>S — Social:</strong> Demographic shifts, culture, beliefs, lifestyle trends, urbanisation, income distribution.</div>
+<div class="ans-point"><strong>T — Technological:</strong> Level of tech adoption, automation, R&D investment, digital infrastructure, latest disruptions.</div>
+<div class="ans-point"><strong>E — Environmental:</strong> Government environmental regulations, carbon footprint targets, risks for raw material availability, climate change impact on operations.</div>
+<div class="ans-point"><strong>L — Legal:</strong> Intellectual property laws, industry-specific regulations, licences and permits required, compliance requirements.</div>
+<div class="ans-point"><strong>When to use:</strong> Understanding the external context in a market entry case; identifying macro risks in an M&A; or as a structured way to assess industry context when asked "what external factors should the company consider?"</div>
+<div class="ans-point"><strong>India context:</strong> Regulatory risk is often the most material PESTEL factor in India — DPCO in pharma, RBI guidelines in fintech, FDI limits in insurance, GST changes affecting working capital. Always flag the most material one, don't list all six equally.</div>`},
+    {id:'st3',diff:'Medium',title:'BCG Matrix',
+     q:'What is the BCG Matrix and how do you use it to advise a multi-business client?',
+     a:`<div class="ans-point"><strong>2×2 Matrix:</strong> Market Growth Rate (vertical) × Relative Market Share (horizontal). Classifies business units into four types.</div>
+<div class="ans-point"><strong>Stars</strong> (high growth, high share): Market leaders in growing markets. Invest heavily to maintain position. Can become Cash Cows when growth slows.</div>
+<div class="ans-point"><strong>Cash Cows</strong> (low growth, high share): Mature markets, strong position. Generate cash with low reinvestment needed. "Milk" to fund Stars and Question Marks. Don't over-invest.</div>
+<div class="ans-point"><strong>Question Marks</strong> (high growth, low share): Unclear potential. Need significant investment to become Stars. If the company can't win, better to exit early. Decision: invest or divest?</div>
+<div class="ans-point"><strong>Dogs</strong> (low growth, low share): Weak position in declining market. Sustained cash flows but no growth potential. Liquidate or divest unless strategic reason to retain.</div>
+<div class="ans-point"><strong>When to use:</strong> Multi-business portfolio analysis — which business units get investment, which get harvested, which get divested. Especially useful in a Growth or M&A context to assess portfolio composition.</div>
+<div class="ans-point"><strong>Limitation:</strong> BCG Matrix is static and oversimplified. Market share and growth don't fully capture competitive position — a company with low share in a high-growth market might have strong technology that BCG doesn't capture. Always pair with qualitative strategic assessment.</div>`},
+    {id:'st4',diff:'Medium',title:'Value Chain Analysis',
+     q:'What is Porter\'s Value Chain and how do you use it to find cost or differentiation opportunities?',
+     a:`<div class="ans-point"><strong>Purpose:</strong> Map all activities a company performs to deliver a product/service, and identify where cost advantages or differentiation opportunities exist.</div>
+<div class="ans-point"><strong>Primary Activities (IIMA framework):</strong></div>
+<div class="ans-point">• <strong>Product Development / R&D:</strong> Research capital, financing, human capital. IP and patents generated.</div>
+<div class="ans-point">• <strong>Raw Material Procurement / Inbound Logistics:</strong> Optimal order quantity, supplier relationships, quality controls, wastage.</div>
+<div class="ans-point">• <strong>Manufacturing / Operations:</strong> Machinery, human capital, technology, methodology. Capacity utilisation, defect rate.</div>
+<div class="ans-point">• <strong>Warehousing & Transport (Outbound Logistics):</strong> Storage constraints, transport costs, inventory costs, route efficiency.</div>
+<div class="ans-point">• <strong>Distribution:</strong> Channel selection, sales force, incentive structure, channel conversion rates.</div>
+<div class="ans-point">• <strong>Retail & Marketing:</strong> Advertisements, brand awareness, human capital for sales.</div>
+<div class="ans-point">• <strong>After-Sales Service:</strong> Repairs, customer service quality, returns policy, SLAs.</div>
+<div class="ans-point"><strong>How to use:</strong> When diagnosing a cost problem — walk through each stage to find where costs are disproportionately high. When finding differentiation — which stage can the company invest in to create something competitors can't easily replicate?</div>`},
+    {id:'st5',diff:'Hard',title:'VRIO Framework',
+     q:'What is the VRIO framework and when do you use it?',
+     a:`<div class="ans-point"><strong>VRIO = Valuable, Rare, Inimitable, Organized.</strong> Used to determine whether a resource or capability provides a sustained competitive advantage.</div>
+<div class="ans-point"><strong>V — Valuable:</strong> Does this resource allow the company to exploit an opportunity or neutralise a threat? If not → Competitive Disadvantage.</div>
+<div class="ans-point"><strong>R — Rare:</strong> Is this resource controlled by only a few competitors? If valuable but not rare → Competitive Parity (table stakes, not a differentiator).</div>
+<div class="ans-point"><strong>I — Inimitable:</strong> Is it costly or difficult for competitors to imitate or substitute? If valuable + rare but easily copied → only Temporary Competitive Advantage.</div>
+<div class="ans-point"><strong>O — Organized:</strong> Is the company organised to capture the value from this resource (right processes, structure, incentives)? If VRIO but poorly organised → Underutilized Competitive Advantage.</div>
+<div class="ans-point"><strong>Outcome: Valuable + Rare + Inimitable + Organized = Sustained Competitive Advantage.</strong></div>
+<div class="ans-point"><strong>When to use:</strong> Right to win analysis in market entry, strategy cases about competitive positioning, or when asked "what is the company's core advantage and is it defensible?"</div>
+<div class="ans-point"><strong>Example:</strong> Reliance Jio's telecom infrastructure — Valuable (enables low-cost data), Rare (no other operator built greenfield at this scale simultaneously), Inimitable (₹1.5L Cr capex barrier), Organized (integrated with Jio apps, devices, content). → Sustained competitive advantage.</div>`},
+    {id:'st6',diff:'Easy',title:'TAM / SAM / SOM',
+     q:'How do you estimate TAM, SAM, and SOM and what is the strategic use of each?',
+     a:`<div class="ans-point"><strong>TAM — Total Addressable Market:</strong> The entire market for the product/service. If you had 100% share. Use top-down approach: relevant population × penetration rate × price. Strategic use: sets the upper bound on opportunity size.</div>
+<div class="ans-point"><strong>SAM — Serviceable Addressable Market:</strong> TAM × Market Penetration rate. The portion you can realistically target given geography, segment focus, and channel reach. Narrows TAM to your actual addressable space. Strategic use: defines the investment thesis — this is the realistic prize.</div>
+<div class="ans-point"><strong>SOM — Serviceable Operable Market:</strong> SAM × Your Realistic Market Share. What you can actually capture given competitive dynamics. Strategic use: the number that drives financial projections and break-even analysis.</div>
+<div class="ans-point"><strong>BCG Matrix connection:</strong> TAM/SAM/SOM supplements BCG — use TAM to assess if the growth opportunity is worth pursuing; use SOM to size the realistic prize that funds the investment case.</div>
+<div class="ans-point"><strong>Top-down approach:</strong> Start from population → apply demographic filters → penetration rate → price. Fast, good for guesstimate-style questions.</div>
+<div class="ans-point"><strong>Bottom-up approach:</strong> Unit × transactions per year × price per transaction. Builds from actual market behaviours. More accurate but data-intensive.</div>
+<div class="ans-point"><strong>Always sanity check:</strong> Does the number feel right relative to known references? If your SOM implies 15% market share in Year 1 against established players, that's likely too aggressive.</div>`}
+  ]
+},
+{
+  id:'marketing', icon:'📣', name:'Marketing & General',
+  desc:'5Cs, 4Ps, 4As, STP, MECE, issue trees, and structured recommendation delivery.',
+  time:14,
+  cards:[
+    {id:'mk1',diff:'Easy',title:'5Cs of Marketing',
+     q:'What are the 5Cs of Marketing and when do you use this framework?',
+     a:`<div class="ans-point"><strong>A framework for understanding the marketing environment:</strong></div>
+<div class="ans-point"><strong>Company:</strong> Who are you? Understand the company's products, channels, value chain, core capabilities, and current market position.</div>
+<div class="ans-point"><strong>Customers:</strong> Who are you selling to? Understand customer segments, their needs and wants, WTP, buying behaviour, and how they currently solve their problem.</div>
+<div class="ans-point"><strong>Competitors:</strong> Who is in your way? Understand other players, their strategies, pricing, market share, and how they're positioned relative to your product.</div>
+<div class="ans-point"><strong>Collaborators:</strong> Who are you working with? Understand external vendors, suppliers, distribution partners, and co-marketing partners who enable your value delivery.</div>
+<div class="ans-point"><strong>Context:</strong> What are current conditions? Use SWOT and PESTEL to understand the business climate, macro forces, and regulatory environment.</div>
+<div class="ans-point"><strong>When to use:</strong> As an opening framework for any marketing strategy case, new product launch, or brand positioning question. Gives a 360° view before recommending tactics.</div>`},
+    {id:'mk2',diff:'Easy',title:'4Ps of Marketing',
+     q:'What are the 4Ps and how do you apply them in a case?',
+     a:`<div class="ans-point"><strong>Product:</strong> The item catering to a customer need. Involves: product design, features, quality, range, branding, packaging. Key question: does the product meet the stated customer need better than alternatives?</div>
+<div class="ans-point"><strong>Price:</strong> Amount charged for the product. Involves: pricing strategy (value-based / cost-plus / competitive), payment methods, discounts, allowances. Key question: is the price aligned with perceived value and competitive position?</div>
+<div class="ans-point"><strong>Place:</strong> Channel of delivery. Involves: distribution channel selection, franchising, inventory management, transportation, last-mile logistics. Key question: is the product available where and when the customer wants to buy it?</div>
+<div class="ans-point"><strong>Promotion:</strong> Marketing communications. Involves: channel mix (TV, digital, BTL), messaging, promotional offers, salesforce. Key question: is the target customer aware of the product and persuaded to buy?</div>
+<div class="ans-point"><strong>When to use:</strong> When you've established market attractiveness and the company has decided to enter or grow — use 4Ps to design the go-to-market execution. Also use for diagnosing why a product isn't selling despite market demand.</div>`},
+    {id:'mk3',diff:'Medium',title:'4As of Marketing',
+     q:'What are the 4As of Marketing and how are they different from the 4Ps?',
+     a:`<div class="ans-point"><strong>4As are customer-centric (vs 4Ps which are product/company-centric):</strong></div>
+<div class="ans-point"><strong>Awareness:</strong> Do customers know the product exists? Two dimensions — product knowledge (enough to trigger purchase decision) and brand awareness (recognition, recall, top-of-mind).</div>
+<div class="ans-point"><strong>Affordability:</strong> Can customers buy it? Economic affordability (do they have the financial resources?) and psychological affordability (are they willing to pay the price even if they can afford it?).</div>
+<div class="ans-point"><strong>Accessibility:</strong> Can customers find and buy it? Customer availability (sufficient stock to meet demand) and customer convenience (ease of access — physical store proximity, delivery speed, online availability).</div>
+<div class="ans-point"><strong>Acceptability:</strong> Will customers choose it? Functional acceptability (objective — product specs, performance, durability) and psychological acceptability (subjective — brand appeal, aesthetics, social signalling).</div>
+<div class="ans-point"><strong>Diagnostic use:</strong> If a product exists, is priced right, but isn't selling — the 4As tell you where the breakdown is. No sales despite good awareness + affordability = acceptability problem (product doesn't resonate). No sales despite good product = awareness or accessibility problem.</div>`},
+    {id:'mk4',diff:'Medium',title:'STP Marketing',
+     q:'What is STP in marketing and how do you apply it in a case?',
+     a:`<div class="ans-point"><strong>STP = Segmentation → Targeting → Positioning. A three-step process to define who you serve and how.</strong></div>
+<div class="ans-point"><strong>Segmentation:</strong> Divide the market into distinct groups of customers based on shared characteristics. Methods: Demographic (age, income, gender), Geographic (region, urban/rural), Behavioural (usage frequency, brand loyalty, purchase occasion), Psychographic (lifestyle, values, attitudes).</div>
+<div class="ans-point"><strong>Targeting:</strong> Select which segment(s) to focus marketing and distribution efforts on. Evaluate segments on: size, growth rate, profitability, company's ability to serve, competitive intensity. A smaller segment with less competition and high WTP is often better than the largest segment.</div>
+<div class="ans-point"><strong>Positioning:</strong> Design the product and marketing mix to appeal to the target segment. What is the brand's unique value proposition? What single message should the customer take away? Positioning is the mental space you occupy — "For [target], [brand] is the [category] that [unique benefit] because [reason to believe]."</div>
+<div class="ans-point"><strong>India example:</strong> Marico's Saffola — Segmented health-conscious urban adults. Targeted households where the primary grocery buyer cares about heart health. Positioned as "the healthy cooking oil" with a doctor-endorsed message. Avoided competing on price vs commodity oils.</div>`},
+    {id:'mk5',diff:'Easy',title:'MECE Principle',
+     q:'What does MECE mean and why is it fundamental to consulting problem-solving?',
+     a:`<div class="ans-point"><strong>MECE = Mutually Exclusive, Collectively Exhaustive.</strong></div>
+<div class="ans-point"><strong>Mutually Exclusive:</strong> Each category is distinct — no overlap, no double-counting. An issue can only go into one bucket.</div>
+<div class="ans-point"><strong>Collectively Exhaustive:</strong> The categories together cover everything — no issue is left unaccounted for.</div>
+<div class="ans-point"><strong>Why it matters:</strong> MECE thinking ensures your analysis is complete (you've covered all possibilities) and clean (you're not analysing the same thing twice under different names). Interviewers use it as a proxy for structured problem-solving ability.</div>
+<div class="ans-point"><strong>Common MECE violations:</strong></div>
+<div class="ans-point">• "Cost reduction" and "supplier renegotiation" as separate branches — supplier renegotiation is a subset of cost reduction. Not mutually exclusive.</div>
+<div class="ans-point">• "Revenue from existing customers" and "revenue from SMEs" — an existing customer could be an SME. Overlapping categories.</div>
+<div class="ans-point">• Listing 3 of 4 cost categories — misses "other" which might be material. Not collectively exhaustive.</div>
+<div class="ans-point"><strong>Test:</strong> Can you place every data point into exactly one bucket? If yes — MECE. If a data point fits in two buckets, or doesn't fit in any — fix the structure.</div>`},
+    {id:'mk6',diff:'Medium',title:'Hypothesis-Driven Approach',
+     q:'What is a hypothesis-driven approach and why do consultants use it instead of exploring everything?',
+     a:`<div class="ans-point"><strong>The approach:</strong> Rather than exploring all possibilities (boiling the ocean), start with a structured hypothesis: "I believe the problem is X, and here's my evidence. Here's how I'd test it."</div>
+<div class="ans-point"><strong>Why consultants use it:</strong> Client time is expensive. Hypothesis-driven analysis focuses the team on the most likely answer and tests it quickly, rather than spending weeks mapping all possibilities equally.</div>
+<div class="ans-point"><strong>Process:</strong></div>
+<div class="ans-point">1. Form initial hypothesis based on case context, industry knowledge, and the data already given. "My hypothesis is that the margin decline is a cost problem, not a revenue problem — because the client mentioned stable volumes and the sector has seen commodity inflation."</div>
+<div class="ans-point">2. Identify the 2–3 data points that would confirm or reject the hypothesis. "To test this, I'd look at raw material cost as a % of revenue vs. prior year, and compare to industry peers."</div>
+<div class="ans-point">3. Test → if data supports → refine and deepen. If data rejects → state what it rules out and move to the next hypothesis.</div>
+<div class="ans-point">4. Converge on the most data-supported answer.</div>
+<div class="ans-point"><strong>Trap:</strong> Don't fall in love with your hypothesis. Good consultants update quickly when data contradicts them. "The data suggests I was wrong about X — which actually means the issue is more likely Y."</div>`},
+    {id:'mk7',diff:'Easy',title:'Structuring a Recommendation',
+     q:'How do you structure a final recommendation in a consulting case?',
+     a:`<div class="ans-point"><strong>Use the Pyramid Principle — Answer First:</strong></div>
+<div class="ans-point"><strong>1. Lead with the answer:</strong> "My recommendation is [specific action] because [primary reason]." State the conclusion first, not last. Interviewers hate when candidates build up to their answer — they already know the situation.</div>
+<div class="ans-point"><strong>2. Three supporting pillars:</strong> Most important reason → second reason → third reason. Each pillar should be distinct (MECE) and backed by the analysis you've done.</div>
+<div class="ans-point"><strong>3. Key risks and mitigations:</strong> "The main risk is [X]. We'd mitigate it by [specific action]." Shows you've thought beyond the recommendation.</div>
+<div class="ans-point"><strong>4. Next steps:</strong> "As immediate next steps, I'd suggest [specific actions] in the next 30/60/90 days." Makes the recommendation actionable.</div>
+<div class="ans-point"><strong>Example structure:</strong> "My recommendation is to enter the Indian EV market via a JV with a local manufacturer. Three reasons: local partner provides regulatory speed; JV limits upfront capital exposure; allows a market test before full commitment. Key risk: IP leakage — mitigated via contractual carve-outs and minority stake. Next steps: identify JV candidates in Q1, run commercial DD in Q2."</div>
+<div class="ans-point"><strong>Critical rule:</strong> Never hedge with "it depends" as your final answer. Take a clear position, then qualify it. Consultants are paid to have a point of view.</div>`}
+  ]
+}
 ];
 
-let activeTab = 'all';
+let currentTrack = null;
+let currentIndex = 0;
+let revealed = false;
 
-function setTab(el) {
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  activeTab = el.dataset.cat;
-  render();
-}
+function totalCards() { return TRACKS.reduce((s,t) => s + t.cards.length, 0); }
 
-function render() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const filtered = FRAMEWORKS.filter(fw => {
-    const matchCat = activeTab === 'all' || fw.cat === activeTab;
-    const matchQ = !q || fw.name.toLowerCase().includes(q) || fw.sub.toLowerCase().includes(q) || fw.tags.some(t => t.toLowerCase().includes(q));
-    return matchCat && matchQ;
-  });
-
-  document.getElementById('fwCount').textContent = filtered.length + ' framework' + (filtered.length !== 1 ? 's' : '');
-
-  const content = document.getElementById('content');
-  if (!filtered.length) {
-    content.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><h3>No frameworks found</h3><p>Try a different search or category.</p></div>';
-    return;
-  }
-
-  const catMeta = {
-    'profitability': {label:'Profitability', order:1},
-    'market-entry':  {label:'Market Entry', order:2},
-    'growth':        {label:'Growth Strategy', order:3},
-    'pricing':       {label:'Pricing', order:4},
-    'ma':            {label:'M&A', order:5},
-    'operations':    {label:'Operations', order:6},
-    'general':       {label:'General Consulting', order:7}
-  };
-
-  const groups = {};
-  filtered.forEach(fw => { if (!groups[fw.cat]) groups[fw.cat] = []; groups[fw.cat].push(fw); });
-  const sortedCats = Object.keys(groups).sort((a, b) => (catMeta[a]?.order||9) - (catMeta[b]?.order||9));
-
-  content.innerHTML = sortedCats.map(cat => {
-    const fws = groups[cat];
-    return `<div class="fw-section">
-      <div class="fw-section-header">
-        <span class="fw-section-label">${catMeta[cat]?.label||cat}</span>
-        <span class="fw-section-count">${fws.length}</span>
-      </div>
-      <div class="fw-grid">
-        ${fws.map(fw => `
-          <div class="fw-card" id="fw-${fw.id}" onclick="toggleCard(${fw.id})">
-            <div class="fw-card-top">
-              <div class="fw-icon ${fw.iconClass}">${fw.icon}</div>
-              <div class="fw-card-meta">
-                <div class="fw-card-name">${fw.name}</div>
-                <div class="fw-card-sub">${fw.sub}</div>
-              </div>
-              <div class="fw-chevron-wrap"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            </div>
-            <div class="fw-tags">
-              <span class="fw-mastered" id="mbadge-${fw.id}" style="${CS.isMastered(fw.id)?'':'display:none'}">✓ Mastered</span>
-              ${fw.tags.map(t=>`<span class="fw-tag">${t}</span>`).join('')}
-            </div>
-            <div class="fw-expand-body">
-              <div>
-                <div class="fw-expand-label">Step-by-step</div>
-                <div class="fw-steps-list">
-                  ${fw.steps.map((s,i)=>`<div class="fw-step-item"><div class="fw-step-num">${i+1}</div><span>${s}</span></div>`).join('')}
-                </div>
-              </div>
-              <div class="fw-when">${fw.when}</div>
-              <div>
-                <div class="fw-expand-label">Real-world example</div>
-                <div class="fw-example">${fw.example}</div>
-              </div>
-              <div>
-                <div class="fw-expand-label">Common mistakes</div>
-                <ul class="fw-mistakes-list">
-                  ${fw.mistakes.map(m=>`<li>${m}</li>`).join('')}
-                </ul>
-              </div>
-              <div>
-                <div class="fw-expand-label">Say this in the interview</div>
-                <div class="fw-phrases-list">
-                  ${fw.phrases.map(p=>`<div class="fw-phrase">${p}</div>`).join('')}
-                </div>
-              </div>
-              <div>
-                <div class="fw-expand-label">Works well with</div>
-                <div class="fw-combo-tags">
-                  ${fw.combos.map(c=>`<span class="fw-combo-tag">${c}</span>`).join('')}
-                </div>
-              </div>
-              <div class="fw-prompt-box" onclick="event.stopPropagation()">
-                <div class="fw-expand-label">Practice prompt</div>
-                <div class="fw-prompt-q">${fw.prompt}</div>
-                <button class="fw-prompt-reveal" onclick="revealPrompt(${fw.id},this)">Show model answer</button>
-                <div class="fw-prompt-answer" id="pa-${fw.id}" style="display:none">${fw.promptAnswer}</div>
-              </div>
-              <button class="mastery-btn ${CS.isMastered(fw.id)?'mastery-btn-done':''}" id="mbtn-${fw.id}" onclick="event.stopPropagation();toggleMastery(${fw.id})">${CS.isMastered(fw.id)?'✓ Marked as Mastered':'Mark as Mastered'}</button>
-            </div>
-          </div>
-        `).join('')}
-      </div>
+function renderTracks() {
+  const grid = document.getElementById('tracks-grid');
+  grid.innerHTML = TRACKS.map(t => {
+    const mastered = t.cards.filter(c => CS.isMastered(c.id)).length;
+    const pct = t.cards.length ? Math.round((mastered / t.cards.length) * 100) : 0;
+    return `<div class="track-card" onclick="startTrack('${t.id}')">
+      <span class="track-icon">${t.icon}</span>
+      <div class="track-name">${t.name}</div>
+      <div class="track-desc">${t.desc}</div>
+      <div class="track-progress-label">${mastered} / ${t.cards.length} Mastered</div>
+      <div class="track-progress-bar"><div class="track-progress-fill" style="width:${pct}%"></div></div>
+      <div class="track-meta"><span>${t.cards.length} cards</span><span>~${t.time} min</span></div>
+      <button class="track-btn">${mastered === t.cards.length && mastered > 0 ? 'Review Again →' : 'Start Learning →'}</button>
     </div>`;
   }).join('');
 }
 
-function toggleCard(id) {
-  document.getElementById('fw-' + id).classList.toggle('expanded');
+function startTrack(id) {
+  currentTrack = TRACKS.find(t => t.id === id);
+  currentIndex = 0;
+  document.getElementById('view-tracks').style.display = 'none';
+  document.getElementById('view-card').style.display = 'flex';
+  showCard();
 }
 
-function revealPrompt(id, btn) {
-  const ans = document.getElementById('pa-' + id);
-  const showing = ans.style.display !== 'none';
-  ans.style.display = showing ? 'none' : 'block';
-  btn.textContent = showing ? 'Show model answer' : 'Hide answer';
+function exitDeck() {
+  document.getElementById('view-card').style.display = 'none';
+  document.getElementById('view-tracks').style.display = '';
+  renderTracks();
 }
 
-function toggleMastery(id) {
-  const now = CS.toggleMastered(id);
-  const badge = document.getElementById('mbadge-' + id);
-  const btn   = document.getElementById('mbtn-' + id);
-  if (badge) badge.style.display = now ? '' : 'none';
-  if (btn)   { btn.textContent = now ? '✓ Marked as Mastered' : 'Mark as Mastered'; btn.classList.toggle('mastery-btn-done', now); }
+function showCard() {
+  if (!currentTrack) return;
+  const cards = currentTrack.cards;
+  const card = cards[currentIndex];
+  revealed = false;
+
+  // Topbar
+  document.getElementById('cl-track').textContent = currentTrack.name.toUpperCase();
+  document.getElementById('cl-counter').textContent = `Card ${String(currentIndex + 1).padStart(2,'0')} / ${cards.length}`;
+  const mastCount = cards.filter(c => CS.isMastered(c.id)).length;
+  document.getElementById('cl-mastered').textContent = `· ${mastCount} of ${cards.length} Mastered`;
+
+  // Progress bar
+  const pct = ((currentIndex + 1) / cards.length) * 100;
+  document.getElementById('cl-progress').style.width = pct + '%';
+
+  // Card content
+  const diffClass = card.diff === 'Easy' ? 'diff-easy' : card.diff === 'Medium' ? 'diff-medium' : 'diff-hard';
+  document.getElementById('cl-diff').innerHTML = `<span class="${diffClass}">${card.diff}</span>`;
+  document.getElementById('cl-title').textContent = card.title;
+  document.getElementById('cl-question').textContent = card.q;
+  document.getElementById('cl-answer').innerHTML = card.a;
+
+  // Star button
+  const starBtn = document.getElementById('star-btn');
+  starBtn.textContent = CS.isMastered('star_' + card.id) ? '★' : '☆';
+  starBtn.classList.toggle('starred', CS.isMastered('star_' + card.id));
+
+  // Hide answer
+  document.getElementById('card-answer').style.display = 'none';
+
+  // Action buttons
+  setButtons('pre');
+
+  // Nav buttons
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  document.getElementById('btn-skip').disabled = currentIndex === cards.length - 1;
+
+  if (currentIndex === cards.length - 1) {
+    document.getElementById('btn-skip').textContent = 'Finish';
+    document.getElementById('btn-skip').disabled = false;
+    document.getElementById('btn-skip').onclick = finishDeck;
+  } else {
+    document.getElementById('btn-skip').textContent = 'Skip →';
+    document.getElementById('btn-skip').onclick = () => navCard(1);
+  }
 }
 
-render();
-document.getElementById('fw-streak-n').textContent = CS.getStreak();
+function setButtons(state) {
+  const card = currentTrack.cards[currentIndex];
+  const isMastered = CS.isMastered(card.id);
+  const el = document.getElementById('card-actions');
+  if (state === 'pre') {
+    el.innerHTML = `<button class="btn-reveal" onclick="revealCard()">Reveal Answer</button>
+      <button class="btn-know" onclick="markMastered()">✓ Already Know This</button>`;
+  } else {
+    el.innerHTML = `<button class="btn-mastered ${isMastered ? 'is-mastered' : ''}" onclick="markMastered()">${isMastered ? '✓ Mastered' : '✓ Mastered'}</button>
+      <button class="btn-still" onclick="navCard(1)">📖 Still Learning</button>`;
+  }
+}
+
+function revealCard() {
+  revealed = true;
+  document.getElementById('card-answer').style.display = '';
+  setButtons('post');
+}
+
+function markMastered() {
+  const card = currentTrack.cards[currentIndex];
+  CS.toggleMastered(card.id);
+  if (!revealed) revealCard();
+  setButtons('post');
+  const isMastered = CS.isMastered(card.id);
+  document.querySelector('.btn-mastered').classList.toggle('is-mastered', isMastered);
+  document.querySelector('.btn-mastered').textContent = isMastered ? '✓ Mastered' : '✓ Mark Mastered';
+}
+
+function toggleStar() {
+  const card = currentTrack.cards[currentIndex];
+  CS.toggleMastered('star_' + card.id);
+  const starred = CS.isMastered('star_' + card.id);
+  document.getElementById('star-btn').textContent = starred ? '★' : '☆';
+  document.getElementById('star-btn').classList.toggle('starred', starred);
+}
+
+function navCard(dir) {
+  currentIndex = Math.max(0, Math.min(currentTrack.cards.length - 1, currentIndex + dir));
+  showCard();
+}
+
+function finishDeck() {
+  const cards = currentTrack.cards;
+  const mastered = cards.filter(c => CS.isMastered(c.id)).length;
+  alert(`Track complete! You've mastered ${mastered} of ${cards.length} cards in ${currentTrack.name}.`);
+  exitDeck();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (!currentTrack) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.code === 'Space') { e.preventDefault(); if (!revealed) revealCard(); else navCard(1); }
+  if (e.key === 'm' || e.key === 'M') markMastered();
+  if (e.key === 's' || e.key === 'S') toggleStar();
+  if (e.key === 'ArrowRight') navCard(1);
+  if (e.key === 'ArrowLeft') navCard(-1);
+});
+
 CS.syncUser();
+renderTracks();
 </script>

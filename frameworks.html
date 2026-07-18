@@ -1,0 +1,955 @@
+<title>CaseSnap — Frameworks</title>
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --bg:          #F8F4EC;
+  --surface:     #FFFFFF;
+  --surface2:    #F2EDE4;
+  --ink:         #1A150D;
+  --ink-muted:   #6E5A3C;
+  --accent:      #B5580A;
+  --accent-h:    #CC6610;
+  --accent-text: #FFFFFF;
+  --border:      #DDD0B8;
+  --tag-bg:      rgba(181,88,10,.08);
+  --tag-bd:      rgba(181,88,10,.18);
+  --shadow:      0 2px 20px rgba(181,88,10,.10);
+  --sb-w:        214px;
+  --sb-bg:       #1A1208;
+  --sb-ink:      #D8C8A8;
+  --sb-muted:    #8A7458;
+  --sb-hover:    rgba(240,152,48,.09);
+  --sb-active:   rgba(240,152,48,.14);
+  --tb-h:        54px;
+}
+
+@media (prefers-color-scheme: dark) { :root {
+  --bg:          #0F0B06;
+  --surface:     #1A1208;
+  --surface2:    #201608;
+  --ink:         #F0E8D8;
+  --ink-muted:   #A0845A;
+  --accent:      #F09830;
+  --accent-h:    #F5AA48;
+  --accent-text: #100C04;
+  --border:      #2E2214;
+  --tag-bg:      rgba(240,152,48,.10);
+  --tag-bd:      rgba(240,152,48,.22);
+  --shadow:      0 2px 36px rgba(0,0,0,.55);
+  --sb-bg:       #100C04;
+  --sb-ink:      #D8C8A8;
+  --sb-muted:    #7A6040;
+  --sb-hover:    rgba(240,152,48,.07);
+  --sb-active:   rgba(240,152,48,.13);
+}}
+
+:root[data-theme="dark"] {
+  --bg:          #0F0B06; --surface: #1A1208; --surface2: #201608;
+  --ink:         #F0E8D8; --ink-muted: #A0845A;
+  --accent:      #F09830; --accent-h: #F5AA48; --accent-text: #100C04;
+  --border:      #2E2214; --tag-bg: rgba(240,152,48,.10); --tag-bd: rgba(240,152,48,.22);
+  --shadow:      0 2px 36px rgba(0,0,0,.55);
+  --sb-bg:       #100C04; --sb-ink: #D8C8A8; --sb-muted: #7A6040;
+  --sb-hover:    rgba(240,152,48,.07); --sb-active: rgba(240,152,48,.13);
+}
+:root[data-theme="light"] {
+  --bg:          #F8F4EC; --surface: #FFFFFF; --surface2: #F2EDE4;
+  --ink:         #1A150D; --ink-muted: #6E5A3C;
+  --accent:      #B5580A; --accent-h: #CC6610; --accent-text: #FFFFFF;
+  --border:      #DDD0B8; --tag-bg: rgba(181,88,10,.08); --tag-bd: rgba(181,88,10,.18);
+  --shadow:      0 2px 20px rgba(181,88,10,.10);
+  --sb-bg:       #1A1208; --sb-ink: #D8C8A8; --sb-muted: #8A7458;
+  --sb-hover:    rgba(240,152,48,.09); --sb-active: rgba(240,152,48,.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  height: 100dvh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────── */
+.sidebar {
+  width: var(--sb-w);
+  flex-shrink: 0;
+  background: var(--sb-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 16px;
+  overflow: hidden;
+}
+.sb-logo { display:flex; align-items:center; gap:9px; padding:0 18px 22px; border-bottom:1px solid rgba(255,255,255,.05); }
+.sb-mark { width:30px; height:30px; background:var(--accent); border-radius:8px; display:grid; place-items:center; font-size:11px; font-weight:800; color:var(--accent-text); flex-shrink:0; }
+.sb-name { font-size:14.5px; font-weight:700; color:var(--sb-ink); letter-spacing:-.3px; }
+.sb-nav { flex:1; padding:14px 10px; display:flex; flex-direction:column; gap:2px; overflow-y:auto; }
+.sb-nav a { display:flex; align-items:center; gap:9px; padding:8px 10px; border-radius:8px; font-size:13.5px; font-weight:500; color:var(--sb-muted); text-decoration:none; transition:background .15s, color .15s; white-space:nowrap; }
+.sb-nav a:hover { background:var(--sb-hover); color:var(--sb-ink); }
+.sb-nav a.active { background:var(--sb-active); color:var(--accent); font-weight:600; }
+.sb-nav a svg { flex-shrink:0; opacity:.7; }
+.sb-nav a.active svg { opacity:1; }
+.sb-section { font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--sb-muted); padding:10px 10px 4px; opacity:.6; }
+.sb-user { margin:0 10px; padding:10px; border-radius:8px; background:rgba(255,255,255,.04); display:flex; align-items:center; gap:9px; }
+.sb-avatar { width:28px; height:28px; border-radius:50%; background:rgba(181,88,10,.4); display:grid; place-items:center; font-size:11px; font-weight:700; color:#F5D0A0; flex-shrink:0; }
+.sb-user-name { font-size:12.5px; font-weight:600; color:var(--sb-ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sb-user-phase { font-size:11px; color:var(--sb-muted); }
+.sb-logout { display:flex; align-items:center; gap:6px; width:calc(100% - 20px); margin:4px 10px 10px; padding:7px 10px; background:none; border:none; cursor:pointer; color:var(--sb-muted); font-size:11.5px; font-family:inherit; border-radius:7px; transition:background .12s,color .12s; text-align:left; }
+.sb-logout:hover { background:rgba(255,255,255,.06); color:var(--sb-ink); }
+
+/* ── Main ─────────────────────────────────────────────────────────────── */
+.main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+
+/* Topbar */
+.topbar {
+  height: var(--tb-h);
+  flex-shrink: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.tb-title { font-size:16px; font-weight:700; color:var(--ink); letter-spacing:-.3px; flex:1; }
+.tb-count { font-size:12px; font-weight:600; color:var(--ink-muted); background:var(--tag-bg); border:1px solid var(--tag-bd); border-radius:100px; padding:3px 10px; }
+.tb-streak { display:flex; align-items:center; gap:5px; font-size:12.5px; font-weight:700; color:var(--accent); background:var(--tag-bg); border:1px solid var(--tag-bd); border-radius:100px; padding:4px 11px; }
+
+/* Filter bar */
+.filterbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: sticky;
+  top: var(--tb-h);
+  z-index: 9;
+}
+
+.search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 280px;
+}
+.search-wrap svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--ink-muted); pointer-events:none; }
+.search-input {
+  width: 100%;
+  padding: 7px 10px 7px 32px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.search-input::placeholder { color: var(--ink-muted); opacity: .5; }
+.search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--tag-bg); }
+
+.cat-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cat-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  padding: 6px 13px;
+  border-radius: 100px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background: none;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.cat-tab:hover { color: var(--ink); border-color: var(--ink-muted); }
+.cat-tab.active { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+
+/* ── Content ──────────────────────────────────────────────────────────── */
+.content { flex:1; overflow-y:auto; padding:24px 24px 40px; }
+
+/* Category section */
+.fw-section { margin-bottom: 32px; }
+.fw-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.fw-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.fw-section-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-bd);
+  border-radius: 100px;
+  padding: 2px 8px;
+}
+
+/* Framework card grid */
+.fw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.fw-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fw-card:hover { border-color: var(--accent); box-shadow: 0 0 0 3px var(--tag-bg); transform: translateY(-1px); }
+.fw-card.expanded { border-color: var(--accent); background: var(--surface); }
+
+.fw-card-top { display:flex; align-items:flex-start; gap:12px; }
+
+.fw-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.fw-card-meta { flex: 1; min-width: 0; }
+.fw-card-name { font-size: 14.5px; font-weight: 700; color: var(--ink); letter-spacing: -.2px; margin-bottom: 3px; }
+.fw-card-sub { font-size: 12px; color: var(--ink-muted); line-height: 1.45; }
+
+.fw-tags { display:flex; flex-wrap:wrap; gap:5px; }
+.fw-tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-bd);
+  color: var(--accent);
+}
+
+/* Expand body */
+.fw-expand-body {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  animation: fadeDown .2s ease;
+}
+@keyframes fadeDown { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+.fw-card.expanded .fw-expand-body { display: flex; }
+
+.fw-expand-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 5px;
+}
+
+.fw-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fw-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.fw-step-num {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-bd);
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.fw-when {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  padding: 9px 11px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.fw-when strong { color: var(--ink); font-weight: 600; }
+
+.fw-chevron-wrap {
+  color: var(--ink-muted);
+  transition: transform .2s;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.fw-card.expanded .fw-chevron-wrap { transform: rotate(180deg); }
+
+/* Mastered badge */
+.fw-mastered {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #0D6644;
+  background: rgba(16,130,80,.09);
+  border: 1px solid rgba(16,130,80,.22);
+  border-radius: 100px;
+  padding: 3px 9px;
+}
+@media (prefers-color-scheme: dark) {
+  .fw-mastered { color: #1EBF78; background: rgba(30,191,120,.10); border-color: rgba(30,191,120,.24); }
+}
+:root[data-theme="dark"] .fw-mastered { color:#1EBF78; background:rgba(30,191,120,.10); border-color:rgba(30,191,120,.24); }
+:root[data-theme="light"] .fw-mastered { color:#0D6644; background:rgba(16,130,80,.09); border-color:rgba(16,130,80,.22); }
+
+/* Empty state */
+.empty { text-align:center; padding:60px 24px; color:var(--ink-muted); }
+.empty-icon { font-size:36px; margin-bottom:12px; }
+.empty h3 { font-size:16px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+.empty p { font-size:14px; }
+
+/* Mastery toggle button */
+.mastery-btn {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.mastery-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
+.mastery-btn.mastery-btn-done { border-color: rgba(16,130,80,.3); color: #0D6644; background: rgba(16,130,80,.08); }
+@media (prefers-color-scheme: dark) { .mastery-btn.mastery-btn-done { color: #1EBF78; background: rgba(30,191,120,.10); border-color: rgba(30,191,120,.24); } }
+:root[data-theme="dark"] .mastery-btn.mastery-btn-done { color:#1EBF78; background:rgba(30,191,120,.10); border-color:rgba(30,191,120,.24); }
+
+/* Category icon colours */
+.icon-prof  { background: rgba(181,88,10,.12); }
+.icon-mktent { background: rgba(52,130,180,.12); }
+.icon-growth { background: rgba(16,130,80,.12); }
+.icon-pricing { background: rgba(150,60,180,.12); }
+.icon-ma    { background: rgba(220,90,60,.12); }
+.icon-ops   { background: rgba(180,140,20,.12); }
+.icon-gen   { background: rgba(100,100,100,.12); }
+
+::-webkit-scrollbar { width:5px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+</style>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-mark">CS</div>
+    <span class="sb-name">CaseSnap</span>
+  </div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="currentColor"/></svg> Dashboard</a>
+    <a href="cases.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="5.5" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="10" width="9" height="2.5" rx="1.25" fill="currentColor"/></svg> Cases</a>
+    <a href="frameworks.html" class="active"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.8 5.6H14.6L10.6 8.4L12 13L8 10.2L4 13L5.4 8.4L1.4 5.6H6.2L8 1Z" fill="currentColor"/></svg> Frameworks</a>
+    <span class="sb-section">Practice</span>
+    <a href="mockrounds.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mock Rounds</a>
+    <a href="guesstimates.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2C8 2 3 6 3 10C3 12.8 5.2 15 8 15C10.8 15 13 12.8 13 10C13 6 8 2 8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Guesstimates</a>
+    <a href="leaderboard.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L10 6H15L11 9.5L12.5 14.5L8 11.5L3.5 14.5L5 9.5L1 6H6L8 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Leaderboard</a>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">RA</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">Rahul Agarwal</div>
+      <div class="sb-user-phase">Phase 2 · Active</div>
+    </div>
+  </div>
+  <button class="sb-logout" onclick="CS.logout()">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l4 3-4 3M6 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Sign out
+  </button>
+</nav>
+
+<!-- Main -->
+<div class="main">
+
+  <div class="topbar">
+    <span class="tb-title">Frameworks</span>
+    <span class="tb-count" id="fwCount">26 frameworks</span>
+    <span class="tb-streak" id="fw-streak">🔥 <span id="fw-streak-n">0</span></span>
+  </div>
+
+  <div class="filterbar">
+    <div class="search-wrap">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input class="search-input" id="searchInput" placeholder="Search frameworks…" oninput="render()" />
+    </div>
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat="all" onclick="setTab(this)">All</button>
+      <button class="cat-tab" data-cat="profitability" onclick="setTab(this)">Profitability</button>
+      <button class="cat-tab" data-cat="market-entry" onclick="setTab(this)">Market Entry</button>
+      <button class="cat-tab" data-cat="growth" onclick="setTab(this)">Growth</button>
+      <button class="cat-tab" data-cat="pricing" onclick="setTab(this)">Pricing</button>
+      <button class="cat-tab" data-cat="ma" onclick="setTab(this)">M&amp;A</button>
+      <button class="cat-tab" data-cat="operations" onclick="setTab(this)">Operations</button>
+      <button class="cat-tab" data-cat="general" onclick="setTab(this)">General</button>
+    </div>
+  </div>
+
+  <div class="content" id="content"></div>
+
+</div>
+
+<script src="progress.js"></script>
+<script>
+const FRAMEWORKS = [
+  /* ── Profitability ── */
+  {
+    id: 1, cat: 'profitability', icon: '📉', iconClass: 'icon-prof', mastered: false,
+    name: 'Profitability Framework',
+    sub: 'Core framework for any declining margin or loss-making client case.',
+    tags: ['EBITDA', 'Margins', 'Cost vs Revenue'],
+    steps: [
+      'Clarify: EBITDA, PBT, or PAT? One-time or structural?',
+      'Split: Revenue vs. Cost — which is driving decline?',
+      'Revenue: Price × Volume — what moved and why?',
+      'Cost: Fixed vs. Variable — which category increased?',
+      'Benchmark against industry / historical trend',
+      'Identify root cause and recommend lever'
+    ],
+    when: '<strong>Use when:</strong> Client margins are shrinking, a business unit is loss-making, or you\'re asked to "diagnose profitability."'
+  },
+  {
+    id: 2, cat: 'profitability', icon: '💰', iconClass: 'icon-prof', mastered: false,
+    name: 'Revenue Decomposition',
+    sub: 'Breaks revenue into levers — useful for diagnosing why top-line is stagnant or declining.',
+    tags: ['ARPU', 'Volume', 'Mix shift'],
+    steps: [
+      'Revenue = Price × Quantity (or ARPU × Subs in B2C)',
+      'Segment revenue: product line, geography, customer type',
+      'Identify which segment is declining — mix shift or absolute?',
+      'Price driver: market pricing pressure vs. internal discounting?',
+      'Volume driver: demand, churn, distribution reach?',
+      'Cross-check with competitor revenue trends'
+    ],
+    when: '<strong>Use when:</strong> Revenue is flat or declining despite stable/growing market, or client asks "why is our top-line not growing?"'
+  },
+  {
+    id: 3, cat: 'profitability', icon: '🏗️', iconClass: 'icon-prof', mastered: false,
+    name: 'Cost Structure Analysis',
+    sub: 'Diagnoses which cost buckets are driving margin erosion.',
+    tags: ['Fixed costs', 'Variable costs', 'Opex'],
+    steps: [
+      'Split: Fixed vs. Variable costs',
+      'List cost categories: COGS, SG&A, R&D, D&A, interest',
+      'For each: has it grown in absolute terms? As % of revenue?',
+      'Identify one-time items vs. structural step-ups',
+      'Benchmark cost ratios vs. peers',
+      'Recommend cost takeout or restructuring lever'
+    ],
+    when: '<strong>Use when:</strong> Revenue is stable but margins are falling — costs are clearly the culprit.'
+  },
+
+  /* ── Market Entry ── */
+  {
+    id: 4, cat: 'market-entry', icon: '🌐', iconClass: 'icon-mktent', mastered: false,
+    name: '4Cs Market Entry Framework',
+    sub: 'Evaluate whether and how to enter a new market across Customer, Competition, Company, and Context.',
+    tags: ['Market sizing', 'Competitive moat', 'Feasibility'],
+    steps: [
+      'Customer: Who are they? Size, willingness to pay, unmet needs?',
+      'Competition: Who plays? What is the moat? Is there room?',
+      'Company: Do we have capabilities, brand, capital to win?',
+      'Context: Regulatory, economic, or macro tailwinds/headwinds?',
+      'Mode of entry: Organic build, JV, acquisition, licensing?',
+      'Recommendation: Go / No-go with conditions'
+    ],
+    when: '<strong>Use when:</strong> Client asks "should we enter market X?" or "how do we expand geographically / into a new segment?"'
+  },
+  {
+    id: 5, cat: 'market-entry', icon: '📏', iconClass: 'icon-mktent', mastered: false,
+    name: 'Market Sizing (TAM/SAM/SOM)',
+    sub: 'Estimate market size using top-down or bottom-up approach.',
+    tags: ['TAM', 'SAM', 'Estimation'],
+    steps: [
+      'Define: What exactly counts as the market?',
+      'Choose approach: Top-down (population funnel) or Bottom-up (unit × frequency)',
+      'TAM: Total addressable market — if you had 100% share',
+      'SAM: Serviceable addressable — realistic geography/segment',
+      'SOM: Your actual capture given competitive dynamics',
+      'Sanity check: Does the number make intuitive sense?'
+    ],
+    when: '<strong>Use when:</strong> Client needs to assess opportunity size before committing to entry, or during guesstimate rounds.'
+  },
+  {
+    id: 6, cat: 'market-entry', icon: '🛡️', iconClass: 'icon-mktent', mastered: false,
+    name: "Porter's Five Forces",
+    sub: 'Assess industry attractiveness before recommending entry.',
+    tags: ['Industry analysis', 'Competition', 'Barriers'],
+    steps: [
+      'Competitive rivalry: How intense is existing competition?',
+      'Supplier power: Can suppliers squeeze margins?',
+      'Buyer power: Can customers demand lower prices?',
+      'Threat of substitutes: What else can buyers switch to?',
+      'Threat of new entrants: How easy is it to enter the industry?',
+      'Synthesise: Is this an attractive industry to enter?'
+    ],
+    when: '<strong>Use when:</strong> Evaluating a new industry or explaining why margins in a sector are structurally low.'
+  },
+
+  /* ── Growth ── */
+  {
+    id: 7, cat: 'growth', icon: '🚀', iconClass: 'icon-growth', mastered: false,
+    name: 'Ansoff Matrix',
+    sub: 'Four growth strategies based on product and market combinations.',
+    tags: ['Product', 'Market', 'Diversification'],
+    steps: [
+      'Market Penetration: Sell existing products to existing customers more',
+      'Market Development: Sell existing products to new geographies/segments',
+      'Product Development: Sell new products to existing customers',
+      'Diversification: New products for new markets (highest risk)',
+      'Evaluate feasibility of each quadrant for the client',
+      'Recommend which strategy matches risk appetite and capability'
+    ],
+    when: '<strong>Use when:</strong> Client wants to grow but hasn\'t specified how — use to structure the options space.'
+  },
+  {
+    id: 8, cat: 'growth', icon: '🔗', iconClass: 'icon-growth', mastered: false,
+    name: 'Value Chain Analysis',
+    sub: 'Map activities to find where value is created and where there is room to capture more.',
+    tags: ['Primary activities', 'Support activities', 'Margin pools'],
+    steps: [
+      'Map primary activities: Inbound → Ops → Outbound → Marketing → Service',
+      'Map support activities: HR, Tech, Procurement, Infrastructure',
+      'Identify where client is strong vs. weak vs. competitors',
+      'Find where margin pools are concentrated in the chain',
+      'Recommend: Invest in high-margin activities, outsource weak links',
+      'Assess vertical integration or partnerships'
+    ],
+    when: '<strong>Use when:</strong> Client wants to identify competitive advantage or find efficiency/growth in its operations.'
+  },
+  {
+    id: 9, cat: 'growth', icon: '🎯', iconClass: 'icon-growth', mastered: false,
+    name: 'Growth Levers Framework',
+    sub: 'Systematic approach to identifying organic and inorganic growth paths.',
+    tags: ['Organic', 'Inorganic', 'Adjacencies'],
+    steps: [
+      'Organic — Revenue: pricing, volume, new segments, geographies',
+      'Organic — Cost: efficiency, automation, procurement',
+      'Inorganic: M&A, partnerships, licensing, JVs',
+      'Evaluate each lever: impact vs. feasibility vs. time-to-value',
+      'Shortlist 2–3 high-priority levers with rationale',
+      'Outline roadmap with milestones'
+    ],
+    when: '<strong>Use when:</strong> Client asks "how do we grow 2× in 3 years?" — gives structure to an open-ended growth ask.'
+  },
+
+  /* ── Pricing ── */
+  {
+    id: 10, cat: 'pricing', icon: '🏷️', iconClass: 'icon-pricing', mastered: false,
+    name: 'Pricing Strategy Framework',
+    sub: 'Three lenses for setting or changing price — cost, competition, value.',
+    tags: ['Cost+', 'Value-based', 'Competitive'],
+    steps: [
+      'Cost-plus: Floor price = Cost + Minimum margin',
+      'Competitive: What are peers charging? Can you command a premium?',
+      'Value-based: What is the customer\'s willingness to pay?',
+      'Segment customers: Different WTP → tiered pricing?',
+      'Consider price elasticity: How will volume change with price?',
+      'Recommend: Optimal price given strategy and market position'
+    ],
+    when: '<strong>Use when:</strong> Client is launching a product, repricing, or margin-compressing. Common in PE due diligence cases.'
+  },
+  {
+    id: 11, cat: 'pricing', icon: '📊', iconClass: 'icon-pricing', mastered: false,
+    name: 'Price Elasticity & Demand Analysis',
+    sub: 'Quantify how sensitive demand is to price changes.',
+    tags: ['WTP', 'Elasticity', 'Revenue optimisation'],
+    steps: [
+      'Define: Is demand elastic (price-sensitive) or inelastic?',
+      'Gather or estimate historical price-volume data',
+      'Calculate elasticity: % ΔQ / % ΔP',
+      'If elastic: price cuts may grow revenue; price rises risk volume loss',
+      'If inelastic: pricing power exists — raise price to improve margin',
+      'Recommend optimal price point using revenue = P × Q curve'
+    ],
+    when: '<strong>Use when:</strong> Client has pricing power question — tolls, utilities, luxury goods, essential services.'
+  },
+
+  /* ── M&A ── */
+  {
+    id: 12, cat: 'ma', icon: '🤝', iconClass: 'icon-ma', mastered: false,
+    name: 'M&A Rationale Framework',
+    sub: 'Evaluate whether an acquisition makes strategic and financial sense.',
+    tags: ['Synergies', 'Strategic fit', 'Due diligence'],
+    steps: [
+      'Strategic rationale: Why this target? Fill capability gap, buy growth, kill a competitor?',
+      'Market attractiveness: Is the target in a good industry?',
+      'Target assessment: Financials, moat, management quality',
+      'Synergies: Revenue synergies (cross-sell, market access) + Cost synergies (procurement, headcount)',
+      'Integration risk: Culture, system, operational complexity',
+      'Valuation: Does the deal price capture synergies reasonably?'
+    ],
+    when: '<strong>Use when:</strong> Client is considering buying a company or being acquired — very common in Big 4 strategy cases.'
+  },
+  {
+    id: 13, cat: 'ma', icon: '🔍', iconClass: 'icon-ma', mastered: false,
+    name: 'Due Diligence Framework',
+    sub: 'Structured checklist for evaluating a target before an acquisition.',
+    tags: ['Commercial DD', 'Financial DD', 'Operational DD'],
+    steps: [
+      'Commercial DD: Market size, competition, customer concentration, churn',
+      'Financial DD: Revenue quality, cost structure, EBITDA bridge, working capital',
+      'Operational DD: Supply chain, IT systems, regulatory compliance',
+      'HR DD: Key man risk, cultural fit, attrition risk post-deal',
+      'Legal DD: Liabilities, IP ownership, contracts, litigation',
+      'Synthesise: Red flags vs. value creation thesis'
+    ],
+    when: '<strong>Use when:</strong> PE client is acquiring a business and needs to validate assumptions before signing.'
+  },
+
+  /* ── Operations ── */
+  {
+    id: 14, cat: 'operations', icon: '⚙️', iconClass: 'icon-ops', mastered: false,
+    name: 'Operations Improvement (Lean)',
+    sub: 'Identify and eliminate waste across a process using Lean principles.',
+    tags: ['Lean', 'Process efficiency', 'Waste'],
+    steps: [
+      'Map the end-to-end process (value stream map)',
+      'Identify 7 wastes: Overproduction, Waiting, Transport, Motion, Overprocessing, Inventory, Defects',
+      'Quantify impact of each waste on cost / cycle time',
+      'Prioritise: High-impact, low-complexity improvements first',
+      'Propose process redesign or automation where relevant',
+      'Define KPIs to track improvement (OEE, cycle time, yield)'
+    ],
+    when: '<strong>Use when:</strong> Client has high costs or slow delivery and wants to improve operational efficiency.'
+  },
+  {
+    id: 15, cat: 'operations', icon: '📦', iconClass: 'icon-ops', mastered: false,
+    name: 'Supply Chain Framework',
+    sub: 'Diagnose disruptions or inefficiencies across the supply chain.',
+    tags: ['Procurement', 'Inventory', 'Logistics'],
+    steps: [
+      'Map: Supplier → Manufacturing → Warehouse → Distribution → Customer',
+      'Identify bottleneck: Where is delay or cost concentrated?',
+      'Supplier risk: Concentration, lead time, quality',
+      'Inventory: Optimal levels, holding cost, stockout risk',
+      'Logistics: Last-mile efficiency, modal choice, 3PL vs. own fleet',
+      'Recommend: Dual sourcing, hub strategy, automation, vendor consolidation'
+    ],
+    when: '<strong>Use when:</strong> Client faces supply disruption, high logistics cost, or inventory build-up.'
+  },
+  {
+    id: 16, cat: 'operations', icon: '💻', iconClass: 'icon-ops', mastered: false,
+    name: 'Digital Transformation Framework',
+    sub: 'Assess readiness and roadmap for a company\'s digitisation journey.',
+    tags: ['Technology', 'Automation', 'Change management'],
+    steps: [
+      'Current state: What processes are manual/inefficient?',
+      'Opportunity sizing: Revenue uplift + cost reduction from digitisation',
+      'Technology stack: What needs to be built vs. bought vs. partnered?',
+      'Data readiness: Is data clean, accessible, and governed?',
+      'Change management: Is the org ready? Skills gap? Culture?',
+      'Roadmap: Quick wins (0–6M) → Core transformation (6–18M) → Scale'
+    ],
+    when: '<strong>Use when:</strong> Tech consulting case or client wants to "digitise" — restructure the ask before jumping to solutions.'
+  },
+
+  /* ── General ── */
+  {
+    id: 17, cat: 'general', icon: '🧠', iconClass: 'icon-gen', mastered: false,
+    name: 'MECE Issue Tree',
+    sub: 'The foundation of structured consulting thinking — Mutually Exclusive, Collectively Exhaustive.',
+    tags: ['MECE', 'Structuring', 'Issue tree'],
+    steps: [
+      'Define the problem precisely — avoid solving the wrong thing',
+      'Break into 2–4 branches that don\'t overlap (Mutually Exclusive)',
+      'Ensure branches together cover all possibilities (Collectively Exhaustive)',
+      'Each branch can be further split until hypotheses are testable',
+      'Test MECEness: "Can this go in two buckets?" → Not ME. "Is anything missing?" → Not CE',
+      'Use issue trees as the backbone of every case structure'
+    ],
+    when: '<strong>Use when:</strong> Starting any case — structuring the problem space is always the first 2 minutes.'
+  },
+  {
+    id: 18, cat: 'general', icon: '📋', iconClass: 'icon-gen', mastered: false,
+    name: 'Hypothesis-Driven Approach',
+    sub: 'Work from a leading hypothesis, then test and refine — the McKinsey way.',
+    tags: ['Hypothesis', 'Top-down', 'Pyramid principle'],
+    steps: [
+      'Form an initial hypothesis from the data given at the start',
+      'State it clearly: "I believe the core issue is X because Y"',
+      'Design analyses to confirm or reject each hypothesis',
+      'Prune branches that data rules out; deepen those that hold',
+      'Update hypothesis as new information emerges',
+      'Lead the synthesis with the answer, not the analysis'
+    ],
+    when: '<strong>Use when:</strong> You need to show structured thinking and avoid "boiling the ocean" in open-ended cases.'
+  },
+  {
+    id: 19, cat: 'general', icon: '🗺️', iconClass: 'icon-gen', mastered: false,
+    name: 'SWOT Analysis',
+    sub: 'Quick situational audit — best used as input to strategy, not as the strategy itself.',
+    tags: ['Strengths', 'Weaknesses', 'Opportunities', 'Threats'],
+    steps: [
+      'Strengths: Internal capabilities that give competitive advantage',
+      'Weaknesses: Internal gaps or vulnerabilities',
+      'Opportunities: External trends or gaps the client can exploit',
+      'Threats: External risks that could erode position',
+      'Match S→O (offensive moves) and W→T (defensive moves)',
+      'Translate findings into 2–3 strategic priorities'
+    ],
+    when: '<strong>Use when:</strong> Asked for a strategic overview or as a framing tool before diving into a growth / market entry case.'
+  },
+  {
+    id: 20, cat: 'general', icon: '⚖️', iconClass: 'icon-gen', mastered: false,
+    name: 'Decision Matrix (Prioritisation)',
+    sub: 'Score and rank initiatives by impact vs. feasibility.',
+    tags: ['Impact', 'Feasibility', 'Prioritisation'],
+    steps: [
+      'List all initiatives or options on the table',
+      'Define scoring dimensions: impact (revenue/cost/risk) and feasibility (cost, time, complexity)',
+      'Score each 1–3 on each dimension',
+      'Plot on a 2×2: High Impact / High Feasibility = quick wins',
+      'High Impact / Low Feasibility = strategic bets (resource carefully)',
+      'Low Impact = deprioritise regardless of ease'
+    ],
+    when: '<strong>Use when:</strong> Client has many options and needs to decide where to focus — final slide of most cases.'
+  },
+  {
+    id: 21, cat: 'general', icon: '🔺', iconClass: 'icon-gen', mastered: false,
+    name: 'Pyramid Principle (Communication)',
+    sub: 'Structure your answer so the recommendation comes first, supported by evidence below.',
+    tags: ['Top-down', 'Storyline', 'SCQA'],
+    steps: [
+      'Lead with the answer / recommendation — not the analysis',
+      'Support with 3 key arguments (the "pillars")',
+      'Each pillar is supported by data/analysis below it',
+      'Use SCQA: Situation → Complication → Question → Answer',
+      'In case interviews: state your hypothesis → structure → findings → recommendation',
+      'Avoid the "journey" narrative — the interviewer knows the answer before the story'
+    ],
+    when: '<strong>Use when:</strong> Structuring your verbal synthesis or building a final recommendation slide.'
+  },
+  {
+    id: 22, cat: 'general', icon: '📐', iconClass: 'icon-gen', mastered: false,
+    name: 'BCG Growth-Share Matrix',
+    sub: 'Portfolio analysis tool — classify business units to allocate capital.',
+    tags: ['Portfolio', 'Stars', 'Cash cows'],
+    steps: [
+      'Stars: High market share, high growth → invest to maintain',
+      'Cash Cows: High market share, low growth → harvest, fund others',
+      'Question Marks: Low share, high growth → selective investment',
+      'Dogs: Low share, low growth → divest or restructure',
+      'Map all BUs on the matrix using relative share and market growth',
+      'Recommend portfolio-level capital allocation strategy'
+    ],
+    when: '<strong>Use when:</strong> Client is a conglomerate asking which businesses to invest in vs. divest.'
+  },
+  {
+    id: 23, cat: 'general', icon: '🌍', iconClass: 'icon-gen', mastered: false,
+    name: 'Macro / PESTLE Analysis',
+    sub: 'Scan the external environment before a market entry or strategy recommendation.',
+    tags: ['Political', 'Economic', 'Tech', 'ESG'],
+    steps: [
+      'Political: Regulatory risk, government stability, trade policy',
+      'Economic: GDP growth, inflation, interest rates, forex risk',
+      'Social: Demographics, consumer trends, urbanisation',
+      'Technological: Disruption risk, digitisation, infrastructure',
+      'Legal: Compliance, IP, labour law, sector-specific regulation',
+      'Environmental: Climate risk, ESG pressure, carbon cost'
+    ],
+    when: '<strong>Use when:</strong> Starting a market entry, country expansion, or M&A case — set macro context before diving in.'
+  },
+  {
+    id: 24, cat: 'general', icon: '📈', iconClass: 'icon-gen', mastered: false,
+    name: 'Business Case / Investment Framework',
+    sub: 'Evaluate whether an investment or initiative is worth pursuing.',
+    tags: ['NPV', 'Payback', 'Risk-adjusted return'],
+    steps: [
+      'Define the investment: Capex, timeline, strategic objective',
+      'Revenue case: Incremental revenue / cost savings generated',
+      'Cost case: Upfront + ongoing operating costs',
+      'Build simple P&L: Revenue − Costs over 5 years',
+      'Calculate NPV, IRR, or Payback period',
+      'Sensitivity: What if revenue is 20% lower? Still viable?'
+    ],
+    when: '<strong>Use when:</strong> Client is deciding whether to build a plant, launch a product, or make a large capital investment.'
+  },
+  {
+    id: 25, cat: 'general', icon: '🧩', iconClass: 'icon-gen', mastered: false,
+    name: 'Root Cause Analysis (5 Whys)',
+    sub: 'Drill to the true underlying cause by asking "why" repeatedly.',
+    tags: ['Causal chain', 'Problem diagnosis', 'Ops'],
+    steps: [
+      'State the observable problem clearly',
+      'Ask: Why is this happening? → Answer gives Level 1 cause',
+      'Ask Why again on Level 1 → Level 2 cause',
+      'Repeat 3–5 times until you hit a root cause you can act on',
+      'Validate: Does fixing this root cause prevent the surface symptom?',
+      'Recommend the fix at the root level, not the symptom level'
+    ],
+    when: '<strong>Use when:</strong> Operations or process cases where the problem is visible but the cause is hidden.'
+  },
+  {
+    id: 26, cat: 'general', icon: '🎲', iconClass: 'icon-gen', mastered: false,
+    name: 'Guesstimate Framework',
+    sub: 'Estimate any quantity using structured segmentation and reasonable assumptions.',
+    tags: ['Estimation', 'Fermi', 'Market sizing'],
+    steps: [
+      'Clarify what exactly is being estimated (units matter)',
+      'Choose approach: Supply-side (capacity × utilisation) or Demand-side (population funnel)',
+      'Build a chain of logical multiplications with round numbers',
+      'State assumptions clearly — interviewers care about logic, not precision',
+      'Sanity check: Compare your answer to a known reference point',
+      'Present a range, not a single point estimate'
+    ],
+    when: '<strong>Use when:</strong> Asked to estimate EV charging stations, piano tuners in a city, or any quantity — guesstimate round.'
+  }
+];
+
+let activeTab = 'all';
+
+function setTab(el) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  activeTab = el.dataset.cat;
+  render();
+}
+
+function render() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = FRAMEWORKS.filter(fw => {
+    const matchCat = activeTab === 'all' || fw.cat === activeTab;
+    const matchQ = !q || fw.name.toLowerCase().includes(q) || fw.sub.toLowerCase().includes(q) || fw.tags.some(t => t.toLowerCase().includes(q));
+    return matchCat && matchQ;
+  });
+
+  document.getElementById('fwCount').textContent = filtered.length + ' framework' + (filtered.length !== 1 ? 's' : '');
+
+  const content = document.getElementById('content');
+
+  if (!filtered.length) {
+    content.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><h3>No frameworks found</h3><p>Try a different search or category.</p></div>';
+    return;
+  }
+
+  // Group by category
+  const catMeta = {
+    'profitability': { label: 'Profitability', order: 1 },
+    'market-entry':  { label: 'Market Entry', order: 2 },
+    'growth':        { label: 'Growth Strategy', order: 3 },
+    'pricing':       { label: 'Pricing', order: 4 },
+    'ma':            { label: 'M&A', order: 5 },
+    'operations':    { label: 'Operations', order: 6 },
+    'general':       { label: 'General Consulting', order: 7 }
+  };
+
+  const groups = {};
+  filtered.forEach(fw => {
+    if (!groups[fw.cat]) groups[fw.cat] = [];
+    groups[fw.cat].push(fw);
+  });
+
+  const sortedCats = Object.keys(groups).sort((a, b) => (catMeta[a]?.order || 9) - (catMeta[b]?.order || 9));
+
+  content.innerHTML = sortedCats.map(cat => {
+    const fws = groups[cat];
+    return `
+      <div class="fw-section">
+        <div class="fw-section-header">
+          <span class="fw-section-label">${catMeta[cat]?.label || cat}</span>
+          <span class="fw-section-count">${fws.length}</span>
+        </div>
+        <div class="fw-grid">
+          ${fws.map(fw => `
+            <div class="fw-card" id="fw-${fw.id}" onclick="toggleCard(${fw.id})">
+              <div class="fw-card-top">
+                <div class="fw-icon ${fw.iconClass}">${fw.icon}</div>
+                <div class="fw-card-meta">
+                  <div class="fw-card-name">${fw.name}</div>
+                  <div class="fw-card-sub">${fw.sub}</div>
+                </div>
+                <div class="fw-chevron-wrap">
+                  <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+              <div class="fw-tags">
+                ${CS.isMastered(fw.id) ? '<span class="fw-mastered" id="mbadge-'+fw.id+'">✓ Mastered</span>' : '<span class="fw-mastered" id="mbadge-'+fw.id+'" style="display:none">✓ Mastered</span>'}
+                ${fw.tags.map(t => `<span class="fw-tag">${t}</span>`).join('')}
+              </div>
+              <div class="fw-expand-body">
+                <div>
+                  <div class="fw-expand-label">Step-by-step</div>
+                  <div class="fw-steps-list">
+                    ${fw.steps.map((s, i) => `<div class="fw-step-item"><div class="fw-step-num">${i+1}</div><span>${s}</span></div>`).join('')}
+                  </div>
+                </div>
+                <div class="fw-when">${fw.when}</div>
+                <button class="mastery-btn" id="mbtn-${fw.id}" onclick="event.stopPropagation();toggleMastery(${fw.id})">${CS.isMastered(fw.id) ? '✓ Marked as Mastered' : 'Mark as Mastered'}</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleCard(id) {
+  const card = document.getElementById('fw-' + id);
+  card.classList.toggle('expanded');
+}
+
+function toggleMastery(id) {
+  const now = CS.toggleMastered(id);
+  const badge = document.getElementById('mbadge-' + id);
+  const btn   = document.getElementById('mbtn-' + id);
+  if (badge) badge.style.display = now ? '' : 'none';
+  if (btn)   btn.textContent = now ? '✓ Marked as Mastered' : 'Mark as Mastered';
+  if (btn)   btn.classList.toggle('mastery-btn-done', now);
+}
+
+render();
+document.getElementById('fw-streak-n').textContent = CS.getStreak();
+CS.syncUser();
+</script>

@@ -1,0 +1,736 @@
+<title>CaseSnap — Guesstimate Practice</title>
+<style>
+:root {
+  --bg: #F8F4EC; --surface: #FFFFFF; --surface2: #F2EDE4; --ink: #1A150D; --ink-muted: #6E5A3C;
+  --accent: #B5580A; --accent-h: #CC6610; --accent-text: #FFFFFF;
+  --border: #DDD0B8; --tag-bg: rgba(181,88,10,.08); --tag-bd: rgba(181,88,10,.18);
+  --shadow: 0 2px 20px rgba(181,88,10,.10);
+  --sb-w: 214px; --sb-bg: #1A1208; --sb-ink: #D8C8A8; --sb-muted: #8A7458;
+  --sb-hover: rgba(240,152,48,.09); --sb-active: rgba(240,152,48,.14);
+  --tb-h: 54px; --pad-bg: #FDFAF5; --pad-bd: #E4D8C0;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #0F0B06; --surface: #1A1208; --surface2: #201608; --ink: #F0E8D8; --ink-muted: #A0845A;
+  --accent: #F09830; --accent-h: #F5AA48; --accent-text: #100C04;
+  --border: #2E2214; --tag-bg: rgba(240,152,48,.10); --tag-bd: rgba(240,152,48,.22);
+  --shadow: 0 2px 36px rgba(0,0,0,.55); --sb-bg: #100C04; --sb-ink: #D8C8A8;
+  --sb-muted: #7A6040; --sb-hover: rgba(240,152,48,.07); --sb-active: rgba(240,152,48,.13);
+  --pad-bg: #150F06; --pad-bd: #2A1E0C;
+}}
+:root[data-theme="dark"] {
+  --bg: #0F0B06; --surface: #1A1208; --surface2: #201608; --ink: #F0E8D8; --ink-muted: #A0845A;
+  --accent: #F09830; --accent-h: #F5AA48; --accent-text: #100C04;
+  --border: #2E2214; --tag-bg: rgba(240,152,48,.10); --tag-bd: rgba(240,152,48,.22);
+  --shadow: 0 2px 36px rgba(0,0,0,.55); --sb-bg: #100C04; --sb-ink: #D8C8A8;
+  --sb-muted: #7A6040; --sb-hover: rgba(240,152,48,.07); --sb-active: rgba(240,152,48,.13);
+  --pad-bg: #150F06; --pad-bd: #2A1E0C;
+}
+:root[data-theme="light"] {
+  --bg: #F8F4EC; --surface: #FFFFFF; --surface2: #F2EDE4; --ink: #1A150D; --ink-muted: #6E5A3C;
+  --accent: #B5580A; --accent-h: #CC6610; --accent-text: #FFFFFF;
+  --border: #DDD0B8; --tag-bg: rgba(181,88,10,.08); --tag-bd: rgba(181,88,10,.18);
+  --shadow: 0 2px 20px rgba(181,88,10,.10); --sb-bg: #1A1208; --sb-ink: #D8C8A8;
+  --sb-muted: #8A7458; --sb-hover: rgba(240,152,48,.09); --sb-active: rgba(240,152,48,.14);
+  --pad-bg: #FDFAF5; --pad-bd: #E4D8C0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); height: 100dvh; display: flex; overflow: hidden; }
+/* Sidebar */
+.sidebar { width: var(--sb-w); flex-shrink: 0; background: var(--sb-bg); display: flex; flex-direction: column; padding: 20px 0 16px; overflow: hidden; }
+.sb-logo { display: flex; align-items: center; gap: 9px; padding: 0 18px 22px; border-bottom: 1px solid rgba(255,255,255,.05); }
+.sb-mark { width: 30px; height: 30px; background: var(--accent); border-radius: 8px; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: var(--accent-text); flex-shrink: 0; }
+.sb-name { font-size: 14.5px; font-weight: 700; color: var(--sb-ink); letter-spacing: -.3px; }
+.sb-nav { flex: 1; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.sb-nav a { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--sb-muted); text-decoration: none; transition: background .15s, color .15s; white-space: nowrap; }
+.sb-nav a:hover { background: var(--sb-hover); color: var(--sb-ink); }
+.sb-nav a.active { background: var(--sb-active); color: var(--accent); font-weight: 600; }
+.sb-nav a svg { flex-shrink: 0; opacity: .7; }
+.sb-nav a.active svg { opacity: 1; }
+.sb-section { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sb-muted); padding: 10px 10px 4px; opacity: .6; }
+.sb-user { margin: 0 10px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,.04); display: flex; align-items: center; gap: 9px; }
+.sb-avatar { width: 28px; height: 28px; border-radius: 50%; background: rgba(181,88,10,.4); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #F5D0A0; flex-shrink: 0; }
+.sb-user-info { overflow: hidden; }
+.sb-user-name { font-size: 12.5px; font-weight: 600; color: var(--sb-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-user-phase { font-size: 11px; color: var(--sb-muted); }
+.sb-logout { display:flex; align-items:center; gap:6px; width:calc(100% - 20px); margin:4px 10px 10px; padding:7px 10px; background:none; border:none; cursor:pointer; color:var(--sb-muted); font-size:11.5px; font-family:inherit; border-radius:7px; transition:background .12s,color .12s; text-align:left; }
+.sb-logout:hover { background:rgba(255,255,255,.06); color:var(--sb-ink); }
+/* Main */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: var(--tb-h); flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; }
+.topbar-title { font-size: 15px; font-weight: 700; color: var(--ink); flex: 1; letter-spacing: -.2px; }
+.stat-pill { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-muted); background: var(--tag-bg); border: 1px solid var(--tag-bd); border-radius: 100px; padding: 4px 12px; }
+.stat-pill span { color: var(--accent); }
+/* Content area */
+.content { flex: 1; overflow: hidden; display: flex; }
+/* List view */
+.list-view { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.filter-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-btn { font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 100px; border: 1px solid var(--border); background: none; color: var(--ink-muted); cursor: pointer; transition: all .15s; }
+.filter-btn.active, .filter-btn:hover { background: var(--tag-bg); border-color: var(--tag-bd); color: var(--accent); }
+.question-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+.q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; cursor: pointer; transition: border-color .15s, box-shadow .15s; display: flex; flex-direction: column; gap: 10px; }
+.q-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+.q-card.solved { border-left: 3px solid var(--accent); }
+.q-card-meta { display: flex; align-items: center; gap: 6px; }
+.q-badge { font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 100px; border: 1px solid var(--tag-bd); background: var(--tag-bg); color: var(--ink-muted); }
+.q-badge.easy { background: rgba(16,130,80,.08); border-color: rgba(16,130,80,.20); color: #0D6644; }
+.q-badge.moderate { background: rgba(181,88,10,.08); border-color: rgba(181,88,10,.18); color: #7A3A04; }
+.q-badge.hard { background: rgba(180,28,28,.08); border-color: rgba(180,28,28,.20); color: #7A1010; }
+@media (prefers-color-scheme: dark) {
+  .q-badge.easy { background: rgba(30,191,120,.10); border-color: rgba(30,191,120,.22); color: #1EBF78; }
+  .q-badge.moderate { background: rgba(240,152,48,.10); border-color: rgba(240,152,48,.22); color: #F5AA48; }
+  .q-badge.hard { background: rgba(240,80,80,.10); border-color: rgba(240,80,80,.22); color: #F09090; }
+}
+:root[data-theme="dark"] .q-badge.easy { background: rgba(30,191,120,.10); border-color: rgba(30,191,120,.22); color: #1EBF78; }
+:root[data-theme="dark"] .q-badge.moderate { background: rgba(240,152,48,.10); border-color: rgba(240,152,48,.22); color: #F5AA48; }
+:root[data-theme="dark"] .q-badge.hard { background: rgba(240,80,80,.10); border-color: rgba(240,80,80,.22); color: #F09090; }
+:root[data-theme="light"] .q-badge.easy { background: rgba(16,130,80,.08); border-color: rgba(16,130,80,.20); color: #0D6644; }
+:root[data-theme="light"] .q-badge.moderate { background: rgba(181,88,10,.08); border-color: rgba(181,88,10,.18); color: #7A3A04; }
+:root[data-theme="light"] .q-badge.hard { background: rgba(180,28,28,.08); border-color: rgba(180,28,28,.20); color: #7A1010; }
+.q-card-text { font-size: 13.5px; line-height: 1.6; color: var(--ink); font-weight: 500; }
+.q-card-footer { display: flex; align-items: center; justify-content: space-between; }
+.q-time { font-size: 11.5px; color: var(--ink-muted); display: flex; align-items: center; gap: 4px; }
+.q-status { font-size: 11px; font-weight: 600; color: var(--accent); }
+.q-status.done { color: #1EBF78; }
+/* Solve view */
+.solve-view { flex: 1; overflow: hidden; display: none; flex-direction: column; }
+.solve-view.visible { display: flex; }
+.solve-topbar { height: var(--tb-h); flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 14px; }
+.solve-back { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 500; color: var(--ink-muted); background: none; border: none; cursor: pointer; padding: 5px 0; transition: color .15s; }
+.solve-back:hover { color: var(--accent); }
+.solve-sep { width: 1px; height: 18px; background: var(--border); flex-shrink: 0; }
+.solve-q-title { font-size: 13.5px; font-weight: 600; color: var(--ink); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.timer-chip { display: flex; align-items: center; gap: 7px; background: var(--tag-bg); border: 1px solid var(--tag-bd); border-radius: 8px; padding: 5px 12px; flex-shrink: 0; }
+.timer-disp { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--accent); }
+.timer-lbl { font-size: 10.5px; font-weight: 500; color: var(--ink-muted); letter-spacing: .04em; }
+.timer-btn { background: none; border: none; cursor: pointer; color: var(--ink-muted); display: grid; place-items: center; padding: 2px; transition: color .15s; }
+.timer-btn:hover { color: var(--accent); }
+.solve-body { flex: 1; overflow-y: auto; padding: 0; display: flex; flex-direction: column; }
+.solve-prompt { padding: 20px 28px 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.solve-prompt-lbl { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 8px; }
+.solve-prompt-text { font-size: 15px; line-height: 1.75; color: var(--ink); font-weight: 500; font-family: Georgia, serif; }
+.solve-hint { margin-top: 14px; padding: 12px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; font-size: 13px; line-height: 1.65; color: var(--ink-muted); }
+.solve-hint strong { color: var(--accent); font-weight: 600; }
+.solve-work { flex: 1; display: flex; flex-direction: column; gap: 0; }
+.work-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 0; flex: 1; }
+.work-col { display: flex; flex-direction: column; padding: 18px 20px; gap: 12px; border-right: 1px solid var(--border); }
+.work-col:last-child { border-right: none; }
+.work-label { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-muted); }
+.work-area { flex: 1; background: var(--pad-bg); border: 1px solid var(--pad-bd); border-radius: 10px; padding: 12px 14px; font-size: 13.5px; line-height: 1.65; color: var(--ink); font-family: inherit; resize: none; outline: none; min-height: 120px; transition: border-color .15s, box-shadow .15s; }
+.work-area:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--tag-bg); }
+.work-area::placeholder { color: var(--ink-muted); opacity: .45; }
+.mono { font-family: "SF Mono", "Fira Code", Consolas, monospace; font-size: 12.5px; letter-spacing: .01em; }
+.submit-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+.btn-reveal { flex: 1; padding: 11px 20px; background: var(--accent); color: var(--accent-text); border: none; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s, transform .12s; }
+.btn-reveal:hover { background: var(--accent-h); transform: translateY(-1px); }
+.btn-skip2 { padding: 11px 16px; background: none; border: 1px solid var(--border); border-radius: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink-muted); cursor: pointer; transition: border-color .15s, color .15s; }
+.btn-skip2:hover { border-color: var(--accent); color: var(--accent); }
+/* Answer panel */
+.ans-panel { display: none; flex-direction: column; }
+.ans-panel.visible { display: flex; }
+.ans-header { padding: 16px 28px 12px; background: rgba(181,88,10,.05); border-bottom: 1px solid rgba(181,88,10,.18); border-top: 1px solid var(--border); }
+@media (prefers-color-scheme: dark) { .ans-header { background: rgba(240,152,48,.06); border-bottom-color: rgba(240,152,48,.22); } }
+:root[data-theme="dark"] .ans-header { background: rgba(240,152,48,.06); border-bottom-color: rgba(240,152,48,.22); }
+:root[data-theme="light"] .ans-header { background: rgba(181,88,10,.05); border-bottom-color: rgba(181,88,10,.18); }
+.ans-title { font-family: Georgia, serif; font-size: 15px; font-weight: bold; color: var(--ink); }
+.ans-body { padding: 18px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+.ans-block { display: flex; flex-direction: column; gap: 6px; }
+.ans-block-label { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.ans-block-text { font-size: 13.5px; line-height: 1.75; color: var(--ink); white-space: pre-line; }
+.ans-block-text strong { font-weight: 600; }
+.ans-final { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; background: var(--tag-bg); border: 1px solid var(--tag-bd); border-radius: 10px; }
+.ans-final-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 5px; }
+.ans-final-text { font-size: 13px; line-height: 1.65; color: var(--ink); font-weight: 500; }
+.ans-nav { display: flex; gap: 10px; margin-top: 4px; }
+.btn-next { padding: 10px 20px; background: var(--accent); color: var(--accent-text); border: none; border-radius: 9px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: background .15s; }
+.btn-next:hover { background: var(--accent-h); }
+.btn-back2 { padding: 10px 16px; background: none; border: 1px solid var(--border); border-radius: 9px; font-size: 13.5px; font-weight: 500; color: var(--ink-muted); cursor: pointer; transition: border-color .15s; }
+.btn-back2:hover { border-color: var(--accent); color: var(--accent); }
+::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+@media (max-width: 700px) { .work-sections { grid-template-columns: 1fr; } }
+</style>
+
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-mark">CS</div>
+    <span class="sb-name">CaseSnap</span>
+  </div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="currentColor"/></svg> Dashboard</a>
+    <a href="cases.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="5.5" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="10" width="9" height="2.5" rx="1.25" fill="currentColor"/></svg> Cases</a>
+    <a href="frameworks.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.8 5.6H14.6L10.6 8.4L12 13L8 10.2L4 13L5.4 8.4L1.4 5.6H6.2L8 1Z" fill="currentColor"/></svg> Frameworks</a>
+    <span class="sb-section">Practice</span>
+    <a href="mockrounds.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mock Rounds</a>
+    <a href="guesstimates.html" class="active"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2C8 2 3 6 3 10C3 12.8 5.2 15 8 15C10.8 15 13 12.8 13 10C13 6 8 2 8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Guesstimates</a>
+    <a href="leaderboard.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L10 6H15L11 9.5L12.5 14.5L8 11.5L3.5 14.5L5 9.5L1 6H6L8 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Leaderboard</a>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">RA</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">Rahul Agarwal</div>
+      <div class="sb-user-phase">Phase 2 · Active</div>
+    </div>
+  </div>
+  <button class="sb-logout" onclick="CS.logout()">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l4 3-4 3M6 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Sign out
+  </button>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Guesstimate Practice</div>
+    <div class="stat-pill">Practised <span id="practisedCount">0</span> / 14</div>
+    <div class="stat-pill">Streak <span id="streakCount">0</span> days</div>
+  </div>
+
+  <div class="content">
+
+    <!-- List view -->
+    <div class="list-view" id="listView">
+      <div>
+        <div class="section-header">
+          <div class="section-label">Filter by category</div>
+        </div>
+        <div class="filter-bar" id="filterBar">
+          <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+          <button class="filter-btn" onclick="setFilter('market',this)">Market Size</button>
+          <button class="filter-btn" onclick="setFilter('infra',this)">Infrastructure</button>
+          <button class="filter-btn" onclick="setFilter('consumer',this)">Consumer</button>
+          <button class="filter-btn" onclick="setFilter('business',this)">Business</button>
+          <button class="filter-btn" onclick="setFilter('tech',this)">Technology</button>
+        </div>
+      </div>
+      <div class="question-grid" id="questionGrid"></div>
+    </div>
+
+    <!-- Solve view -->
+    <div class="solve-view" id="solveView">
+      <div class="solve-topbar">
+        <button class="solve-back" onclick="goBack()">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Guesstimates
+        </button>
+        <div class="solve-sep"></div>
+        <span class="solve-q-title" id="solveQTitle"></span>
+        <div class="timer-chip">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="9" r="5.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 6.5V9.5L9.5 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M6 1.5H10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="timer-lbl">TIME</span>
+          <span class="timer-disp" id="timerDisp">00:00</span>
+          <button class="timer-btn" onclick="toggleTimer()">
+            <svg id="timerIcon" width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="solve-body" id="solveBodyEl">
+        <!-- prompt -->
+        <div class="solve-prompt">
+          <div class="solve-prompt-lbl">Question</div>
+          <div class="solve-prompt-text" id="qText"></div>
+          <div class="solve-hint" id="qHint"></div>
+        </div>
+
+        <!-- work area -->
+        <div class="solve-work">
+          <div class="work-sections">
+            <div class="work-col">
+              <div class="work-label">Your Approach &amp; Assumptions</div>
+              <textarea class="work-area" id="workApproach" placeholder="State your approach first — e.g. 'I'll use a demand-side approach starting with population.'&#10;&#10;Then list your key assumptions with numbers…"></textarea>
+            </div>
+            <div class="work-col">
+              <div class="work-label">Calculation Chain</div>
+              <textarea class="work-area mono" id="workCalc" placeholder="Step 1: ...&#10;Step 2: ...&#10;× ÷ + −&#10;&#10;Final estimate: ...&#10;&#10;Sanity check: compare to a reference you know…"></textarea>
+            </div>
+          </div>
+
+          <!-- submit -->
+          <div class="submit-bar" id="gSubmitBar">
+            <button class="btn-skip2" onclick="revealAnswer(true)">Skip to Answer</button>
+            <button class="btn-reveal" onclick="revealAnswer(false)">Reveal &amp; Compare</button>
+          </div>
+
+          <!-- answer panel -->
+          <div class="ans-panel" id="ansPanel">
+            <div class="ans-header">
+              <div class="ans-title">Model Answer</div>
+            </div>
+            <div class="ans-body">
+              <div class="ans-block">
+                <div class="ans-block-label">Approach</div>
+                <div class="ans-block-text" id="ansApproach"></div>
+              </div>
+              <div class="ans-block">
+                <div class="ans-block-label">Calculation Walk-through</div>
+                <div class="ans-block-text mono" id="ansCalc"></div>
+              </div>
+              <div class="ans-final">
+                <div class="ans-final-dot"></div>
+                <div class="ans-final-text" id="ansFinal"></div>
+              </div>
+              <div class="ans-nav">
+                <button class="btn-back2" onclick="goBack()">Back to List</button>
+                <button class="btn-next" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="progress.js"></script>
+<script>
+const GUESSES = [
+  {id:1, cat:'consumer', q:'How many cups of chai are sold daily across India?', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Think population × chai-drinking adults × daily consumption frequency. Segment urban vs. rural.',
+   ans:{
+     approach:'Demand-side: India population → adults who drink chai → average cups/day. Segment by urban/rural since consumption differs.',
+     calc:`India population: 1.44 billion
+Adults (15+): ~70% = 1.0 billion
+Chai drinkers (80% of adults): 800 million
+
+Urban (35% = 280M): avg 2 cups/day → 560M cups
+Rural (65% = 520M): avg 3 cups/day → 1,560M cups
+Total: ~2,120M cups/day ≈ 2.1 billion cups/day
+
+Sanity check: India produces ~1,350 million kg of tea/yr
+1 cup uses ~2g tea → 2.1B cups × 2g = 4.2M kg/day × 365 = 1,533M kg/yr ✓ (close to known production)`,
+     final:'Central estimate: ~2 billion cups of chai per day across India. Urban average is lower (2 cups) than rural (3 cups) because rural consumption is culturally higher and home-brewed chai is more prevalent.'
+   }},
+  {id:2, cat:'infra', q:'Estimate the number of petrol stations in India.', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Supply-side — coverage model. How many vehicles per pump? Or: demand-side — total fuel dispensed ÷ capacity per station.',
+   ans:{
+     approach:'Two approaches: (1) Coverage model — one station per X km² or per X vehicles. (2) Demand-side — total fuel sold ÷ fuel dispensed per station per day. Cross-check both.',
+     calc:`Approach 1 — Vehicle-based:
+Registered motor vehicles in India: ~350 million
+Cars + trucks need refuelling: avg every 5 days
+Daily refuelling events: 350M ÷ 5 = 70M
+Each pump handles 500 vehicles/day (busy station)
+Pumps needed: 70M ÷ 500 = 140,000 stations
+
+Approach 2 — Coverage-based:
+6,500 cities/towns + 600,000 villages → ~30,000 habitations with petrol access
+~2–3 stations per major habitation → 60,000–90,000 stations
+Rural additions: ~20,000 stations
+
+Weighted midpoint: ~85,000–90,000 stations
+Actual (PPAC 2024): ~91,000 fuel stations ✓`,
+     final:'Central estimate: ~85,000–90,000 petrol stations in India. The vehicle-based approach gives 140,000 (high) because many registered vehicles are underused; the coverage approach at ~90,000 is more accurate.'
+   }},
+  {id:3, cat:'market', q:'What is the market size of the online grocery delivery market in India (₹ Cr, 2024)?', time:'10–12 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> Total grocery market × online penetration, or: urban households × spend on online grocery. Segment Tier-1 vs Tier-2.',
+   ans:{
+     approach:'Demand-side: urban India households → % who buy online grocery → avg monthly spend online. Alternative: Total grocery market × online penetration %.',
+     calc:`Method 1 — Household approach:
+Urban India households: ~90 million
+Online grocery users (20% penetration): 18 million households
+Avg monthly online grocery spend: ₹2,500
+Annual market: 18M × ₹2,500 × 12 = ₹54,000 Cr
+
+Method 2 — Top-down:
+India grocery market: ~₹50 lakh Cr (₹500B)
+Online penetration: ~1.2% = ₹60,000 Cr
+
+Cross-check: Blinkit + Zepto + Swiggy Instamart:
+~₹8,000–10,000 Cr each = ₹30,000 Cr from top 4
+Plus traditional e-grocery (BigBasket, etc.): ~₹20,000 Cr
+Total: ₹50,000–55,000 Cr
+
+Central estimate: ₹55,000–60,000 Cr (FY24)`,
+     final:'Central estimate: ₹55,000–60,000 Cr (approx $7B). Online penetration is still just 1–1.2% of the total grocery market in India, concentrated in top-30 cities. Rapid growth (30%+ CAGR) is driven by quick commerce (10-min delivery) expansion.'
+   }},
+  {id:4, cat:'infra', q:'Estimate the number of mobile cell towers in India.', time:'10–12 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> Start from mobile subscribers → data demand per subscriber → capacity per tower. Or: geographic coverage approach — land area ÷ coverage radius per tower.',
+   ans:{
+     approach:'Two methods: (1) Coverage — India area ÷ area covered per tower. (2) Demand — total subscribers ÷ subscribers per tower. Cross-check.',
+     calc:`Method 1 — Geographic coverage:
+India land area: 3.29 million km²
+Urban area (5% of land, 35% of population): 165,000 km²
+Rural area: 3.125 million km²
+
+Urban tower: covers 3 km² → towers needed: 165,000÷3 = 55,000
+Rural tower: covers 30 km² → towers needed: 3,125,000÷30 = 104,000
+Total: ~160,000 towers (but some areas unserved)
+
+Method 2 — Subscriber-based:
+Mobile subscribers: ~1.17 billion
+Each tower handles ~3,000 subscribers
+Towers: 1.17B ÷ 3,000 = 390,000
+
+Reconcile: urban towers per subscriber basis;
+rural towers per coverage basis → ~250,000 towers
+TRAI data (2023): ~778,000 BTSs (base transceiver stations) → ~200,000 tower sites (each site has 3–4 BTS)`,
+     final:'Central estimate: ~200,000 tower sites in India (each hosting 3–4 BTSs = ~700,000 BTS total). The subscriber method gives higher than geographic because dense urban areas need many towers for capacity, not just coverage.'
+   }},
+  {id:5, cat:'consumer', q:'How many people fly from Delhi airport (IGI) on an average day?', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Flights per day × avg seats per flight × load factor. Or: India annual air passengers → Delhi share.',
+   ans:{
+     approach:'Supply-side: number of flights per day at IGI × avg aircraft size × load factor.',
+     calc:`IGI Delhi: 3 terminals, ~1,500 flights/day (one of Asia's busiest)
+But clarify: are we counting departures only or both?
+
+Departures: ~750 flights/day
+Avg aircraft size: 150 seats (mix of A320, B737, some wide-body)
+Load factor (DGCA avg): 87%
+Passengers departing: 750 × 150 × 0.87 = ~98,000
+
+Arrivals: similar = ~98,000
+Total passengers through IGI: ~196,000/day
+
+Sanity: IATA reports IGI at 69 million passengers/yr (FY24)
+69M ÷ 365 = ~189,000/day ✓`,
+     final:'Central estimate: ~190,000–200,000 passengers per day through IGI Delhi. Departures alone: ~95,000–100,000. This makes Delhi the busiest airport in South Asia and among top 20 globally.'
+   }},
+  {id:6, cat:'business', q:'Estimate the revenue of a large standalone Starbucks store in a Mumbai mall (₹/year).', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Transactions per hour × operating hours × avg ticket size × days/year. Adjust for mall foot traffic patterns.',
+   ans:{
+     approach:'Bottom-up: customers per hour × operating hours × avg spend. Segment by peak/off-peak.',
+     calc:`Store hours: 10am–11pm = 13 hours/day
+
+Peak hours (11am–2pm, 5pm–9pm): 8 hours
+  Customers: 30/hr → 240 customers
+Off-peak hours: 5 hours
+  Customers: 15/hr → 75 customers
+Total customers/day: ~315
+
+Avg ticket size: ₹350 (coffee ₹280–400 + occasional food)
+Daily revenue: 315 × ₹350 = ₹1,10,250
+Annual revenue: ₹1,10,250 × 365 = ₹4.02 Cr
+
+Adjust for Mondays (30% lower): ≈ ₹3.8–4.0 Cr/year
+
+Sanity: Starbucks India revenue / no. of stores:
+~₹1,200 Cr / ~400 stores = ₹3 Cr avg (includes smaller kiosks)
+Flagship mall store: ₹4–5 Cr is realistic ✓`,
+     final:'Central estimate: ₹4–5 Cr annual revenue for a large Starbucks in a Mumbai mall. A busy flagship can do 300+ customers/day at ₹350 avg ticket. Premium malls (BKC, Palladium) could push to ₹5–6 Cr.'
+   }},
+  {id:7, cat:'market', q:'Estimate the size of the Indian EdTech market (₹ Cr, 2024).', time:'10–12 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> Segment by category — test prep, K-12, higher ed, upskilling, language. Each has different price points and penetration.',
+   ans:{
+     approach:'Segment EdTech by category and estimate each separately. Sum to total.',
+     calc:`Segment 1 — K-12 online tutoring:
+School students: 250M; online tutoring users: 10M; avg spend: ₹12,000/yr
+Market: 10M × ₹12,000 = ₹12,000 Cr
+
+Segment 2 — Test prep (JEE/NEET/UPSC/banking):
+Students: 5M; online + hybrid spend: ₹20,000/yr avg
+Market: 5M × ₹20,000 = ₹10,000 Cr
+
+Segment 3 — Professional upskilling (coding, MBA, CFA):
+Users: 3M; avg spend: ₹25,000/yr
+Market: 3M × ₹25,000 = ₹7,500 Cr
+
+Segment 4 — Language learning + early childhood:
+Users: 5M; avg spend: ₹5,000/yr
+Market: 5M × ₹5,000 = ₹2,500 Cr
+
+Total: ₹32,000 Cr ≈ $3.8B
+
+Sanity: IBEF estimates $4.5–5B by 2025 (includes all segments)
+Our ₹32,000 Cr ≈ $3.8B — slightly conservative, accounts for COVID-era decline ✓`,
+     final:'Central estimate: ₹30,000–35,000 Cr ($3.5–4B) for Indian EdTech in 2024. Test prep and K-12 are the largest segments. The market peaked during COVID and is consolidating — Byju\'s write-offs notwithstanding, the underlying demand is real.'
+   }},
+  {id:8, cat:'tech', q:'How many WhatsApp messages are sent in India every day?', time:'8–10 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> India WhatsApp users × messages sent per user per day. Distinguish individual messages vs. broadcast/group messages.',
+   ans:{
+     approach:'Demand-side: active WhatsApp users × messages per user per day. Segment personal vs. business users.',
+     calc:`India WhatsApp monthly active users: ~500 million
+Daily active users: ~75% = 375 million
+
+Personal users (360M):
+  Individual messages/day: 25 (chats, replies)
+  Group messages/day: 15 (groups avg 5 groups × 3 msg each)
+  Total: 40 messages/user/day
+  → 360M × 40 = 14.4 billion
+
+Business users (15M):
+  WhatsApp Business notifications: 50/day avg
+  → 15M × 50 = 750 million
+
+Total messages: 14.4B + 0.75B ≈ 15 billion/day
+
+Sanity: WhatsApp global: 100 billion messages/day (Meta disclosed)
+India = ~30% of global users → 30B expected
+But Indian users are high-engagement → 15B from messages sent BY Indians
+(not counting received) seems reasonable ✓`,
+     final:'Central estimate: ~15 billion WhatsApp messages sent by Indian users per day. This includes personal, group, and business messages. India accounts for roughly 30% of WhatsApp\'s global 100B daily messages.'
+   }},
+  {id:9, cat:'infra', q:'Estimate the number of ATMs in India.', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Coverage model — one ATM per X households or per X bank accounts. Or demand-side — daily ATM transactions ÷ capacity per ATM.',
+   ans:{
+     approach:'Coverage model: banked population → accounts → ATMs needed at reasonable queue/utilisation.',
+     calc:`Bank accounts in India (PM Jan Dhan + others): ~530 million
+Active accounts (transact at least quarterly): ~350 million
+ATM users vs. UPI users: only 40% of banked prefer ATM cash = 140M
+
+Each ATM handles: 200–300 transactions/day
+At 250 transactions/day avg:
+ATMs needed: 140M users × 1 transaction/5 days = 28M/day ÷ 250 = 112,000
+
+Geographic coverage minimum (habitations):
+~90,000 bank branches × 0.7 ATMs per branch = 63,000
+Off-site ATMs (malls, stations, highways): +50,000
+Total: ~113,000
+
+RBI data (2024): ~2,65,000 ATMs ✓ (our estimate is ~50% — reason: we underestimated transactions/day and coverage in Tier-2+)`,
+     final:'Central estimate: ~1,10,000–1,30,000 ATMs (demand-based). Actual RBI figure is ~2,65,000 because coverage norms mandate ATMs even in low-traffic rural areas. Key miss: regulatory floor of 1 ATM per 5km in semi-urban areas drives supply above pure demand.'
+   }},
+  {id:10, cat:'business', q:'Estimate the annual revenue of the IPL as a franchise (₹ Cr, 2024).', time:'10–12 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> Revenue streams: BCCI media rights share + gate receipts + sponsorships + merchandise. Each stream is estimable separately.',
+   ans:{
+     approach:'Break IPL revenue into streams: media rights (the biggest), sponsorship, gate, merchandise. Each stream is independently estimable.',
+     calc:`IPL Total Revenue Streams (2024):
+
+1. Media rights (JioCinema + Star Sports deal):
+   5-year deal: ₹48,390 Cr → ₹9,678 Cr/yr total
+   Per-franchise share: ₹9,678 Cr ÷ 10 teams ≈ ₹968 Cr/team/yr
+
+2. Gate receipts (per franchise):
+   74 matches/season ÷ 10 teams = 7.4 home matches avg
+   Avg stadium: 50,000 seats × 85% occupancy = 42,500
+   Avg ticket price: ₹2,000
+   Revenue: 7.4 × 42,500 × ₹2,000 = ₹629 Cr
+
+Wait — this is per match; correct:
+7.4 matches × 42,500 tickets × ₹2,000 = ₹629 Cr?
+No: 7.4 × 42,500 = 314,500 fans; × ₹2,000 = ₹63 Cr gate/franchise
+
+3. Franchise sponsorships (jersey + ground + digital):
+   ₹100–200 Cr/franchise/year (Mumbai Indians: highest ~₹250 Cr; smaller teams: ~₹80 Cr)
+   Avg: ₹140 Cr
+
+4. Merchandise + fan engagement: ~₹10–15 Cr
+
+Total per franchise: ₹968 + ₹63 + ₹140 + ₹12 = ₹1,183 Cr/yr
+
+Total IPL revenue: ₹1,183 Cr × 10 = ₹11,830 Cr/yr`,
+     final:'Central estimate: ₹1,000–1,200 Cr per franchise per year; ₹10,000–12,000 Cr total IPL ecosystem. Media rights are the dominant revenue stream (80%+ of total). Mumbai Indians is the highest-valued franchise (~₹1,400 Cr revenue); bottom teams ~₹700 Cr.'
+   }},
+  {id:11, cat:'tech', q:'How many hours of YouTube content are watched in India every day?', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> India YouTube users × avg session time × sessions per day. Segment by age group and data availability.',
+   ans:{
+     approach:'Active YouTube users × avg watch time per day. Cross-check with known global data.',
+     calc:`India YouTube monthly active users: ~476 million (2024, Statista)
+Daily active users: ~65% = 310 million
+
+Watch time per active user per day:
+- Heavy users (20%): 90 min/day → 62M × 90 min = 5,580M min
+- Moderate users (50%): 45 min/day → 155M × 45 min = 6,975M min
+- Light users (30%): 20 min/day → 93M × 20 min = 1,860M min
+
+Total: 14,415 million minutes/day = 240 million hours/day
+
+Sanity: YouTube global: 1 billion hours/day (stated by Google ~2018)
+India = 35% global users → 350M hours expected
+But India is a high-usage market (free data, Jio effect)
+240M hours for daily active users only (vs. all monthly users) — scales up to ~350M with occasional users ✓`,
+     final:'Central estimate: ~240–350 million hours of YouTube watched in India per day. India is YouTube\'s largest market by users and one of the highest by watch time, driven by vernacular content (Hindi, Tamil, Telugu) and free mobile data.'
+   }},
+  {id:12, cat:'market', q:'Estimate the market size of private healthcare in India (₹ Cr, 2024).', time:'12–15 min', diff:'hard',
+   hint:'<strong>Approach:</strong> Out-of-pocket health spend per household × Indian households. Segment by type: hospital, pharma, diagnostics, insurance premium.',
+   ans:{
+     approach:'Segment by healthcare spend category. Each category has different household penetration and spend levels.',
+     calc:`India households: ~310 million
+Urban (32%): 99M | Rural (68%): 211M
+
+Category 1 — Pharma (OTC + prescription):
+Urban household: ₹5,000/yr; Rural: ₹3,000/yr
+99M × ₹5,000 + 211M × ₹3,000 = ₹4,950 Cr + ₹6,330 Cr = ₹11,280 Cr
+Wait — per person, not household.
+India: 1.44B people × ₹1,800 avg pharma spend = ₹2,59,200 Cr ≈ ₹2.6 lakh Cr
+
+Category 2 — Hospital (IP + OP):
+Hospital visits: 1.44B people × 0.5 visits/yr (avg across all) × ₹8,000/visit = ₹5.76 lakh Cr
+But IP hospitalisation: 50M events/yr × ₹35,000 avg = ₹1.75 lakh Cr
+OOP doctor visits: 600M visits × ₹800 avg = ₹48,000 Cr
+
+Category 3 — Diagnostics (pathology, imaging): ₹30,000 Cr
+Category 4 — Health insurance premium (private):
+300M covered × ₹6,000 avg premium = ₹18,000 Cr
+
+Total private healthcare (conservative):
+Pharma ₹2.6L Cr + Hospital ₹2.3L Cr + Diagnostics ₹30,000 Cr + Insurance ₹18,000 Cr
+= ₹5.5 lakh Cr = ₹5,50,000 Cr
+
+Published: FICCI estimates India healthcare at $372B (₹31L Cr) by 2022; private = 70% = ₹22L Cr
+Our estimate is lower — we missed dental, mental health, alternative medicine, medical tourism`,
+     final:'Central estimate: ₹5–8 lakh Cr ($60–95B) for private healthcare spend in India, covering pharma, hospitals, diagnostics, and insurance. Full published estimates of ₹22 lakh Cr include alternative medicine, dental, and all out-of-pocket segments. The key miss in any bottom-up is the fragmented informal health spend (local doctors, chemists).'
+   }},
+  {id:13, cat:'consumer', q:'How many wedding ceremonies take place in India per year?', time:'8–10 min', diff:'easy',
+   hint:'<strong>Approach:</strong> Marriage-eligible population × marriage rate × adjustment for polygamy/divorce. Or: population ÷ avg age at marriage ÷ 2.',
+   ans:{
+     approach:'Population-based: total eligible population entering marriage age each year, adjusted for first-marriage rate.',
+     calc:`India population: 1.44 billion
+Annual births (30 years ago, to estimate current 25–30 age cohort): ~26 million/yr
+Adults reaching prime marriage age (25-30 for women, 28-33 for men): ~24 million/yr
+
+First-marriage rate for this cohort: ~92% eventually marry
+Average age at marriage: women 22 (rural), 25 (urban); men 26 rural, 29 urban
+Annual marriages from new cohort: ~24M × 92% = 22M marriages/yr (across many years)
+
+But annual marriages = people marrying THIS year, not cumulative
+India crude marriage rate: ~7.6/1000 population (UNFPA)
+7.6 × 1,440,000 / 1,000 = 10.9 million marriages/year
+
+Sanity: WARA (Wedding industry assoc) estimates 10–12 million weddings/year
+10–12 million ✓`,
+     final:'Central estimate: ~10–12 million weddings per year in India. At ₹10 lakh average spend per wedding, this represents a ₹10–12 lakh Cr ($120–150B) wedding industry — one of the largest in the world. Peak season (Nov–Feb) accounts for 60% of annual weddings.'
+   }},
+  {id:14, cat:'tech', q:'Estimate the total data consumed on Indian mobile networks in a single day (petabytes).', time:'10–12 min', diff:'moderate',
+   hint:'<strong>Approach:</strong> Active data users × average data consumption per user per day. TRAI publishes monthly data — sanity check against it.',
+   ans:{
+     approach:'Active mobile data users × avg daily data consumption. Segment by type of content (video is 80%+ of data).',
+     calc:`India mobile subscribers: 1.17 billion
+4G/5G data users: ~800 million
+Daily active data users: ~70% = 560 million
+
+Avg daily data usage:
+India avg: ~14.4 GB/month (TRAI, 2023) = 0.48 GB/day
+560 million × 0.48 GB = 268.8 million GB/day = 268.8 petabytes (PB)/day
+
+Wait: 1 PB = 1 million GB
+268.8 million GB = 268.8 PB/day
+
+Sanity check:
+TRAI Q4 2023: India mobile data: 19.5 billion GB/quarter
+19.5B GB ÷ 90 days = 216M GB/day = 216 PB/day ✓ (close to our 269 PB)
+
+Our slightly higher: monthly active users vs TRAI's total
+216–270 PB/day is the right range`,
+     final:'Central estimate: ~220–270 petabytes (PB) of mobile data consumed per day in India. India is the world\'s largest mobile data consumer by volume. 80%+ is video (YouTube, Reels, OTT). Jio\'s 2016 launch compressed data costs from ₹300/GB to <₹10/GB, triggering this explosion.'
+   }},
+];
+
+let currentFilter = 'all';
+let currentQIdx = 0;
+let timerSecs = 0, timerRunning = true, timerInterval;
+const practised = new Set(JSON.parse(localStorage.getItem('gs_practised') || '[]'));
+
+function markPractised(id) {
+  practised.add(id);
+  localStorage.setItem('gs_practised', JSON.stringify([...practised]));
+  document.getElementById('practisedCount').textContent = practised.size;
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderList();
+}
+
+function renderList() {
+  const filtered = currentFilter === 'all' ? GUESSES : GUESSES.filter(g => g.cat === currentFilter);
+  const grid = document.getElementById('questionGrid');
+  grid.innerHTML = filtered.map(g => `
+    <div class="q-card${practised.has(g.id) ? ' solved' : ''}" onclick="startQ(${g.id})">
+      <div class="q-card-meta">
+        <span class="q-badge">${g.cat.charAt(0).toUpperCase() + g.cat.slice(1)}</span>
+        <span class="q-badge ${g.diff}">${g.diff.charAt(0).toUpperCase() + g.diff.slice(1)}</span>
+      </div>
+      <div class="q-card-text">${g.q}</div>
+      <div class="q-card-footer">
+        <span class="q-time"><svg width="11" height="11" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M8 5V8.5L10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> ${g.time}</span>
+        ${practised.has(g.id) ? '<span class="q-status done">✓ Practised</span>' : '<span class="q-status">Start →</span>'}
+      </div>
+    </div>
+  `).join('');
+}
+
+function startQ(id) {
+  const g = GUESSES.find(x => x.id === id);
+  if (!g) return;
+  currentQIdx = GUESSES.findIndex(x => x.id === id);
+
+  // Reset solve view
+  document.getElementById('qText').textContent = g.q;
+  document.getElementById('qHint').innerHTML = g.hint;
+  document.getElementById('solveQTitle').textContent = g.q.length > 50 ? g.q.slice(0,50) + '…' : g.q;
+  document.getElementById('workApproach').value = '';
+  document.getElementById('workCalc').value = '';
+  document.getElementById('ansPanel').classList.remove('visible');
+  document.getElementById('gSubmitBar').style.display = '';
+
+  // Reset + start timer
+  clearInterval(timerInterval);
+  timerSecs = 0; timerRunning = true;
+  updateTimerDisplay();
+  timerInterval = setInterval(tickTimer, 1000);
+  document.getElementById('timerIcon').innerHTML = '<rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/>';
+
+  // Switch views
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('solveView').classList.add('visible');
+
+  // Next button label
+  const nextIdx = currentQIdx + 1;
+  document.getElementById('nextBtn').textContent = nextIdx < GUESSES.length ? 'Next Question →' : 'Back to List';
+}
+
+function goBack() {
+  clearInterval(timerInterval);
+  document.getElementById('listView').style.display = '';
+  document.getElementById('solveView').classList.remove('visible');
+  renderList();
+}
+
+function revealAnswer(skip) {
+  const g = GUESSES[currentQIdx];
+  markPractised(g.id);
+  CS.markSolved && CS._tick && CS._tick();
+
+  document.getElementById('ansApproach').textContent = g.ans.approach;
+  document.getElementById('ansCalc').textContent = g.ans.calc;
+  document.getElementById('ansFinal').textContent = g.ans.final;
+  document.getElementById('gSubmitBar').style.display = 'none';
+  document.getElementById('ansPanel').classList.add('visible');
+  clearInterval(timerInterval);
+
+  // Scroll to answer
+  setTimeout(() => {
+    document.getElementById('ansPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
+function nextQuestion() {
+  const nextIdx = currentQIdx + 1;
+  if (nextIdx < GUESSES.length) {
+    startQ(GUESSES[nextIdx].id);
+  } else {
+    goBack();
+  }
+}
+
+function tickTimer() {
+  timerSecs++;
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSecs / 60), s = timerSecs % 60;
+  document.getElementById('timerDisp').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+}
+
+function toggleTimer() {
+  timerRunning = !timerRunning;
+  const icon = document.getElementById('timerIcon');
+  if (timerRunning) {
+    timerInterval = setInterval(tickTimer, 1000);
+    icon.innerHTML = '<rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/>';
+  } else {
+    clearInterval(timerInterval);
+    icon.innerHTML = '<path d="M4 2L14 8L4 14V2Z" fill="currentColor"/>';
+  }
+}
+
+// Init
+document.getElementById('practisedCount').textContent = practised.size;
+document.getElementById('streakCount').textContent = CS.getStreak();
+renderList();
+CS.syncUser();
+</script>

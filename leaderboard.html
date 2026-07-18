@@ -1,0 +1,273 @@
+<title>CaseSnap — My Stats</title>
+<style>
+:root {
+  --bg: #F8F4EC; --surface: #FFFFFF; --surface2: #F2EDE4; --ink: #1A150D; --ink-muted: #6E5A3C;
+  --accent: #B5580A; --accent-h: #CC6610; --accent-text: #FFFFFF;
+  --border: #DDD0B8; --tag-bg: rgba(181,88,10,.08); --tag-bd: rgba(181,88,10,.18);
+  --shadow: 0 2px 20px rgba(181,88,10,.10);
+  --sb-w: 214px; --sb-bg: #1A1208; --sb-ink: #D8C8A8; --sb-muted: #8A7458;
+  --sb-hover: rgba(240,152,48,.09); --sb-active: rgba(240,152,48,.14); --tb-h: 54px;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg: #0F0B06; --surface: #1A1208; --surface2: #201608; --ink: #F0E8D8; --ink-muted: #A0845A;
+  --accent: #F09830; --accent-h: #F5AA48; --accent-text: #100C04;
+  --border: #2E2214; --tag-bg: rgba(240,152,48,.10); --tag-bd: rgba(240,152,48,.22);
+  --shadow: 0 2px 36px rgba(0,0,0,.55); --sb-bg: #100C04; --sb-ink: #D8C8A8;
+  --sb-muted: #7A6040; --sb-hover: rgba(240,152,48,.07); --sb-active: rgba(240,152,48,.13);
+}}
+:root[data-theme="dark"] { --bg:#0F0B06;--surface:#1A1208;--surface2:#201608;--ink:#F0E8D8;--ink-muted:#A0845A;--accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;--tag-bg:rgba(240,152,48,.10);--tag-bd:rgba(240,152,48,.22);--shadow:0 2px 36px rgba(0,0,0,.55);--sb-bg:#100C04;--sb-ink:#D8C8A8;--sb-muted:#7A6040;--sb-hover:rgba(240,152,48,.07);--sb-active:rgba(240,152,48,.13); }
+:root[data-theme="light"] { --bg:#F8F4EC;--surface:#FFFFFF;--surface2:#F2EDE4;--ink:#1A150D;--ink-muted:#6E5A3C;--accent:#B5580A;--accent-h:#CC6610;--accent-text:#FFFFFF;--border:#DDD0B8;--tag-bg:rgba(181,88,10,.08);--tag-bd:rgba(181,88,10,.18);--shadow:0 2px 20px rgba(181,88,10,.10);--sb-bg:#1A1208;--sb-ink:#D8C8A8;--sb-muted:#8A7458;--sb-hover:rgba(240,152,48,.09);--sb-active:rgba(240,152,48,.14); }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); height: 100dvh; display: flex; overflow: hidden; }
+/* Sidebar */
+.sidebar { width: var(--sb-w); flex-shrink: 0; background: var(--sb-bg); display: flex; flex-direction: column; padding: 20px 0 16px; overflow: hidden; }
+.sb-logo { display: flex; align-items: center; gap: 9px; padding: 0 18px 22px; border-bottom: 1px solid rgba(255,255,255,.05); }
+.sb-mark { width: 30px; height: 30px; background: var(--accent); border-radius: 8px; display: grid; place-items: center; font-size: 11px; font-weight: 800; color: var(--accent-text); flex-shrink: 0; }
+.sb-name { font-size: 14.5px; font-weight: 700; color: var(--sb-ink); letter-spacing: -.3px; }
+.sb-nav { flex: 1; padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
+.sb-nav a { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; font-size: 13.5px; font-weight: 500; color: var(--sb-muted); text-decoration: none; transition: background .15s, color .15s; white-space: nowrap; }
+.sb-nav a:hover { background: var(--sb-hover); color: var(--sb-ink); }
+.sb-nav a.active { background: var(--sb-active); color: var(--accent); font-weight: 600; }
+.sb-nav a svg { flex-shrink: 0; opacity: .7; }
+.sb-nav a.active svg { opacity: 1; }
+.sb-section { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--sb-muted); padding: 10px 10px 4px; opacity: .6; }
+.sb-user { margin: 0 10px; padding: 10px; border-radius: 8px; background: rgba(255,255,255,.04); display: flex; align-items: center; gap: 9px; }
+.sb-avatar { width: 28px; height: 28px; border-radius: 50%; background: rgba(181,88,10,.4); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #F5D0A0; flex-shrink: 0; }
+.sb-user-info { overflow: hidden; }
+.sb-user-name { font-size: 12.5px; font-weight: 600; color: var(--sb-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-user-phase { font-size: 11px; color: var(--sb-muted); }
+.sb-logout { display:flex; align-items:center; gap:6px; width:calc(100% - 20px); margin:4px 10px 10px; padding:7px 10px; background:none; border:none; cursor:pointer; color:var(--sb-muted); font-size:11.5px; font-family:inherit; border-radius:7px; transition:background .12s,color .12s; text-align:left; }
+.sb-logout:hover { background:rgba(255,255,255,.06); color:var(--sb-ink); }
+/* Main */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { height: var(--tb-h); flex-shrink: 0; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 16px; }
+.topbar-title { font-size: 15px; font-weight: 700; letter-spacing: -.2px; flex: 1; }
+.content { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+/* Stats strip */
+.stats-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 14px; text-align: center; }
+.stat-val { font-size: 28px; font-weight: 800; letter-spacing: -.8px; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-lbl { font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); margin-top: 5px; }
+/* Section headers */
+.sec-h { font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
+/* Achievements */
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 10px; }
+.badge { background: var(--surface); border: 1px solid var(--border); border-radius: 11px; padding: 14px 14px 12px; display: flex; align-items: flex-start; gap: 11px; transition: border-color .15s; }
+.badge.earned { border-color: var(--accent); background: var(--tag-bg); }
+.badge-icon { font-size: 22px; line-height: 1; flex-shrink: 0; filter: grayscale(1); opacity: .4; transition: filter .2s, opacity .2s; }
+.badge.earned .badge-icon { filter: grayscale(0); opacity: 1; }
+.badge-name { font-size: 12.5px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.badge-desc { font-size: 11px; color: var(--ink-muted); margin-top: 3px; line-height: 1.4; }
+/* Cases list */
+.cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+.case-row { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 11px 13px; display: flex; align-items: center; gap: 10px; }
+.case-row-check { width: 18px; height: 18px; border-radius: 50%; background: #1EBF78; display: grid; place-items: center; flex-shrink: 0; color: white; font-size: 10px; font-weight: 700; }
+.case-row-info { flex: 1; min-width: 0; }
+.case-row-title { font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.case-row-cat { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+.case-row-num { font-size: 11px; font-weight: 700; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+/* Category progress */
+.cat-bars { display: flex; flex-direction: column; gap: 10px; }
+.cbar { display: flex; align-items: center; gap: 10px; }
+.cbar-lbl { font-size: 12px; font-weight: 500; color: var(--ink); width: 130px; flex-shrink: 0; white-space: nowrap; }
+.cbar-track { flex: 1; height: 7px; background: var(--border); border-radius: 100px; overflow: hidden; }
+.cbar-fill { height: 100%; background: var(--accent); border-radius: 100px; transition: width .6s cubic-bezier(.22,1,.36,1); width: 0; }
+.cbar-num { font-size: 11.5px; font-weight: 600; color: var(--ink-muted); width: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+/* Empty state */
+.empty { font-size: 13px; color: var(--ink-muted); padding: 20px 0; }
+/* Reset zone */
+.reset-zone { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px; }
+.reset-title { font-size: 12.5px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.reset-desc { font-size: 12px; color: var(--ink-muted); margin-bottom: 14px; }
+.btn-reset { padding: 8px 18px; background: none; border: 1.5px solid rgba(192,57,43,.4); border-radius: 8px; color: #C0392B; font-size: 12.5px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background .15s, border-color .15s; }
+.btn-reset:hover { background: rgba(192,57,43,.07); border-color: rgba(192,57,43,.7); }
+@media (prefers-color-scheme: dark) { .btn-reset { color: #E85050; border-color: rgba(232,80,80,.3); } .btn-reset:hover { background: rgba(232,80,80,.09); border-color: rgba(232,80,80,.6); } }
+:root[data-theme="dark"] .btn-reset { color: #E85050; border-color: rgba(232,80,80,.3); }
+:root[data-theme="dark"] .btn-reset:hover { background: rgba(232,80,80,.09); border-color: rgba(232,80,80,.6); }
+@media (max-width: 900px) { .stats-strip { grid-template-columns: repeat(3, 1fr); } .sidebar { display: none; } }
+</style>
+
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-mark">CS</div>
+    <span class="sb-name">CaseSnap</span>
+  </div>
+  <div class="sb-nav">
+    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7.5" y="1" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="1" y="7.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="7.5" y="7.5" width="5.5" height="5.5" rx="1" stroke="currentColor" stroke-width="1.2"/></svg> Dashboard</a>
+    <a href="cases.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="5.5" width="14" height="2.5" rx="1.25" fill="currentColor"/><rect x="1" y="10" width="9" height="2.5" rx="1.25" fill="currentColor"/></svg> Cases</a>
+    <a href="frameworks.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L9.8 5.6H14.6L10.6 8.4L12 13L8 10.2L4 13L5.4 8.4L1.4 5.6H6.2L8 1Z" fill="currentColor"/></svg> Frameworks</a>
+    <span class="sb-section">Practice</span>
+    <a href="mockrounds.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 4.5V8.5L10.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Mock Rounds</a>
+    <a href="guesstimates.html"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 2C8 2 3 6 3 10C3 12.8 5.2 15 8 15C10.8 15 13 12.8 13 10C13 6 8 2 8 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Guesstimates</a>
+    <a href="leaderboard.html" class="active"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1L10 6H15L11 9.5L12.5 14.5L8 11.5L3.5 14.5L5 9.5L1 6H6L8 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Leaderboard</a>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">RA</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">Rahul Agarwal</div>
+      <div class="sb-user-phase">Phase 2 · Active</div>
+    </div>
+  </div>
+  <button class="sb-logout" onclick="CS.logout()">
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l4 3-4 3M6 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Sign out
+  </button>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">My Stats</span>
+  </div>
+  <div class="content" id="content">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<script src="progress.js"></script>
+<script>
+const CM = {
+  1:  ['Profitability',   'Declining Margins at a Telecom Operator'],
+  2:  ['Market Entry',    'E-Pharma Market Entry in India'],
+  3:  ['Growth Strategy', 'Insurance Company Growth Strategy'],
+  4:  ['Profitability',   'FMCG Company Declining Profitability'],
+  5:  ['Market Entry',    'EV Manufacturer Entry into India'],
+  6:  ['Pricing',         'Premium EV Pricing Strategy'],
+  7:  ['Profitability',   'Hospital Chain Revenue Decline'],
+  8:  ['M&A',             'Refrigerator Brand Acquisition Rationale'],
+  9:  ['Growth Strategy', "Dominos India's Growth Strategy"],
+  10: ['Tech Consulting', 'Courier Company Digitization'],
+  11: ['Pricing',         'Industrial Expressway Toll Pricing'],
+  12: ['Market Entry',    'Biotech Company Market Entry'],
+  13: ['Profitability',   'E-commerce Platform Losses'],
+  14: ['M&A',             'IVF Chain Acquisition Due Diligence'],
+  15: ['Growth Strategy', 'Chemical Company Expansion Strategy'],
+  16: ['Tech Consulting', 'PSU Bank Digital Transformation'],
+  17: ['Guesstimate',     'EV Charging Stations on Delhi–Mumbai Highway'],
+  18: ['Guesstimate',     'AI Usage at Business Schools in India'],
+};
+
+const BADGES = [
+  { id: 'first',     icon: '🎯', name: 'First Blood',       desc: 'Solved your first case',                  check: (s,m,st,g,r) => s >= 1  },
+  { id: 'five',      icon: '⚡', name: 'Getting Momentum', desc: 'Solved 5 cases',                          check: (s,m,st,g,r) => s >= 5  },
+  { id: 'half',      icon: '🔥', name: 'Halfway There',    desc: 'Solved 9 of 18 cases',                    check: (s,m,st,g,r) => s >= 9  },
+  { id: 'all',       icon: '🏆', name: 'Complete Sweep',   desc: 'Solved all 18 cases',                     check: (s,m,st,g,r) => s >= 18 },
+  { id: 'fw10',      icon: '📚', name: 'Framework Scholar', desc: 'Mastered 10+ frameworks',                check: (s,m,st,g,r) => m >= 10 },
+  { id: 'fw20',      icon: '🧠', name: 'Framework Master', desc: 'Mastered 20+ frameworks',                 check: (s,m,st,g,r) => m >= 20 },
+  { id: 'streak3',   icon: '🔥', name: 'On a Roll',        desc: '3-day practice streak',                   check: (s,m,st,g,r) => st >= 3 },
+  { id: 'streak7',   icon: '🌟', name: 'Committed',        desc: '7-day practice streak',                   check: (s,m,st,g,r) => st >= 7 },
+  { id: 'guess',     icon: '💡', name: 'Estimation Mind',  desc: 'Practised 7+ guesstimates',               check: (s,m,st,g,r) => g >= 7  },
+  { id: 'mock3',     icon: '🎤', name: 'Mock Ready',       desc: 'Completed 3 mock rounds',                 check: (s,m,st,g,r) => r >= 3  },
+];
+
+const CAT = {
+  'Profitability':   [1,4,7,13],
+  'Market Entry':    [2,5,12],
+  'Growth Strategy': [3,9,15],
+  'Pricing':         [6,11],
+  'M&A':             [8,14],
+  'Tech Consulting': [10,16],
+  'Guesstimates':    [17,18],
+};
+
+function render() {
+  const solved   = CS.getSolved();
+  const mastered = CS.getMastered();
+  const streak   = CS.getStreak();
+  const guesses  = (JSON.parse(localStorage.getItem('gs_practised') || '[]')).length;
+  const rounds   = parseInt(localStorage.getItem('mr_done') || '0');
+
+  const solvedCount = solved.length;
+
+  const content = document.getElementById('content');
+  content.innerHTML = `
+    <!-- Stats strip -->
+    <div>
+      <div class="stats-strip">
+        <div class="stat-card"><div class="stat-val">${solvedCount}</div><div class="stat-lbl">Cases Solved</div></div>
+        <div class="stat-card"><div class="stat-val">${streak}</div><div class="stat-lbl">Day Streak</div></div>
+        <div class="stat-card"><div class="stat-val">${mastered.length}</div><div class="stat-lbl">Frameworks</div></div>
+        <div class="stat-card"><div class="stat-val">${guesses}</div><div class="stat-lbl">Guesstimates</div></div>
+        <div class="stat-card"><div class="stat-val">${rounds}</div><div class="stat-lbl">Mock Rounds</div></div>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    <div>
+      <div class="sec-h">Achievements</div>
+      <div class="badges">
+        ${BADGES.map(b => {
+          const earned = b.check(solvedCount, mastered.length, streak, guesses, rounds);
+          return `<div class="badge ${earned ? 'earned' : ''}">
+            <div class="badge-icon">${b.icon}</div>
+            <div>
+              <div class="badge-name">${b.name}</div>
+              <div class="badge-desc">${b.desc}</div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Cases solved -->
+    <div>
+      <div class="sec-h">Cases Solved (${solvedCount} / 18)</div>
+      ${solvedCount === 0
+        ? '<div class="empty">No cases solved yet. <a href="cases.html" style="color:var(--accent);font-weight:600;">Start one →</a></div>'
+        : `<div class="cases-grid">
+            ${solved.sort((a,b) => a-b).map(id => {
+              const info = CM[id] || ['Unknown', 'Case ' + id];
+              return `<div class="case-row">
+                <div class="case-row-check">✓</div>
+                <div class="case-row-info">
+                  <div class="case-row-title">${info[1]}</div>
+                  <div class="case-row-cat">${info[0]}</div>
+                </div>
+                <div class="case-row-num">#${id}</div>
+              </div>`;
+            }).join('')}
+          </div>`
+      }
+    </div>
+
+    <!-- Category progress -->
+    <div>
+      <div class="sec-h">Progress by Category</div>
+      <div class="cat-bars" id="catBars">
+        ${Object.entries(CAT).map(([lbl, ids]) => {
+          const done = ids.filter(id => solved.includes(id)).length;
+          const pct = Math.round((done / ids.length) * 100);
+          return `<div class="cbar">
+            <div class="cbar-lbl">${lbl}</div>
+            <div class="cbar-track"><div class="cbar-fill" data-w="${pct}"></div></div>
+            <div class="cbar-num">${done}/${ids.length}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Reset zone -->
+    <div class="reset-zone">
+      <div class="reset-title">Reset Progress</div>
+      <div class="reset-desc">Clears all solved cases, mastered frameworks, streak, and practice history. This cannot be undone.</div>
+      <button class="btn-reset" onclick="confirmReset()">Reset All Progress</button>
+    </div>
+  `;
+
+  // Animate category bars
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.cbar-fill').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  });
+}
+
+function confirmReset() {
+  if (confirm('This will erase all your progress — solved cases, mastered frameworks, streak, and guesstimates. Are you sure?')) {
+    CS.resetAll();
+    render();
+  }
+}
+
+render();
+CS.syncUser();
+</script>

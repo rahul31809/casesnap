@@ -1,0 +1,282 @@
+<title>CaseSnap — Cases</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{--bg:#F5F1E9;--bg-alt:#EDE8DC;--surface:#FFF;--ink:#1A150D;--ink-muted:#6E5A3C;--ink-faint:#B09870;--accent:#B5580A;--accent-h:#C9610B;--accent-text:#FFF;--border:#DDD0B8;--soft:rgba(181,88,10,.09);--sft-bd:rgba(181,88,10,.20);--sh-md:0 4px 20px rgba(181,88,10,.10);--grn:#3A7D44;--grn-bg:rgba(58,125,68,.09);--grn-bd:rgba(58,125,68,.20);--sb-bg:#181007;--sb-ink:#F0E8D8;--sb-muted:#9A7A50;--sb-bd:#251A0E;--sb-act:rgba(240,152,48,.13);--sb-act-bd:rgba(240,152,48,.28);--tb-h:54px}
+@media(prefers-color-scheme:dark){:root{--bg:#0D0A05;--bg-alt:#171208;--surface:#1C1308;--ink:#F0E8D8;--ink-muted:#A0845A;--ink-faint:#7A6040;--accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;--soft:rgba(240,152,48,.10);--sft-bd:rgba(240,152,48,.22);--sh-md:0 4px 24px rgba(0,0,0,.50);--grn:#5BAB68;--grn-bg:rgba(91,171,104,.10);--grn-bd:rgba(91,171,104,.22);--sb-bg:#0A0703;--sb-ink:#F0E8D8;--sb-muted:#7A6040;--sb-bd:#1A1208;--sb-act:rgba(240,152,48,.12);--sb-act-bd:rgba(240,152,48,.25)}}
+:root[data-theme="dark"]{--bg:#0D0A05;--bg-alt:#171208;--surface:#1C1308;--ink:#F0E8D8;--ink-muted:#A0845A;--ink-faint:#7A6040;--accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;--soft:rgba(240,152,48,.10);--sft-bd:rgba(240,152,48,.22);--sh-md:0 4px 24px rgba(0,0,0,.50);--grn:#5BAB68;--grn-bg:rgba(91,171,104,.10);--grn-bd:rgba(91,171,104,.22);--sb-bg:#0A0703;--sb-ink:#F0E8D8;--sb-muted:#7A6040;--sb-bd:#1A1208;--sb-act:rgba(240,152,48,.12);--sb-act-bd:rgba(240,152,48,.25)}
+:root[data-theme="light"]{--bg:#F5F1E9;--bg-alt:#EDE8DC;--surface:#FFF;--ink:#1A150D;--ink-muted:#6E5A3C;--ink-faint:#B09870;--accent:#B5580A;--accent-h:#C9610B;--accent-text:#FFF;--border:#DDD0B8;--soft:rgba(181,88,10,.09);--sft-bd:rgba(181,88,10,.20);--sh-md:0 4px 20px rgba(181,88,10,.10);--grn:#3A7D44;--grn-bg:rgba(58,125,68,.09);--grn-bd:rgba(58,125,68,.20);--sb-bg:#181007;--sb-ink:#F0E8D8;--sb-muted:#9A7A50;--sb-bd:#251A0E;--sb-act:rgba(240,152,48,.13);--sb-act-bd:rgba(240,152,48,.28)}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;overflow:hidden}
+button,input,select{font-family:inherit}
+
+.app{display:flex;height:100dvh}
+
+/* Sidebar */
+.sb{width:214px;flex-shrink:0;background:var(--sb-bg);border-right:1px solid var(--sb-bd);display:flex;flex-direction:column}
+.sb-top{padding:14px 13px 0;flex:1;min-height:0;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;padding:7px 4px 18px}
+.lm{width:27px;height:27px;background:var(--accent);border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:800;color:var(--accent-text);flex-shrink:0}
+.ln{font-size:13.5px;font-weight:700;letter-spacing:-.3px;color:var(--sb-ink)}
+.ng{margin-bottom:20px}
+.nl{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--sb-muted);padding:0 5px;margin-bottom:4px}
+.ni{display:flex;align-items:center;gap:8px;padding:6px 7px;border-radius:6px;color:var(--sb-muted);font-size:12.5px;font-weight:500;transition:background .12s,color .12s;margin-bottom:1px;border:none;background:transparent;width:100%;text-align:left;cursor:pointer}
+.ni:hover{background:rgba(255,255,255,.06);color:var(--sb-ink)}
+.ni.active{background:var(--sb-act);border:1px solid var(--sb-act-bd);color:var(--accent)}
+.ni svg{flex-shrink:0;opacity:.6}.ni.active svg{opacity:1}
+.sb-bot{padding:10px 13px 13px;border-top:1px solid var(--sb-bd);flex-shrink:0}
+.uc{display:flex;align-items:center;gap:9px;padding:6px 5px;border-radius:6px;cursor:pointer}
+.uc:hover{background:rgba(255,255,255,.05)}
+.av{width:27px;height:27px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--accent-text);flex-shrink:0}
+.un{font-size:11.5px;font-weight:600;color:var(--sb-ink);line-height:1.2}
+.up{font-size:10px;color:var(--sb-muted)}
+.sb-logout{display:flex;align-items:center;gap:6px;width:100%;margin-top:6px;padding:6px 5px;background:none;border:none;cursor:pointer;color:var(--sb-muted);font-size:11px;font-family:inherit;border-radius:6px;transition:background .12s,color .12s;text-align:left;}
+.sb-logout:hover{background:rgba(255,255,255,.05);color:var(--sb-ink);}
+
+/* Main */
+.main{flex:1;min-width:0;overflow-y:auto;display:flex;flex-direction:column}
+
+/* Topbar */
+.topbar{height:var(--tb-h);padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;position:sticky;top:0;z-index:10}
+.tb-l{display:flex;align-items:center;gap:9px}
+.tb-l h1{font-size:15px;font-weight:700;letter-spacing:-.2px}
+.cnt-badge{font-size:11px;font-weight:600;background:var(--soft);border:1px solid var(--sft-bd);color:var(--accent);padding:2px 8px;border-radius:100px}
+.streak-pill{display:flex;align-items:center;gap:5px;background:var(--soft);border:1px solid var(--sft-bd);border-radius:100px;padding:4px 10px;font-size:12px;font-weight:600;color:var(--accent)}
+.sp-n{font-size:13px;font-weight:800;line-height:1}
+
+/* Filter bar */
+.filter-bar{position:sticky;top:var(--tb-h);z-index:9;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 22px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.search-wrap{position:relative;flex-shrink:0}
+.search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink-muted)}
+.search-inp{padding:6px 10px 6px 30px;background:var(--bg-alt);border:1px solid var(--border);border-radius:7px;font-size:12.5px;color:var(--ink);outline:none;width:176px;transition:border-color .12s,box-shadow .12s}
+.search-inp:focus{border-color:var(--accent);box-shadow:0 0 0 2px var(--soft)}
+.search-inp::placeholder{color:var(--ink-faint)}
+.tabs-wrap{flex:1;min-width:0;overflow-x:auto;display:flex;gap:3px;scrollbar-width:none}
+.tabs-wrap::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;padding:5px 10px;border-radius:7px;border:1px solid transparent;background:transparent;font-size:12px;font-weight:500;color:var(--ink-muted);cursor:pointer;transition:background .12s,color .12s;display:inline-flex;align-items:center;gap:4px}
+.tab:hover{background:var(--bg-alt);color:var(--ink)}
+.tab.active{background:var(--soft);border-color:var(--sft-bd);color:var(--accent)}
+.tc{font-size:10px;opacity:.65}
+.sort-sel{font-size:12px;color:var(--ink-muted);background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:5px 8px;cursor:pointer;outline:none;flex-shrink:0}
+.sort-sel:focus{border-color:var(--accent)}
+
+/* Content */
+.content{padding:14px 22px 24px;flex:1}
+.results-h{margin-bottom:11px}
+.results-lbl{font-size:12px;color:var(--ink-muted)}
+
+/* Grid */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(254px,1fr));gap:11px}
+
+/* Card */
+.case-card{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:15px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;display:flex;flex-direction:column}
+.case-card:hover{border-color:var(--accent);box-shadow:var(--sh-md);transform:translateY(-2px)}
+.case-card:active{transform:scale(.98);transition:transform .08s}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;gap:6px}
+.bx{font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2.5px 8px;border-radius:100px;white-space:nowrap;flex-shrink:0;line-height:1.5}
+.bx-profitability,.bx-pricing{background:var(--soft);border:1px solid var(--sft-bd);color:var(--accent)}
+.bx-market-entry,.bx-growth{background:rgba(58,125,68,.09);border:1px solid rgba(58,125,68,.22);color:#3A7D44}
+.bx-ma,.bx-tech{background:rgba(81,103,178,.09);border:1px solid rgba(81,103,178,.22);color:#5167B2}
+.bx-guesstimate{background:rgba(140,100,30,.09);border:1px solid rgba(140,100,30,.22);color:#8C641E}
+@media(prefers-color-scheme:dark){
+  .bx-market-entry,.bx-growth{color:#5BAB68;background:rgba(91,171,104,.10);border-color:rgba(91,171,104,.22)}
+  .bx-ma,.bx-tech{color:#8095D8;background:rgba(128,149,216,.10);border-color:rgba(128,149,216,.22)}
+  .bx-guesstimate{color:#C9A34A;background:rgba(201,163,74,.10);border-color:rgba(201,163,74,.22)}
+}
+:root[data-theme="dark"] .bx-market-entry,:root[data-theme="dark"] .bx-growth{color:#5BAB68;background:rgba(91,171,104,.10);border-color:rgba(91,171,104,.22)}
+:root[data-theme="dark"] .bx-ma,:root[data-theme="dark"] .bx-tech{color:#8095D8;background:rgba(128,149,216,.10);border-color:rgba(128,149,216,.22)}
+:root[data-theme="dark"] .bx-guesstimate{color:#C9A34A;background:rgba(201,163,74,.10);border-color:rgba(201,163,74,.22)}
+.sst{font-size:9.5px;font-weight:600;padding:2.5px 8px;border-radius:100px;flex-shrink:0;line-height:1.5}
+.sst-done{background:var(--grn-bg);border:1px solid var(--grn-bd);color:var(--grn)}
+.sst-reviewed{background:var(--soft);border:1px solid var(--sft-bd);color:var(--accent)}
+.card-title{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:8px;letter-spacing:-.1px}
+.card-sectors{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+.sec-tag{font-size:10px;color:var(--ink-muted);background:var(--bg-alt);border:1px solid var(--border);border-radius:100px;padding:2px 7px}
+.card-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.meta-t{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--ink-muted)}
+.diff-b{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px}
+.diff-Moderate{background:var(--bg-alt);border:1px solid var(--border);color:var(--ink-muted)}
+.diff-Challenging{background:var(--soft);border:1px solid var(--sft-bd);color:var(--accent)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid var(--border);margin-top:10px}
+.card-att{font-size:10.5px;color:var(--ink-faint)}
+.card-src{font-size:10px;color:var(--ink-faint)}
+
+/* Empty */
+.empty{text-align:center;padding:56px 24px;color:var(--ink-muted);display:none}
+.empty h3{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.empty p{font-size:13px}
+
+@media(max-width:900px){
+  .sb{display:none}
+  .filter-bar{flex-wrap:wrap;padding:8px 14px;gap:8px}
+  .search-wrap,.search-inp{width:100%}
+  .content{padding:12px 14px 20px}
+  .case-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+}
+</style>
+
+<div class="app">
+<nav class="sb">
+  <div class="sb-top">
+    <a href="dashboard.html" class="logo"><div class="lm">CS</div><span class="ln">CaseSnap</span></a>
+    <div class="ng">
+      <div class="nl">Main</div>
+      <button class="ni" onclick="location.href='dashboard.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1.2" fill="currentColor"/><rect x="8" y="1" width="5" height="5" rx="1.2" fill="currentColor" opacity=".55"/><rect x="1" y="8" width="5" height="5" rx="1.2" fill="currentColor" opacity=".55"/><rect x="8" y="8" width="5" height="5" rx="1.2" fill="currentColor" opacity=".35"/></svg>
+        Dashboard
+      </button>
+      <button class="ni active" onclick="location.href='cases.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 6.5h6M4 9h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Cases
+      </button>
+      <button class="ni" onclick="location.href='frameworks.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5.5h6M4 7.5h6M4 9.5h3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Frameworks
+      </button>
+      <button class="ni" onclick="location.href='mockrounds.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Mock Rounds
+      </button>
+    </div>
+    <div class="ng">
+      <div class="nl">Practice</div>
+      <button class="ni" onclick="location.href='guesstimates.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M7 10.5v3M5.5 13h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Guesstimates
+      </button>
+      <button class="ni" onclick="location.href='leaderboard.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11 5.5 7l3 2.5L13 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Leaderboard
+      </button>
+    </div>
+  </div>
+  <div class="sb-bot">
+    <div class="uc">
+      <div class="av">RA</div>
+      <div><div class="un">Rahul Agarwal</div><div class="up">Phase 2 · Structured Prep</div></div>
+    </div>
+    <button class="sb-logout" onclick="CS.logout()">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l4 3-4 3M6 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Sign out
+    </button>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-l">
+      <h1>Cases</h1>
+      <span class="cnt-badge" id="cnt">18</span>
+    </div>
+    <div class="streak-pill">
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1C6 1 3.5 4 3.5 6.5a2.5 2.5 0 0 0 5 0C8.5 4 6 1 6 1Z" fill="var(--accent)" fill-opacity=".3"/><path d="M6 4.5C6 4.5 5 6 5 7A1 1 0 0 0 7 7C7 6 6 4.5 6 4.5Z" fill="currentColor"/></svg>
+      <span class="sp-n" id="sp-n">0</span> day streak
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="search-wrap">
+      <svg class="search-ico" width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 9.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <input type="text" class="search-inp" id="srch" placeholder="Search cases…" oninput="doFilter()">
+    </div>
+    <div class="tabs-wrap">
+      <button class="tab active" data-f="all" onclick="setTab(this)">All <span class="tc">18</span></button>
+      <button class="tab" data-f="profitability" onclick="setTab(this)">Profitability <span class="tc">5</span></button>
+      <button class="tab" data-f="market-entry" onclick="setTab(this)">Market Entry <span class="tc">3</span></button>
+      <button class="tab" data-f="growth" onclick="setTab(this)">Growth Strategy <span class="tc">3</span></button>
+      <button class="tab" data-f="pricing" onclick="setTab(this)">Pricing <span class="tc">2</span></button>
+      <button class="tab" data-f="ma" onclick="setTab(this)">M&amp;A <span class="tc">2</span></button>
+      <button class="tab" data-f="tech" onclick="setTab(this)">Tech <span class="tc">2</span></button>
+      <button class="tab" data-f="guesstimate" onclick="setTab(this)">Guesstimates <span class="tc">2</span></button>
+    </div>
+    <select class="sort-sel" id="srt" onchange="doFilter()">
+      <option value="new">Default Order</option>
+      <option value="diff">Difficulty</option>
+    </select>
+  </div>
+
+  <div class="content">
+    <div class="results-h"><span class="results-lbl" id="rlbl">Showing 18 cases</span></div>
+    <div class="case-grid" id="cg"></div>
+    <div class="empty" id="emp"><h3>No cases found</h3><p>Try a different search or filter.</p></div>
+  </div>
+</div>
+</div>
+
+<script src="progress.js"></script>
+<script>
+const CLK = `<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 3.5V6l1.5 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>`;
+
+const CASES = [
+  {id:1,  cat:'profitability', label:'Profitability',   title:'Declining Margins at a Telecom Operator',       sectors:['Telecom'],                diff:'Moderate',   time:'25–30',att:1200,attStr:'1.2k',status:'done',    src:'SPJIMR 2026–27'},
+  {id:2,  cat:'market-entry',  label:'Market Entry',    title:'E-Pharma Market Entry in India',                sectors:['Pharma','E-commerce'],    diff:'Moderate',   time:'30–35',att:980, attStr:'980', status:'done',    src:'SPJIMR 2026–27'},
+  {id:3,  cat:'growth',        label:'Growth Strategy', title:'Insurance Company Growth Strategy',              sectors:['BFSI'],                   diff:'Challenging',time:'35–40',att:750, attStr:'750', status:'reviewed',src:'SPJIMR 2026–27'},
+  {id:4,  cat:'profitability', label:'Profitability',   title:'FMCG Company Declining Profitability',          sectors:['FMCG'],                   diff:'Moderate',   time:'20–25',att:1500,attStr:'1.5k',status:'done',    src:'SPJIMR 2026–27'},
+  {id:5,  cat:'market-entry',  label:'Market Entry',    title:'EV Manufacturer Entry into India',              sectors:['Automobile','EV'],        diff:'Challenging',time:'35–40',att:620, attStr:'620', status:null,      src:'SPJIMR 2026–27'},
+  {id:6,  cat:'pricing',       label:'Pricing',         title:'Premium EV Pricing Strategy',                   sectors:['Automobile'],             diff:'Moderate',   time:'20–25',att:840, attStr:'840', status:null,      src:'SPJIMR 2026–27'},
+  {id:7,  cat:'profitability', label:'Profitability',   title:'Hospital Chain Revenue Decline',                sectors:['Healthcare'],             diff:'Moderate',   time:'25–30',att:1100,attStr:'1.1k',status:null,      src:'SPJIMR 2026–27'},
+  {id:8,  cat:'ma',            label:'M&A',             title:'Refrigerator Brand Acquisition Rationale',      sectors:['Manufacturing'],          diff:'Moderate',   time:'30–35',att:540, attStr:'540', status:null,      src:'SPJIMR 2026–27'},
+  {id:9,  cat:'growth',        label:'Growth Strategy', title:"Dominos India's Growth Strategy",               sectors:['QSR'],                    diff:'Moderate',   time:'30–35',att:1300,attStr:'1.3k',status:null,      src:'SPJIMR 2026–27'},
+  {id:10, cat:'tech',          label:'Tech Consulting', title:'Courier Company Digitization',                  sectors:['Logistics'],              diff:'Moderate',   time:'25–30',att:490, attStr:'490', status:null,      src:'SPJIMR 2026–27'},
+  {id:11, cat:'pricing',       label:'Pricing',         title:'Industrial Expressway Toll Pricing',            sectors:['Infrastructure'],         diff:'Moderate',   time:'20–25',att:380, attStr:'380', status:null,      src:'SPJIMR 2026–27'},
+  {id:12, cat:'market-entry',  label:'Market Entry',    title:'Biotech Company Market Entry',                  sectors:['Biotech','Pharma'],       diff:'Challenging',time:'35–40',att:420, attStr:'420', status:null,      src:'SPJIMR 2026–27'},
+  {id:13, cat:'profitability', label:'Profitability',   title:'E-commerce Platform Losses',                    sectors:['E-commerce'],             diff:'Challenging',time:'30–35',att:890, attStr:'890', status:null,      src:'IIMB 2025–26'},
+  {id:14, cat:'ma',            label:'M&A',             title:'IVF Chain Acquisition Due Diligence',           sectors:['Healthcare'],             diff:'Challenging',time:'35–40',att:320, attStr:'320', status:null,      src:'SPJIMR 2026–27'},
+  {id:15, cat:'growth',        label:'Growth Strategy', title:'Chemical Company Expansion Strategy',           sectors:['Manufacturing','Chemical'],diff:'Challenging',time:'35–40',att:410, attStr:'410', status:null,      src:'SPJIMR 2026–27'},
+  {id:16, cat:'tech',          label:'Tech Consulting', title:'PSU Bank Digital Transformation',               sectors:['BFSI'],                   diff:'Challenging',time:'30–35',att:560, attStr:'560', status:null,      src:'SPJIMR 2026–27'},
+  {id:17, cat:'guesstimate',   label:'Guesstimate',     title:'EV Charging Stations on Delhi–Mumbai Highway',  sectors:['Estimation'],             diff:'Moderate',   time:'10–15',att:2100,attStr:'2.1k',status:null,      src:'BCG'},
+  {id:18, cat:'guesstimate',   label:'Guesstimate',     title:'AI Usage at Business Schools in India',         sectors:['Estimation'],             diff:'Moderate',   time:'10–15',att:1800,attStr:'1.8k',status:'done',    src:'Accenture'},
+];
+
+const SL = {done:'Solved',reviewed:'Reviewed'};
+const DW  = {Challenging:2,Moderate:1};
+const SORTS = {att:(a,b)=>b.att-a.att, diff:(a,b)=>DW[b.diff]-DW[a.diff], new:(a,b)=>b.id-a.id};
+let activeF = 'all';
+
+function card(c){
+  const isSolved = CS.isSolved(c.id);
+  const sst = isSolved ? `<span class="sst sst-done">Solved</span>` : '';
+  const secs = c.sectors.map(s=>`<span class="sec-tag">${s}</span>`).join('');
+  return `<div class="case-card" onclick="location.href='solve.html?id=${c.id}'">
+    <div class="card-top"><span class="bx bx-${c.cat}">${c.label}</span>${sst}</div>
+    <div class="card-title">${c.title}</div>
+    <div class="card-sectors">${secs}</div>
+    <div class="card-meta">
+      <div class="meta-t">${CLK} ${c.time} min</div>
+      <span class="diff-b diff-${c.diff}">${c.diff}</span>
+    </div>
+    <div class="card-foot">
+      <span class="card-src">${c.src}</span>
+      ${isSolved ? '<span class="card-att" style="color:#1EBF78;font-weight:600;">✓ Solved</span>' : ''}
+    </div>
+  </div>`;
+}
+
+function render(list){
+  const cg = document.getElementById('cg'), emp = document.getElementById('emp');
+  cg.innerHTML = list.map(card).join('');
+  emp.style.display = list.length ? 'none' : 'block';
+  document.getElementById('rlbl').textContent = `Showing ${list.length} case${list.length!==1?'s':''}`;
+  document.getElementById('cnt').textContent  = list.length;
+}
+
+function doFilter(){
+  const q = document.getElementById('srch').value.toLowerCase().trim();
+  const s = document.getElementById('srt').value;
+  render(CASES
+    .filter(c=>(activeF==='all'||c.cat===activeF)&&(!q||c.title.toLowerCase().includes(q)))
+    .sort(SORTS[s]));
+}
+
+function setTab(btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  activeF = btn.dataset.f;
+  doFilter();
+}
+
+render(CASES);
+document.getElementById('sp-n').textContent = CS.getStreak();
+CS.syncUser();
+</script>

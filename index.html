@@ -1,0 +1,582 @@
+<title>CaseSnap — Crack Consulting Cases. Daily.</title>
+<style>
+  :root {
+    --bg:           #F8F4EC;
+    --surface:      #FFFFFF;
+    --ink:          #1A150D;
+    --ink-muted:    #6E5A3C;
+    --accent:       #B5580A;
+    --accent-h:     #CC6610;
+    --accent-text:  #FFFFFF;
+    --border:       #DDD0B8;
+    --shadow:       0 2px 30px rgba(181,88,10,.10), 0 1px 5px rgba(181,88,10,.07);
+    --tag-bg:       rgba(181,88,10,.08);
+    --tag-bd:       rgba(181,88,10,.18);
+    --notice-bg:    rgba(181,88,10,.06);
+    --notice-bd:    rgba(181,88,10,.16);
+    --ring:         rgba(181,88,10,.14);
+    --dot:          rgba(181,88,10,.13);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:           #0F0B06;
+      --surface:      #1A1208;
+      --ink:          #F0E8D8;
+      --ink-muted:    #A0845A;
+      --accent:       #F09830;
+      --accent-h:     #F5AA48;
+      --accent-text:  #100C04;
+      --border:       #2E2214;
+      --shadow:       0 2px 36px rgba(0,0,0,.55), 0 1px 6px rgba(0,0,0,.40);
+      --tag-bg:       rgba(240,152,48,.10);
+      --tag-bd:       rgba(240,152,48,.22);
+      --notice-bg:    rgba(240,152,48,.07);
+      --notice-bd:    rgba(240,152,48,.18);
+      --ring:         rgba(240,152,48,.12);
+      --dot:          rgba(240,152,48,.10);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:           #0F0B06;
+    --surface:      #1A1208;
+    --ink:          #F0E8D8;
+    --ink-muted:    #A0845A;
+    --accent:       #F09830;
+    --accent-h:     #F5AA48;
+    --accent-text:  #100C04;
+    --border:       #2E2214;
+    --shadow:       0 2px 36px rgba(0,0,0,.55), 0 1px 6px rgba(0,0,0,.40);
+    --tag-bg:       rgba(240,152,48,.10);
+    --tag-bd:       rgba(240,152,48,.22);
+    --notice-bg:    rgba(240,152,48,.07);
+    --notice-bd:    rgba(240,152,48,.18);
+    --ring:         rgba(240,152,48,.12);
+    --dot:          rgba(240,152,48,.10);
+  }
+
+  :root[data-theme="light"] {
+    --bg:           #F8F4EC;
+    --surface:      #FFFFFF;
+    --ink:          #1A150D;
+    --ink-muted:    #6E5A3C;
+    --accent:       #B5580A;
+    --accent-h:     #CC6610;
+    --accent-text:  #FFFFFF;
+    --border:       #DDD0B8;
+    --shadow:       0 2px 30px rgba(181,88,10,.10), 0 1px 5px rgba(181,88,10,.07);
+    --tag-bg:       rgba(181,88,10,.08);
+    --tag-bd:       rgba(181,88,10,.18);
+    --notice-bg:    rgba(181,88,10,.06);
+    --notice-bd:    rgba(181,88,10,.16);
+    --ring:         rgba(181,88,10,.14);
+    --dot:          rgba(181,88,10,.13);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 20px;
+    transition: background .25s, color .25s;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--dot) 1px, transparent 1px),
+      linear-gradient(90deg, var(--dot) 1px, transparent 1px);
+    background-size: 26px 26px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 65% 55% at 50% 42%, var(--ring), transparent 72%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 38px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow);
+    animation: rise .5s cubic-bezier(.22,1,.36,1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+
+  @media (prefers-reduced-motion: reduce) { .card { animation: none; } }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: -.4px;
+    color: var(--accent-text);
+    flex-shrink: 0;
+    user-select: none;
+  }
+
+  .logo-name {
+    font-size: 15.5px;
+    font-weight: 700;
+    letter-spacing: -.35px;
+  }
+
+  .headline {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.17;
+    letter-spacing: -.4px;
+    text-wrap: balance;
+    margin-bottom: 9px;
+  }
+
+  .headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subline {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  /* ── Auth tabs ─────────────────────────────────── */
+  .auth-tabs {
+    display: flex;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .auth-tab {
+    flex: 1;
+    padding: 9px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    font-family: inherit;
+    transition: background .15s, color .15s;
+  }
+
+  .auth-tab.active {
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+
+  /* ── Form elements ─────────────────────────────── */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+
+  .form-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    letter-spacing: .03em;
+    text-transform: uppercase;
+  }
+
+  .form-input {
+    padding: 10px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: inherit;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    width: 100%;
+  }
+
+  .form-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--ring);
+  }
+
+  .form-input::placeholder {
+    color: var(--ink-muted);
+    opacity: .45;
+  }
+
+  .pw-wrap { position: relative; }
+  .pw-wrap .form-input { padding-right: 40px; }
+
+  .pw-toggle {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-muted);
+    display: grid;
+    place-items: center;
+    padding: 4px;
+    opacity: .6;
+    transition: opacity .15s;
+  }
+
+  .pw-toggle:hover { opacity: 1; }
+
+  /* Password requirements */
+  .pw-reqs {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 9px 11px;
+    background: var(--notice-bg);
+    border: 1px solid var(--notice-bd);
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+
+  .req {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    transition: color .2s;
+  }
+
+  .req-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+
+  .req.ok .req-dot { background: #1EBF78; }
+  .req.ok { color: var(--ink); }
+
+  /* Submit button */
+  .btn-auth {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: var(--accent-text);
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .15s, transform .12s;
+    margin-top: 4px;
+    letter-spacing: -.1px;
+  }
+
+  .btn-auth:hover { background: var(--accent-h); transform: translateY(-1px); }
+  .btn-auth:active { transform: translateY(0); }
+  .btn-auth:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+  .auth-switch {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+  }
+
+  .auth-switch button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 12px;
+    font-family: inherit;
+  }
+
+  .auth-switch button:hover { text-decoration: underline; }
+
+  .form-err {
+    font-size: 11.5px;
+    color: #C0392B;
+    padding: 8px 11px;
+    background: rgba(192,57,43,.07);
+    border: 1px solid rgba(192,57,43,.16);
+    border-radius: 7px;
+    margin-bottom: 6px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .form-err { color: #E85050; background: rgba(232,80,80,.09); border-color: rgba(232,80,80,.18); }
+  }
+  :root[data-theme="dark"] .form-err { color: #E85050; background: rgba(232,80,80,.09); border-color: rgba(232,80,80,.18); }
+
+  /* ── Features ──────────────────────────────────── */
+  .features {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .feature {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    color: var(--ink-muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+
+  .footer {
+    position: relative;
+    z-index: 1;
+    margin-top: 18px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    opacity: .45;
+    letter-spacing: .01em;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 32px 24px; }
+    .headline { font-size: 24px; }
+  }
+</style>
+
+<div class="card">
+
+  <!-- Logo -->
+  <div class="logo">
+    <div class="logo-mark">CS</div>
+    <span class="logo-name">CaseSnap</span>
+  </div>
+
+  <!-- Headline -->
+  <h1 class="headline">Crack Consulting Cases. <em>Daily.</em></h1>
+  <p class="subline">Practice frameworks, guesstimates, and structured thinking — built for MBA aspirants targeting Big&nbsp;4 and Accenture Strategy.</p>
+
+  <!-- Auth tab switcher -->
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tab-in" onclick="switchTab('in')">Sign In</button>
+    <button class="auth-tab" id="tab-up" onclick="switchTab('up')">Create Account</button>
+  </div>
+
+  <!-- Sign In form -->
+  <form id="form-in" onsubmit="doSignIn(event)">
+    <div class="form-group">
+      <label class="form-label">Email or Phone Number</label>
+      <input class="form-input" type="text" id="in-id" placeholder="you@example.com or 9876543210" autocomplete="username" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="in-pw" placeholder="Your password" autocomplete="current-password" required>
+        <button type="button" class="pw-toggle" onclick="togglePw('in-pw')" aria-label="Show password">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="in-err" class="form-err" style="display:none"></div>
+    <button type="submit" class="btn-auth">Sign In</button>
+    <div class="auth-switch">No account? <button type="button" onclick="switchTab('up')">Create one free →</button></div>
+  </form>
+
+  <!-- Sign Up form -->
+  <form id="form-up" onsubmit="doSignUp(event)" style="display:none">
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" type="text" id="up-name" placeholder="Your full name" autocomplete="name" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email or Phone Number</label>
+      <input class="form-input" type="text" id="up-id" placeholder="you@example.com or 9876543210" autocomplete="username" required>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="up-pw" placeholder="Create a strong password" autocomplete="new-password" required oninput="checkPwReqs()">
+        <button type="button" class="pw-toggle" onclick="togglePw('up-pw')" aria-label="Show password">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+      <div class="pw-reqs" id="pw-reqs">
+        <div class="req" id="req-len"><div class="req-dot"></div>At least 8 characters</div>
+        <div class="req" id="req-up"><div class="req-dot"></div>One uppercase letter (A–Z)</div>
+        <div class="req" id="req-lo"><div class="req-dot"></div>One lowercase letter (a–z)</div>
+        <div class="req" id="req-num"><div class="req-dot"></div>One number (0–9)</div>
+        <div class="req" id="req-sym"><div class="req-dot"></div>One symbol (!@#$%^&amp;*...)</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Confirm Password</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="up-pw2" placeholder="Repeat your password" autocomplete="new-password" required>
+        <button type="button" class="pw-toggle" onclick="togglePw('up-pw2')" aria-label="Show password">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="up-err" class="form-err" style="display:none"></div>
+    <button type="submit" class="btn-auth">Create Account</button>
+    <div class="auth-switch">Already have an account? <button type="button" onclick="switchTab('in')">Sign in →</button></div>
+  </form>
+
+  <!-- Feature pills -->
+  <div class="features">
+    <span class="feature">18 Cases</span>
+    <span class="feature">14 Guesstimates</span>
+    <span class="feature">6 Mock Rounds</span>
+    <span class="feature">60+ Frameworks</span>
+    <span class="feature">Big 4 Ready</span>
+  </div>
+
+</div>
+
+<p class="footer">© 2025 CaseSnap · Built for consultants in the making</p>
+
+<script>
+// If already logged in, skip to dashboard
+if (localStorage.getItem('cs_session')) location.replace('dashboard.html');
+
+async function hashPw(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function validatePw(pw) {
+  if (pw.length < 8)             return 'Password must be at least 8 characters';
+  if (!/[A-Z]/.test(pw))        return 'Add at least one uppercase letter (A–Z)';
+  if (!/[a-z]/.test(pw))        return 'Add at least one lowercase letter (a–z)';
+  if (!/[0-9]/.test(pw))        return 'Add at least one number (0–9)';
+  if (!/[^A-Za-z0-9\s]/.test(pw)) return 'Add at least one symbol (!@#$%^&*...)';
+  return null;
+}
+
+function checkPwReqs() {
+  const pw = document.getElementById('up-pw').value;
+  const set = (id, ok) => document.getElementById(id).classList.toggle('ok', ok);
+  set('req-len', pw.length >= 8);
+  set('req-up',  /[A-Z]/.test(pw));
+  set('req-lo',  /[a-z]/.test(pw));
+  set('req-num', /[0-9]/.test(pw));
+  set('req-sym', /[^A-Za-z0-9\s]/.test(pw));
+}
+
+function switchTab(tab) {
+  document.getElementById('tab-in').classList.toggle('active', tab === 'in');
+  document.getElementById('tab-up').classList.toggle('active', tab === 'up');
+  document.getElementById('form-in').style.display = tab === 'in' ? '' : 'none';
+  document.getElementById('form-up').style.display = tab === 'up' ? '' : 'none';
+  showErr(tab === 'in' ? 'in-err' : 'up-err', '');
+}
+
+function togglePw(id) {
+  const inp = document.getElementById(id);
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = msg ? '' : 'none';
+}
+
+function getUsers() { return JSON.parse(localStorage.getItem('cs_users') || '[]'); }
+function saveUsers(u) { localStorage.setItem('cs_users', JSON.stringify(u)); }
+function saveSession(u) {
+  localStorage.setItem('cs_session', JSON.stringify({
+    userId: u.id, name: u.name, emailOrPhone: u.emailOrPhone, loggedInAt: new Date().toISOString()
+  }));
+}
+
+async function doSignIn(e) {
+  e.preventDefault();
+  showErr('in-err', '');
+  const id = document.getElementById('in-id').value.trim();
+  const pw = document.getElementById('in-pw').value;
+  if (!id || !pw) { showErr('in-err', 'Please fill in all fields'); return; }
+  const hash = await hashPw(pw);
+  const user = getUsers().find(u => u.emailOrPhone === id && u.passwordHash === hash);
+  if (!user) { showErr('in-err', 'Incorrect email/phone or password'); return; }
+  saveSession(user);
+  location.replace('dashboard.html');
+}
+
+async function doSignUp(e) {
+  e.preventDefault();
+  showErr('up-err', '');
+  const name = document.getElementById('up-name').value.trim();
+  const id   = document.getElementById('up-id').value.trim();
+  const pw   = document.getElementById('up-pw').value;
+  const pw2  = document.getElementById('up-pw2').value;
+  if (!name || !id || !pw || !pw2) { showErr('up-err', 'Please fill in all fields'); return; }
+  const pwErr = validatePw(pw);
+  if (pwErr) { showErr('up-err', pwErr); return; }
+  if (pw !== pw2) { showErr('up-err', 'Passwords do not match'); return; }
+  const users = getUsers();
+  if (users.find(u => u.emailOrPhone === id)) {
+    showErr('up-err', 'This email/phone is already registered — sign in instead');
+    return;
+  }
+  const hash = await hashPw(pw);
+  const newUser = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2),
+    name, emailOrPhone: id, passwordHash: hash, createdAt: new Date().toISOString()
+  };
+  users.push(newUser);
+  saveUsers(users);
+  saveSession(newUser);
+  location.replace('dashboard.html');
+}
+</script>

@@ -1,0 +1,507 @@
+<title>CaseSnap — Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root{
+  --bg:#F5F1E9;--bg-alt:#EDE8DC;--surface:#FFF;--ink:#1A150D;--ink-muted:#6E5A3C;--ink-faint:#B09870;
+  --accent:#B5580A;--accent-h:#C9610B;--accent-text:#FFF;--border:#DDD0B8;
+  --soft:rgba(181,88,10,.09);--sft-bd:rgba(181,88,10,.20);
+  --sh-sm:0 1px 4px rgba(181,88,10,.06);--sh-md:0 4px 20px rgba(181,88,10,.10);
+  --grn:#3A7D44;--grn-bg:rgba(58,125,68,.09);--grn-bd:rgba(58,125,68,.20);
+  --sb-bg:#181007;--sb-ink:#F0E8D8;--sb-muted:#9A7A50;--sb-bd:#251A0E;
+  --sb-act:rgba(240,152,48,.13);--sb-act-bd:rgba(240,152,48,.28);
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0D0A05;--bg-alt:#171208;--surface:#1C1308;--ink:#F0E8D8;--ink-muted:#A0845A;--ink-faint:#7A6040;
+  --accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;
+  --soft:rgba(240,152,48,.10);--sft-bd:rgba(240,152,48,.22);
+  --sh-sm:0 1px 5px rgba(0,0,0,.40);--sh-md:0 4px 24px rgba(0,0,0,.50);
+  --grn:#5BAB68;--grn-bg:rgba(91,171,104,.10);--grn-bd:rgba(91,171,104,.22);
+  --sb-bg:#0A0703;--sb-ink:#F0E8D8;--sb-muted:#7A6040;--sb-bd:#1A1208;
+  --sb-act:rgba(240,152,48,.12);--sb-act-bd:rgba(240,152,48,.25);
+}}
+:root[data-theme="dark"]{
+  --bg:#0D0A05;--bg-alt:#171208;--surface:#1C1308;--ink:#F0E8D8;--ink-muted:#A0845A;--ink-faint:#7A6040;
+  --accent:#F09830;--accent-h:#F5AA48;--accent-text:#100C04;--border:#2E2214;
+  --soft:rgba(240,152,48,.10);--sft-bd:rgba(240,152,48,.22);
+  --sh-sm:0 1px 5px rgba(0,0,0,.40);--sh-md:0 4px 24px rgba(0,0,0,.50);
+  --grn:#5BAB68;--grn-bg:rgba(91,171,104,.10);--grn-bd:rgba(91,171,104,.22);
+  --sb-bg:#0A0703;--sb-ink:#F0E8D8;--sb-muted:#7A6040;--sb-bd:#1A1208;
+  --sb-act:rgba(240,152,48,.12);--sb-act-bd:rgba(240,152,48,.25);
+}
+:root[data-theme="light"]{
+  --bg:#F5F1E9;--bg-alt:#EDE8DC;--surface:#FFF;--ink:#1A150D;--ink-muted:#6E5A3C;--ink-faint:#B09870;
+  --accent:#B5580A;--accent-h:#C9610B;--accent-text:#FFF;--border:#DDD0B8;
+  --soft:rgba(181,88,10,.09);--sft-bd:rgba(181,88,10,.20);
+  --sh-sm:0 1px 4px rgba(181,88,10,.06);--sh-md:0 4px 20px rgba(181,88,10,.10);
+  --grn:#3A7D44;--grn-bg:rgba(58,125,68,.09);--grn-bd:rgba(58,125,68,.20);
+  --sb-bg:#181007;--sb-ink:#F0E8D8;--sb-muted:#9A7A50;--sb-bd:#251A0E;
+  --sb-act:rgba(240,152,48,.13);--sb-act-bd:rgba(240,152,48,.28);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;transition:background .25s,color .25s;overflow:hidden}
+button{font-family:inherit;cursor:pointer}
+
+.app{display:flex;height:100dvh}
+
+/* ── SIDEBAR ── */
+.sb{width:214px;flex-shrink:0;background:var(--sb-bg);border-right:1px solid var(--sb-bd);display:flex;flex-direction:column}
+.sb-top{padding:14px 13px 0;flex:1;min-height:0;overflow-y:auto}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;padding:7px 4px 18px}
+.lm{width:27px;height:27px;background:var(--accent);border-radius:6px;display:grid;place-items:center;font-size:10px;font-weight:800;color:var(--accent-text);flex-shrink:0}
+.ln{font-size:13.5px;font-weight:700;letter-spacing:-.3px;color:var(--sb-ink)}
+.ng{margin-bottom:20px}
+.nl{font-size:9.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--sb-muted);padding:0 5px;margin-bottom:4px}
+.ni{display:flex;align-items:center;gap:8px;padding:6px 7px;border-radius:6px;color:var(--sb-muted);font-size:12.5px;font-weight:500;transition:background .12s,color .12s;margin-bottom:1px;border:none;background:transparent;width:100%;text-align:left}
+.ni:hover{background:rgba(255,255,255,.06);color:var(--sb-ink)}
+.ni.active{background:var(--sb-act);border:1px solid var(--sb-act-bd);color:var(--accent)}
+.ni svg{flex-shrink:0;opacity:.6}
+.ni.active svg{opacity:1}
+.ni-badge{margin-left:auto;background:var(--accent);color:var(--accent-text);font-size:9px;font-weight:700;padding:1px 6px;border-radius:100px}
+.sb-bot{padding:10px 13px 13px;border-top:1px solid var(--sb-bd);flex-shrink:0}
+.uc{display:flex;align-items:center;gap:9px;padding:6px 5px;border-radius:6px;cursor:pointer}
+.uc:hover{background:rgba(255,255,255,.05)}
+.av{width:27px;height:27px;border-radius:50%;background:var(--accent);display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--accent-text);flex-shrink:0}
+.un{font-size:11.5px;font-weight:600;color:var(--sb-ink);line-height:1.2}
+.up{font-size:10px;color:var(--sb-muted)}
+.sb-logout{display:flex;align-items:center;gap:6px;width:100%;margin-top:6px;padding:6px 5px;background:none;border:none;cursor:pointer;color:var(--sb-muted);font-size:11px;font-family:inherit;border-radius:6px;transition:background .12s,color .12s;text-align:left;}
+.sb-logout:hover{background:rgba(255,255,255,.05);color:var(--sb-ink);}
+
+/* ── MAIN ── */
+.main{flex:1;min-width:0;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{padding:13px 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;position:sticky;top:0;z-index:10}
+.tb-l h1{font-size:15px;font-weight:700;letter-spacing:-.2px;line-height:1.2}
+.tb-l p{font-size:11.5px;color:var(--ink-muted);margin-top:1px}
+.tb-r{display:flex;align-items:center;gap:8px}
+.streak-pill{display:flex;align-items:center;gap:6px;background:var(--soft);border:1px solid var(--sft-bd);border-radius:100px;padding:4px 11px;font-size:12px;font-weight:600;color:var(--accent)}
+.sp-n{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.ib{width:31px;height:31px;border-radius:7px;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink-muted);transition:border-color .12s,color .12s}
+.ib:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── CONTENT GRID ── */
+.content{padding:16px 22px;display:grid;grid-template-columns:1fr 296px;gap:14px;align-content:start}
+
+/* Stats row */
+.sr{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:10px}
+.si{width:32px;height:32px;border-radius:8px;background:var(--soft);border:1px solid var(--sft-bd);display:grid;place-items:center;flex-shrink:0}
+.sv{font-size:17px;font-weight:800;letter-spacing:-.5px;font-variant-numeric:tabular-nums;line-height:1}
+.sl{font-size:10.5px;color:var(--ink-muted);margin-top:2px}
+
+/* Left column */
+.lc{display:flex;flex-direction:column;gap:13px}
+
+/* Featured case */
+.fc{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.fc-inner{padding:18px 18px 16px}
+.fc-ey{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.fc-badges{display:flex;align-items:center;gap:5px}
+.bx{display:inline-flex;align-items:center;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2.5px 8px;border-radius:100px}
+.bx-accent{background:var(--soft);border:1px solid var(--sft-bd);color:var(--accent)}
+.bx-neutral{background:var(--bg-alt);border:1px solid var(--border);color:var(--ink-muted)}
+.fc-num{font-size:11px;color:var(--ink-faint)}
+.fc-title{font-family:Georgia,"Times New Roman",serif;font-size:18px;font-weight:bold;letter-spacing:-.3px;line-height:1.25;margin-bottom:8px}
+.fc-desc{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:13px}
+.fc-mr{display:flex;align-items:center;gap:13px;margin-bottom:13px;flex-wrap:wrap}
+.mi{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ink-muted)}
+.fw-used{margin-bottom:15px}
+.fw-lbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:5px}
+.fw-ts{display:flex;flex-wrap:wrap;gap:5px}
+.fw-t{font-size:11px;font-weight:500;padding:3px 9px;background:var(--bg-alt);border:1px solid var(--border);border-radius:100px;color:var(--ink-muted)}
+.fc-acts{display:flex;gap:7px}
+.btn-start{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:var(--accent);color:var(--accent-text);border:none;border-radius:8px;font-size:12.5px;font-weight:600;transition:background .12s,transform .12s}
+.btn-start:hover{background:var(--accent-h);transform:translateY(-1px)}
+.btn-start:active{transform:none}
+.btn-sec{padding:9px 13px;background:transparent;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;color:var(--ink-muted);transition:border-color .12s,color .12s}
+.btn-sec:hover{border-color:var(--accent);color:var(--accent)}
+.fc-foot{display:flex;align-items:center;gap:7px;padding:8px 18px;background:var(--bg-alt);border-top:1px solid var(--border);font-size:11px;color:var(--ink-muted)}
+.fc-foot strong{color:var(--ink);font-weight:600}
+
+/* Recent */
+.sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.sec-t{font-size:12.5px;font-weight:700}
+.sec-lnk{font-size:11.5px;color:var(--accent);text-decoration:none;font-weight:500}
+.sec-lnk:hover{text-decoration:underline}
+.rl{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.ri{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer}
+.ri:last-child{border-bottom:none}
+.ri:hover{background:var(--bg-alt)}
+.ri-ico{width:30px;height:30px;border-radius:7px;background:var(--soft);border:1px solid var(--sft-bd);display:grid;place-items:center;flex-shrink:0}
+.ri-body{flex:1;min-width:0}
+.ri-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ri-meta{font-size:11px;color:var(--ink-muted);margin-top:1px}
+.ri-r{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
+.ob{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px}
+.ob-s{background:var(--grn-bg);color:var(--grn);border:1px solid var(--grn-bd)}
+.ob-r{background:var(--soft);color:var(--accent);border:1px solid var(--sft-bd)}
+.ri-ago{font-size:10px;color:var(--ink-faint)}
+
+/* Right column */
+.rc{display:flex;flex-direction:column;gap:13px}
+
+/* Progress */
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 14px}
+.ctr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ctr:last-child{margin-bottom:0}
+.ct-lbl{font-size:11px;font-weight:500;width:96px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink-muted)}
+.ct-bw{flex:1;height:4px;background:var(--border);border-radius:100px;overflow:hidden}
+.ct-b{height:100%;background:var(--accent);border-radius:100px;width:0;transition:width .5s ease}
+.ct-ct{font-size:10.5px;color:var(--ink-faint);width:34px;text-align:right;flex-shrink:0;font-variant-numeric:tabular-nums}
+
+/* Phase */
+.phc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.ph-track{display:flex;align-items:center;margin:10px 0 8px}
+.ph-step{display:flex;align-items:center;flex:1}
+.ph-dot{width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:700;flex-shrink:0;border:1.5px solid}
+.ph-dot.done{background:var(--accent);border-color:var(--accent);color:var(--accent-text)}
+.ph-dot.cur{background:var(--surface);border-color:var(--accent);color:var(--accent)}
+.ph-dot.todo{background:transparent;border-color:var(--border);color:var(--ink-muted)}
+.ph-ln{flex:1;height:2px;background:var(--border)}
+.ph-ln.done{background:var(--accent)}
+.ph-names{display:flex;justify-content:space-between;margin-bottom:10px}
+.ph-ni{font-size:9px;color:var(--ink-muted);text-align:center;width:66px;line-height:1.3}
+.ph-ni.cur{color:var(--accent);font-weight:600}
+.ph-desc{font-size:11.5px;color:var(--ink-muted);line-height:1.6;margin-bottom:10px}
+.ph-act{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--soft);border:1px solid var(--sft-bd);border-radius:7px;font-size:11.5px;font-weight:600;color:var(--accent);cursor:pointer}
+.ph-act:hover{background:rgba(181,88,10,.14)}
+
+/* Guesstimate of day */
+.gd{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.gd-fr{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.gd-q{font-family:Georgia,"Times New Roman",serif;font-size:13.5px;font-weight:bold;color:var(--ink);line-height:1.45;margin-bottom:11px}
+.gd-hint{font-size:11.5px;color:var(--ink-muted);line-height:1.55;padding:8px 10px;background:var(--bg-alt);border-radius:7px;margin-bottom:9px;display:none}
+.gd-hint.vis{display:block}
+.gd-row{display:flex;align-items:center;gap:7px}
+.btn-hint{font-size:11.5px;font-weight:500;color:var(--accent);background:none;border:1px solid var(--sft-bd);border-radius:6px;padding:5px 10px;transition:background .12s;flex-shrink:0}
+.btn-hint:hover{background:var(--soft)}
+.btn-att{flex:1;padding:8px;background:var(--accent);color:var(--accent-text);border:none;border-radius:7px;font-size:12px;font-weight:600;transition:background .12s}
+.btn-att:hover{background:var(--accent-h)}
+
+@media(max-width:900px){
+  .sb{display:none}
+  .content{grid-template-columns:1fr}
+  .rc{display:contents}
+  .sr{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .content{padding:12px 14px;gap:11px}
+  .topbar{padding:11px 14px}
+}
+</style>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sb">
+  <div class="sb-top">
+    <a href="dashboard.html" class="logo">
+      <div class="lm">CS</div>
+      <span class="ln">CaseSnap</span>
+    </a>
+    <div class="ng">
+      <div class="nl">Main</div>
+      <button class="ni active" onclick="location.href='dashboard.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1.2" fill="currentColor"/><rect x="8" y="1" width="5" height="5" rx="1.2" fill="currentColor" opacity=".55"/><rect x="1" y="8" width="5" height="5" rx="1.2" fill="currentColor" opacity=".55"/><rect x="8" y="8" width="5" height="5" rx="1.2" fill="currentColor" opacity=".35"/></svg>
+        Dashboard
+      </button>
+      <button class="ni" onclick="location.href='cases.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 6.5h6M4 9h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Cases
+        <span class="ni-badge">7</span>
+      </button>
+      <button class="ni" onclick="location.href='frameworks.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5.5h6M4 7.5h6M4 9.5h3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        Frameworks
+      </button>
+      <button class="ni" onclick="location.href='mockrounds.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M7 4.5v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Mock Rounds
+      </button>
+    </div>
+    <div class="ng">
+      <div class="nl">Practice</div>
+      <button class="ni" onclick="location.href='guesstimates.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="4" stroke="currentColor" stroke-width="1.3"/><path d="M7 10.5v3M5.5 13h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Guesstimates
+      </button>
+      <button class="ni" onclick="location.href='leaderboard.html'">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 11 5.5 7l3 2.5L13 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Leaderboard
+      </button>
+    </div>
+  </div>
+  <div class="sb-bot">
+    <div class="uc">
+      <div class="av">RA</div>
+      <div>
+        <div class="un">Rahul Agarwal</div>
+        <div class="up">Phase 2 · Structured Prep</div>
+      </div>
+    </div>
+    <button class="sb-logout" onclick="CS.logout()">
+      <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 5l4 3-4 3M6 8h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Sign out
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="topbar">
+    <div class="tb-l">
+      <h1 id="greeting">Good morning, Rahul.</h1>
+      <p>Thursday, 17 July · 2 cases done this week · 3 to go</p>
+    </div>
+    <div class="tb-r">
+      <div class="streak-pill">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C6 1 3.5 4 3.5 6.5a2.5 2.5 0 0 0 5 0C8.5 4 6 1 6 1Z" stroke="currentColor" stroke-width="1.2" fill="var(--accent)" fill-opacity=".3"/><path d="M6 4.5C6 4.5 5 6 5 7A1 1 0 0 0 7 7C7 6 6 4.5 6 4.5Z" fill="currentColor"/></svg>
+        <span class="sp-n" id="dash-streak">0</span>
+        day streak
+      </div>
+      <button class="ib" title="Notifications">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1.5a4.5 4.5 0 0 0-4.5 4.5v2.5L1.5 9.5v1h11v-1L11.5 8.5V6A4.5 4.5 0 0 0 7 1.5Z" stroke="currentColor" stroke-width="1.2"/><path d="M6 11.5a1 1 0 0 0 2 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- Stats row -->
+    <div class="sr">
+      <div class="sc">
+        <div class="si"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M7 1a6 6 0 1 0 0 12A6 6 0 0 0 7 1Z" stroke="var(--accent)" stroke-width="1.3"/><path d="M5 7.5l1.5 1.5 3-3" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="sv" id="sv-solved">0</div><div class="sl">Cases Solved</div></div>
+      </div>
+      <div class="sc">
+        <div class="si"><svg width="15" height="15" viewBox="0 0 12 12" fill="none"><path d="M6 1C6 1 3.5 4 3.5 6.5a2.5 2.5 0 0 0 5 0C8.5 4 6 1 6 1Z" fill="var(--accent)" opacity=".3"/><path d="M6 4.5C6 4.5 5 6 5 7A1 1 0 0 0 7 7C7 6 6 4.5 6 4.5Z" fill="var(--accent)"/></svg></div>
+        <div><div class="sv" id="sv-streak">0</div><div class="sl">Day Streak</div></div>
+      </div>
+      <div class="sc">
+        <div class="si"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2" width="11" height="10" rx="1.5" stroke="var(--accent)" stroke-width="1.3"/><path d="M4 6h4M4 8.5h2.5" stroke="var(--accent)" stroke-width="1.1" stroke-linecap="round"/></svg></div>
+        <div><div class="sv" id="sv-fw">0</div><div class="sl">Frameworks</div></div>
+      </div>
+      <div class="sc">
+        <div class="si"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 11 5.5 7l3 2.5L13 3" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="sv" id="sv-phase">0%</div><div class="sl">Phase Completion</div></div>
+      </div>
+    </div>
+
+    <!-- LEFT COLUMN -->
+    <div class="lc">
+
+      <!-- Today's case -->
+      <div class="fc">
+        <div class="fc-inner">
+          <div class="fc-ey">
+            <div class="fc-badges">
+              <span class="bx bx-accent">Profitability</span>
+              <span class="bx bx-neutral">Telecom</span>
+              <span class="bx bx-neutral">Moderate</span>
+            </div>
+            <span class="fc-num">Case #47 · Today</span>
+          </div>
+          <div class="fc-title">Declining Margins at a Telecom Operator</div>
+          <div class="fc-desc">A leading telecom company's EBITDA margin has declined from 32% to 26% over three quarters. The CEO wants to understand the root cause and identify quick wins for margin recovery.</div>
+          <div class="fc-mr">
+            <div class="mi">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              25–30 min
+            </div>
+            <div class="mi">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="6" width="2.5" height="5" rx=".5" fill="currentColor"/><rect x="4.75" y="4" width="2.5" height="7" rx=".5" fill="currentColor" opacity=".65"/><rect x="8.5" y="1.5" width="2.5" height="9.5" rx=".5" fill="currentColor" opacity=".4"/></svg>
+              2 metrics to isolate
+            </div>
+            <div class="mi">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1a5 5 0 1 0 0 10A5 5 0 0 0 6 1Z" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5l1.5 1.5 3-3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              From SPJIMR Consulting Casebook 2026–27
+            </div>
+          </div>
+          <div class="fw-used">
+            <div class="fw-lbl">Key frameworks</div>
+            <div class="fw-ts">
+              <span class="fw-t">Profitability Framework</span>
+              <span class="fw-t">Revenue Decomposition</span>
+              <span class="fw-t">Cost Structure Analysis</span>
+            </div>
+          </div>
+          <div class="fc-acts">
+            <button class="btn-start" id="btnStartCase" onclick="startTodaysCase()">
+              Start Case
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4.5l3 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="btn-sec">Save for Later</button>
+          </div>
+        </div>
+        <div class="fc-foot">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 4v2.5l1.5 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          Avg solve time <strong>27 min</strong> · From SPJIMR Consulting Casebook 2026–27
+        </div>
+      </div>
+
+      <!-- Recent activity -->
+      <div>
+        <div class="sec-h">
+          <div class="sec-t">Recent Activity</div>
+          <a href="cases.html" class="sec-lnk">View all</a>
+        </div>
+        <div class="rl">
+          <div class="ri">
+            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="var(--accent)" stroke-width="1.2" opacity=".45"/><circle cx="7" cy="7" r="2.5" fill="var(--accent)"/></svg></div>
+            <div class="ri-body">
+              <div class="ri-name">E-Pharma Market Entry in India</div>
+              <div class="ri-meta">Market Entry · Pharma</div>
+            </div>
+            <div class="ri-r"><span class="ob ob-s">Solved</span><span class="ri-ago">2 days ago</span></div>
+          </div>
+          <div class="ri">
+            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="4" stroke="var(--accent)" stroke-width="1.2"/><path d="M7 10v4M5.5 13.5h3" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+            <div class="ri-body">
+              <div class="ri-name">AI Usage at Business Schools</div>
+              <div class="ri-meta">Guesstimate · Estimation</div>
+            </div>
+            <div class="ri-r"><span class="ob ob-s">Solved</span><span class="ri-ago">Yesterday</span></div>
+          </div>
+          <div class="ri">
+            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 11 5.5 7l3 2.5 4-6" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="ri-body">
+              <div class="ri-name">Growth Strategy for Insurance Co.</div>
+              <div class="ri-meta">Growth Strategy · BFSI</div>
+            </div>
+            <div class="ri-r"><span class="ob ob-r">Reviewed</span><span class="ri-ago">3 days ago</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="rc">
+
+      <!-- Progress by case type -->
+      <div class="pc">
+        <div class="sec-t" style="margin-bottom:12px">Progress by Case Type</div>
+        <div class="ctr"><div class="ct-lbl">Profitability</div><div class="ct-bw"><div class="ct-b" data-w="40"></div></div><div class="ct-ct">6 / 15</div></div>
+        <div class="ctr"><div class="ct-lbl">Market Entry</div><div class="ct-bw"><div class="ct-b" data-w="20"></div></div><div class="ct-ct">2 / 10</div></div>
+        <div class="ctr"><div class="ct-lbl">Growth Strategy</div><div class="ct-bw"><div class="ct-b" data-w="20"></div></div><div class="ct-ct">2 / 10</div></div>
+        <div class="ctr"><div class="ct-lbl">Pricing</div><div class="ct-bw"><div class="ct-b" data-w="20"></div></div><div class="ct-ct">1 / 5</div></div>
+        <div class="ctr"><div class="ct-lbl">M&amp;A</div><div class="ct-bw"><div class="ct-b" data-w="0"></div></div><div class="ct-ct">0 / 5</div></div>
+        <div class="ctr"><div class="ct-lbl">Tech Consulting</div><div class="ct-bw"><div class="ct-b" data-w="0"></div></div><div class="ct-ct">0 / 6</div></div>
+        <div class="ctr"><div class="ct-lbl">Guesstimates</div><div class="ct-bw"><div class="ct-b" data-w="8"></div></div><div class="ct-ct">15 / 180</div></div>
+      </div>
+
+      <!-- Learning path phase -->
+      <div class="phc">
+        <div class="sec-t">Learning Path</div>
+        <div class="ph-track">
+          <div class="ph-step"><div class="ph-dot done">✓</div><div class="ph-ln done"></div></div>
+          <div class="ph-step"><div class="ph-dot cur">2</div><div class="ph-ln"></div></div>
+          <div class="ph-dot todo">3</div>
+        </div>
+        <div class="ph-names">
+          <div class="ph-ni">Foundation</div>
+          <div class="ph-ni cur">Structured<br>Prep</div>
+          <div class="ph-ni">Interview<br>Ready</div>
+        </div>
+        <div class="ph-desc">You're in <strong>Phase 2 — Structured Prep.</strong> Focus on sector cases, M&amp;A frameworks, and harder guesstimates this week.</div>
+        <div class="ph-act" role="button">
+          <span>View Phase 2 roadmap</span>
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4.5l3 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Guesstimate of the day -->
+      <div class="gd">
+        <div class="gd-fr">
+          <div class="sec-t">Guesstimate of the Day</div>
+          <span class="bx bx-neutral">BCG</span>
+        </div>
+        <div class="gd-q">"How many EV charging stations should be installed on the Delhi–Mumbai Highway by 2040?"</div>
+        <div class="gd-hint" id="gh">
+          Break it down as: highway distance ÷ EV range × demand factor × lanes. Factor in EV penetration % by 2040 (~30%), peak traffic hours, and dual-side station infrastructure.
+        </div>
+        <div class="gd-row">
+          <button class="btn-hint" id="hbtn" onclick="toggleHint()">Show hint</button>
+          <button class="btn-att" onclick="location.href='guesstimates.html'">Attempt</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="progress.js"></script>
+<script>
+// Greeting with user name
+const _u = CS.getUser();
+const _fname = _u ? _u.name.split(' ')[0] : 'there';
+const h = new Date().getHours();
+document.getElementById('greeting').textContent =
+  (h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening') + ', ' + _fname + '.';
+
+function toggleHint() {
+  const el = document.getElementById('gh');
+  const btn = document.getElementById('hbtn');
+  el.classList.toggle('vis');
+  btn.textContent = el.classList.contains('vis') ? 'Hide hint' : 'Show hint';
+}
+
+function startTodaysCase() {
+  const solved = CS.getSolved();
+  for (let i = 1; i <= 18; i++) {
+    if (!solved.includes(i)) { location.href = 'solve.html?id=' + i; return; }
+  }
+  location.href = 'solve.html?id=1'; // all done — restart
+}
+
+// Category progress bars (dynamic)
+(function() {
+  const CAT = {
+    'Profitability':   [1,4,7,13],
+    'Market Entry':    [2,5,12],
+    'Growth Strategy': [3,9,15],
+    'Pricing':         [6,11],
+    'M&A':             [8,14],
+    'Tech Consulting': [10,16],
+    'Guesstimates':    [17,18]
+  };
+  const solved = CS.getSolved();
+  const pc = document.querySelector('.pc');
+  const rows = pc.querySelectorAll('.ctr');
+  const labels = Object.keys(CAT);
+  labels.forEach((lbl, i) => {
+    const ids = CAT[lbl];
+    const done = ids.filter(id => solved.includes(id)).length;
+    const total = ids.length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    if (rows[i]) {
+      rows[i].querySelector('.ct-lbl').textContent = lbl;
+      rows[i].querySelector('.ct-ct').textContent  = done + ' / ' + total;
+      rows[i].querySelector('.ct-b').dataset.w     = pct;
+    }
+  });
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.ct-b').forEach(el => {
+      el.style.width = el.dataset.w + '%';
+    });
+  });
+})();
+
+// Live stats from localStorage
+(function(){
+  const solved   = CS.getSolved().length;
+  const mastered = CS.getMastered().length;
+  const streak   = CS.getStreak();
+  const phase    = Math.min(100, Math.round((solved / 18) * 100));
+
+  document.getElementById('sv-solved').textContent = solved;
+  document.getElementById('sv-streak').textContent = streak;
+  document.getElementById('sv-fw').textContent     = mastered;
+  document.getElementById('sv-phase').textContent  = phase + '%';
+  document.getElementById('dash-streak').textContent = streak;
+})();
+
+CS.syncUser();
+</script>

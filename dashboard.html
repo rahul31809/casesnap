@@ -209,7 +209,7 @@ button{font-family:inherit;cursor:pointer}
       <button class="ni" onclick="location.href='cases.html'">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="2.5" width="11" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 6.5h6M4 9h4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         Cases
-        <span class="ni-badge">7</span>
+        <span class="ni-badge" id="cases-badge"></span>
       </button>
       <button class="ni" onclick="location.href='frameworks.html'">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5.5h6M4 7.5h6M4 9.5h3.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
@@ -479,6 +479,11 @@ buildTodayCard();
   const mastered = CS.getMastered().length;
   const streak   = CS.getStreak();
   const phasePct = Math.min(100, Math.round((solved / 18) * 100));
+
+  const remaining = 18 - solved;
+  const badge = document.getElementById('cases-badge');
+  badge.textContent = remaining;
+  badge.style.display = remaining > 0 ? '' : 'none';
 
   document.getElementById('sv-solved').textContent = solved;
   document.getElementById('sv-streak').textContent = streak;

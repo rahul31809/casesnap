@@ -73,7 +73,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .card-progress-bar{height:3px;background:var(--border);flex-shrink:0;}
 .card-progress-fill{height:100%;background:var(--accent);transition:width .3s ease;}
 
-.card-body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:28px 24px;}
+.card-body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:24px 24px 16px;}
+.card-footer{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:10px 24px 16px;background:var(--bg);border-top:1px solid var(--border);}
 
 .flash-card{width:100%;max-width:700px;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);}
 
@@ -102,7 +103,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .answer-body .ans-point:last-child{margin-bottom:0;}
 
 /* Action buttons */
-.card-actions{width:100%;max-width:700px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+.card-actions{width:100%;max-width:700px;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;}
 .btn-reveal{padding:14px;background:var(--ink);color:var(--bg);border:none;border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:opacity .15s;}
 .btn-reveal:hover{opacity:.85;}
 .btn-know{padding:14px;background:none;color:var(--ink);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:border-color .15s;}
@@ -113,7 +114,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .btn-still{padding:14px;background:none;color:var(--ink);border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:border-color .15s;}
 .btn-still:hover{border-color:var(--ink);}
 
-.card-nav{width:100%;max-width:700px;display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:0 2px;}
+.card-nav{width:100%;max-width:700px;display:flex;align-items:center;justify-content:space-between;padding:0 2px;}
 .nav-btn{background:none;border:none;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-muted);font-family:inherit;padding:6px 10px;border-radius:7px;transition:color .12s;display:flex;align-items:center;gap:5px;}
 .nav-btn:hover{color:var(--ink);}
 .nav-btn:disabled{opacity:.25;cursor:not-allowed;}
@@ -185,6 +186,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
           <div class="answer-body" id="cl-answer"></div>
         </div>
       </div>
+    </div>
+    <div class="card-footer">
       <div class="card-actions" id="card-actions"></div>
       <div class="card-nav">
         <button class="nav-btn" id="btn-prev" onclick="navCard(-1)">← Previous</button>

@@ -143,7 +143,38 @@ const CS = {
     if (!localStorage.getItem('cs_session')) {
       location.replace('index.html');
     } else {
-      CS.loadFromCloud(); // async, updates localStorage in background
+      CS.loadFromCloud();
     }
+  }
+}());
+
+// Inject Admin Panel link into sidebar for admin users (runs after DOM is ready)
+(function() {
+  const u = CS.getUser();
+  if (!u || !u.isAdmin) return;
+
+  // dashboard.html uses .ng groups + button.ni
+  const ngs = document.querySelectorAll('.ng');
+  if (ngs.length) {
+    const last = ngs[ngs.length - 1];
+    const btn = document.createElement('button');
+    btn.className = 'ni';
+    btn.onclick = function() { location.href = 'admin.html'; };
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Admin Panel';
+    last.appendChild(btn);
+    return;
+  }
+
+  // all other pages use .sb-nav + <a> tags
+  const sbNav = document.querySelector('.sb-nav');
+  if (sbNav) {
+    const sep = document.createElement('span');
+    sep.className = 'sb-section';
+    sep.textContent = 'Admin';
+    sbNav.appendChild(sep);
+    const a = document.createElement('a');
+    a.href = 'admin.html';
+    a.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" stroke="currentColor" stroke-width="1.3"/><path d="M2 12.5c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Admin Panel';
+    sbNav.appendChild(a);
   }
 }());

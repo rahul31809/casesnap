@@ -73,6 +73,26 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sa
 .cbar-track { flex: 1; height: 7px; background: var(--border); border-radius: 100px; overflow: hidden; }
 .cbar-fill { height: 100%; background: var(--accent); border-radius: 100px; transition: width .6s cubic-bezier(.22,1,.36,1); width: 0; }
 .cbar-num { font-size: 11.5px; font-weight: 600; color: var(--ink-muted); width: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+/* Tabs */
+.tab-row { display: flex; gap: 4px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 3px; width: fit-content; }
+.tab { padding: 7px 18px; background: none; border: none; border-radius: 7px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--ink-muted); font-family: inherit; transition: background .15s, color .15s; }
+.tab.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+/* Peer rankings table */
+.pr-table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.pr-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+.pr-table thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); background: var(--surface2); border-bottom: 1px solid var(--border); }
+.pr-table thead th.num { text-align: right; }
+.pr-table tbody tr + tr { border-top: 1px solid var(--border); }
+.pr-table tbody tr:hover { background: var(--surface2); }
+.pr-table tbody tr.me { background: var(--tag-bg); }
+.pr-table td { padding: 11px 14px; font-size: 13px; }
+.pr-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.rank-num { font-size: 12px; font-weight: 700; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.rank-num.gold   { color: #C89B2A; }
+.rank-num.silver { color: #8A9BAE; }
+.rank-num.bronze { color: #A0705A; }
+.peer-name { font-weight: 600; }
+.you-tag { display: inline-block; font-size: 9.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; background: var(--accent); color: var(--accent-text); border-radius: 100px; padding: 1px 7px; margin-left: 7px; vertical-align: middle; }
 /* Empty state */
 .empty { font-size: 13px; color: var(--ink-muted); padding: 20px 0; }
 /* Reset zone */
@@ -116,10 +136,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sa
 
 <div class="main">
   <div class="topbar">
-    <span class="topbar-title">My Stats</span>
+    <span class="topbar-title">Leaderboard</span>
+    <div class="tab-row" style="margin-left:auto">
+      <button class="tab active" id="tab-my" onclick="showTab('my')">My Stats</button>
+      <button class="tab" id="tab-peers" onclick="showTab('peers')">Peer Rankings</button>
+    </div>
   </div>
-  <div class="content" id="content">
-    <!-- filled by JS -->
+  <div class="content">
+    <div id="pane-my"><!-- filled by render() --></div>
+    <div id="pane-peers" style="display:none"><!-- filled by loadPeers() --></div>
   </div>
 </div>
 
@@ -169,6 +194,73 @@ const CAT = {
   'Guesstimates':    [17,18],
 };
 
+const SB_URL = 'https://pniqqakcyoncvmarkazy.supabase.co';
+const SB_KEY = 'sb_publishable_ZEAmDgmC9GaQBQuC7wA8jw_GLrbxoSD';
+const SBH = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY };
+
+let peersLoaded = false;
+
+function showTab(tab) {
+  document.getElementById('tab-my').classList.toggle('active', tab === 'my');
+  document.getElementById('tab-peers').classList.toggle('active', tab === 'peers');
+  document.getElementById('pane-my').style.display    = tab === 'my'    ? '' : 'none';
+  document.getElementById('pane-peers').style.display = tab === 'peers' ? '' : 'none';
+  if (tab === 'peers' && !peersLoaded) { peersLoaded = true; loadPeers(); }
+}
+
+async function loadPeers() {
+  const box = document.getElementById('pane-peers');
+  box.innerHTML = '<div class="empty">Loading peer data…</div>';
+  try {
+    const [uRes, pRes] = await Promise.all([
+      fetch(SB_URL + '/rest/v1/cs_users?select=id,name,is_admin&order=created_at.asc', { headers: SBH }),
+      fetch(SB_URL + '/rest/v1/cs_progress?select=*', { headers: SBH })
+    ]);
+    const users = await uRes.json();
+    const progs = await pRes.json();
+    const pm = {};
+    progs.forEach(p => pm[p.user_id] = p);
+    const myId = CS.getUser().userId;
+    const rows = users
+      .filter(u => !u.is_admin)
+      .map(u => ({
+        id: u.id, name: u.name, isMe: u.id === myId,
+        cases:    pm[u.id]?.cases_solved?.length  || 0,
+        mastered: pm[u.id]?.cases_mastered?.length || 0,
+        streak:   pm[u.id]?.streak      || 0,
+        rounds:   pm[u.id]?.rounds_done || 0
+      }));
+    rows.sort((a, b) => b.cases - a.cases || b.mastered - a.mastered || b.streak - a.streak);
+    if (!rows.length) { box.innerHTML = '<div class="empty">No peers registered yet — share the link!</div>'; return; }
+    const rankClass = r => r === 1 ? 'gold' : r === 2 ? 'silver' : r === 3 ? 'bronze' : '';
+    box.innerHTML = `
+      <div class="pr-table-wrap">
+        <table class="pr-table">
+          <thead><tr>
+            <th style="width:40px">#</th>
+            <th>Name</th>
+            <th class="num">Cases</th>
+            <th class="num">Mastered</th>
+            <th class="num">Streak</th>
+            <th class="num">Rounds</th>
+          </tr></thead>
+          <tbody>${rows.map((r, i) => `<tr class="${r.isMe ? 'me' : ''}">
+            <td><span class="rank-num ${rankClass(i+1)}">${i+1}</span></td>
+            <td class="peer-name">${esc(r.name)}${r.isMe ? '<span class="you-tag">You</span>' : ''}</td>
+            <td class="num">${r.cases}</td>
+            <td class="num">${r.mastered}</td>
+            <td class="num">${r.streak}</td>
+            <td class="num">${r.rounds}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>`;
+  } catch(e) {
+    document.getElementById('pane-peers').innerHTML = '<div class="empty">Could not load peer data — try again.</div>';
+  }
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
 function render() {
   const solved   = CS.getSolved();
   const mastered = CS.getMastered();
@@ -178,7 +270,7 @@ function render() {
 
   const solvedCount = solved.length;
 
-  const content = document.getElementById('content');
+  const content = document.getElementById('pane-my');
   content.innerHTML = `
     <!-- Stats strip -->
     <div>
@@ -270,4 +362,6 @@ function confirmReset() {
 
 render();
 CS.syncUser();
+// remove any stale reference to old #content in reset
+
 </script>

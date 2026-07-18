@@ -430,7 +430,14 @@
     <div id="in-err" class="form-err" style="display:none"></div>
     <button type="submit" class="btn-auth">Sign In</button>
     <div class="auth-switch">No account? <button type="button" onclick="switchTab('up')">Create one free →</button></div>
+    <div class="auth-switch" style="margin-top:6px"><button type="button" onclick="showForgot()">Forgot password?</button></div>
   </form>
+
+  <!-- Forgot password notice -->
+  <div id="forgot-box" style="display:none;margin-top:12px;padding:12px 14px;background:var(--notice-bg);border:1px solid var(--notice-bd);border-radius:10px;font-size:12.5px;line-height:1.6;color:var(--ink-muted)">
+    Password resets are handled by the admin.<br>
+    Message <strong style="color:var(--ink)">Rahul</strong> on WhatsApp or email <strong style="color:var(--ink)">rahulagarwal31809@gmail.com</strong> with your registered email/phone and he'll reset it for you.
+  </div>
 
   <!-- Sign Up form -->
   <form id="form-up" onsubmit="doSignUp(event)" style="display:none">
@@ -527,6 +534,11 @@ function switchTab(tab) {
 function togglePw(id) {
   const inp = document.getElementById(id);
   inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function showForgot() {
+  const b = document.getElementById('forgot-box');
+  b.style.display = b.style.display === 'none' ? '' : 'none';
 }
 
 function showErr(id, msg) {

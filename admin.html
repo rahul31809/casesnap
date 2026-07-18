@@ -277,6 +277,21 @@
 
   .td-date, .td-rel { font-size: 12.5px; color: var(--ink-muted); white-space: nowrap; }
 
+  .btn-pw-reset {
+    padding: 3px 10px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    font-family: inherit;
+    transition: border-color .15s, color .15s;
+    white-space: nowrap;
+  }
+  .btn-pw-reset:hover { border-color: var(--accent); color: var(--accent); }
+
   .empty-row td {
     text-align: center;
     padding: 48px 20px;
@@ -369,6 +384,7 @@
             <th class="num" onclick="sortBy('streak')">Streak</th>
             <th class="num" onclick="sortBy('rounds')">Rounds</th>
             <th onclick="sortBy('last_active')">Last Active</th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="user-tbody">
@@ -523,12 +539,33 @@ function renderRows(rows) {
       <td class="num">${streak}</td>
       <td class="num">${rounds}</td>
       <td class="td-rel">${relTime(user.last_active_at)}</td>
+      <td><button class="btn-pw-reset" onclick="resetPassword('${user.id}', '${esc(user.name)}')">Reset PW</button></td>
     </tr>`;
   }).join('');
 }
 
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function resetPassword(userId, userName) {
+  const newPw = prompt('Set new password for ' + userName + ':\n(Must be 8+ chars with uppercase, lowercase, number, symbol)');
+  if (!newPw) return;
+  if (newPw.length < 8) { alert('Password too short — minimum 8 characters.'); return; }
+
+  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(newPw));
+  const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+
+  const res = await fetch(SB_URL + '/rest/v1/cs_users?id=eq.' + userId, {
+    method: 'PATCH',
+    headers: { ...H, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({ password_hash: hash })
+  });
+  if (res.ok) {
+    alert('Password for ' + userName + ' has been reset.');
+  } else {
+    alert('Failed to reset password — try again.');
+  }
 }
 
 loadData();

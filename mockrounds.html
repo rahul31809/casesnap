@@ -388,7 +388,7 @@ const ROUNDS = [
 let activeRound = null, currentPhase = 0, phaseTimers = [], phaseElapsed = 0, timerInterval = null;
 let roundStartTime = null, totalPhasesSecs = [];
 let rubricChecks = {};
-const roundsDone = parseInt(localStorage.getItem('mr_done') || '0');
+const roundsDone = CS.getRounds();
 document.getElementById('roundsDoneCount').textContent = roundsDone;
 
 const RUBRIC = [
@@ -521,10 +521,8 @@ function finishRound() {
   document.getElementById('debriefSub').textContent = activeRound.title + ' · completed ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
 
   // Increment rounds done
-  const done = parseInt(localStorage.getItem('mr_done') || '0') + 1;
-  localStorage.setItem('mr_done', done);
+  const done = CS.addRound();
   document.getElementById('roundsDoneCount').textContent = done;
-  CS._tick && CS._tick();
 
   // Rubric
   rubricChecks = {};
@@ -578,6 +576,6 @@ function exitRound() {
 }
 
 renderLobby();
-document.getElementById('roundsDoneCount').textContent = parseInt(localStorage.getItem('mr_done') || '0');
+document.getElementById('roundsDoneCount').textContent = CS.getRounds();
 CS.syncUser();
 </script>

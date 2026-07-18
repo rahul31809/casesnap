@@ -173,8 +173,8 @@ function render() {
   const solved   = CS.getSolved();
   const mastered = CS.getMastered();
   const streak   = CS.getStreak();
-  const guesses  = (JSON.parse(localStorage.getItem('gs_practised') || '[]')).length;
-  const rounds   = parseInt(localStorage.getItem('mr_done') || '0');
+  const guesses  = CS.getPractised().size;
+  const rounds   = CS.getRounds();
 
   const solvedCount = solved.length;
 

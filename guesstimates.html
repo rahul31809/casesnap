@@ -609,11 +609,11 @@ Our slightly higher: monthly active users vs TRAI's total
 let currentFilter = 'all';
 let currentQIdx = 0;
 let timerSecs = 0, timerRunning = true, timerInterval;
-const practised = new Set(JSON.parse(localStorage.getItem('gs_practised') || '[]'));
+const practised = CS.getPractised();
 
 function markPractised(id) {
   practised.add(id);
-  localStorage.setItem('gs_practised', JSON.stringify([...practised]));
+  CS.savePractised(practised);
   document.getElementById('practisedCount').textContent = practised.size;
 }
 

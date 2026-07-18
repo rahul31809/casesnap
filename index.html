@@ -486,8 +486,11 @@
 <p class="footer">© 2025 CaseSnap · Built for consultants in the making</p>
 
 <script>
-// If already logged in, skip to dashboard
 if (localStorage.getItem('cs_session')) location.replace('dashboard.html');
+
+const SB_URL = 'https://pniqqakcyoncvmarkazy.supabase.co';
+const SB_KEY = 'sb_publishable_ZEAmDgmC9GaQBQuC7wA8jw_GLrbxoSD';
+const SBH = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
 
 async function hashPw(pw) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
@@ -495,10 +498,10 @@ async function hashPw(pw) {
 }
 
 function validatePw(pw) {
-  if (pw.length < 8)             return 'Password must be at least 8 characters';
-  if (!/[A-Z]/.test(pw))        return 'Add at least one uppercase letter (A–Z)';
-  if (!/[a-z]/.test(pw))        return 'Add at least one lowercase letter (a–z)';
-  if (!/[0-9]/.test(pw))        return 'Add at least one number (0–9)';
+  if (pw.length < 8)               return 'Password must be at least 8 characters';
+  if (!/[A-Z]/.test(pw))          return 'Add at least one uppercase letter (A–Z)';
+  if (!/[a-z]/.test(pw))          return 'Add at least one lowercase letter (a–z)';
+  if (!/[0-9]/.test(pw))          return 'Add at least one number (0–9)';
   if (!/[^A-Za-z0-9\s]/.test(pw)) return 'Add at least one symbol (!@#$%^&*...)';
   return null;
 }
@@ -532,11 +535,10 @@ function showErr(id, msg) {
   el.style.display = msg ? '' : 'none';
 }
 
-function getUsers() { return JSON.parse(localStorage.getItem('cs_users') || '[]'); }
-function saveUsers(u) { localStorage.setItem('cs_users', JSON.stringify(u)); }
 function saveSession(u) {
   localStorage.setItem('cs_session', JSON.stringify({
-    userId: u.id, name: u.name, emailOrPhone: u.emailOrPhone, loggedInAt: new Date().toISOString()
+    userId: u.id, name: u.name, emailOrPhone: u.email_or_phone,
+    isAdmin: !!u.is_admin, loggedInAt: new Date().toISOString()
   }));
 }
 
@@ -546,11 +548,25 @@ async function doSignIn(e) {
   const id = document.getElementById('in-id').value.trim();
   const pw = document.getElementById('in-pw').value;
   if (!id || !pw) { showErr('in-err', 'Please fill in all fields'); return; }
-  const hash = await hashPw(pw);
-  const user = getUsers().find(u => u.emailOrPhone === id && u.passwordHash === hash);
-  if (!user) { showErr('in-err', 'Incorrect email/phone or password'); return; }
-  saveSession(user);
-  location.replace('dashboard.html');
+  const btn = e.target.querySelector('.btn-auth');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    const hash = await hashPw(pw);
+    const res = await fetch(
+      SB_URL + '/rest/v1/cs_users?email_or_phone=eq.' + encodeURIComponent(id) + '&select=*',
+      { headers: SBH }
+    );
+    const users = await res.json();
+    if (!users.length || users[0].password_hash !== hash) {
+      showErr('in-err', 'Incorrect email/phone or password'); return;
+    }
+    saveSession(users[0]);
+    location.replace(users[0].is_admin ? 'admin.html' : 'dashboard.html');
+  } catch {
+    showErr('in-err', 'Connection error — please try again');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
 }
 
 async function doSignUp(e) {
@@ -564,19 +580,34 @@ async function doSignUp(e) {
   const pwErr = validatePw(pw);
   if (pwErr) { showErr('up-err', pwErr); return; }
   if (pw !== pw2) { showErr('up-err', 'Passwords do not match'); return; }
-  const users = getUsers();
-  if (users.find(u => u.emailOrPhone === id)) {
-    showErr('up-err', 'This email/phone is already registered — sign in instead');
-    return;
+  const btn = e.target.querySelector('.btn-auth');
+  btn.disabled = true; btn.textContent = 'Creating account…';
+  try {
+    const chk = await fetch(
+      SB_URL + '/rest/v1/cs_users?email_or_phone=eq.' + encodeURIComponent(id) + '&select=id',
+      { headers: SBH }
+    );
+    const existing = await chk.json();
+    if (existing.length) { showErr('up-err', 'Already registered — sign in instead'); return; }
+    const hash   = await hashPw(pw);
+    const userId = crypto.randomUUID();
+    const uRes = await fetch(SB_URL + '/rest/v1/cs_users', {
+      method: 'POST',
+      headers: { ...SBH, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ id: userId, name, email_or_phone: id, password_hash: hash, is_admin: false })
+    });
+    if (!uRes.ok) { showErr('up-err', 'Failed to create account — please try again'); return; }
+    await fetch(SB_URL + '/rest/v1/cs_progress', {
+      method: 'POST',
+      headers: { ...SBH, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ user_id: userId })
+    });
+    saveSession({ id: userId, name, email_or_phone: id, is_admin: false });
+    location.replace('dashboard.html');
+  } catch {
+    showErr('up-err', 'Connection error — please try again');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Create Account';
   }
-  const hash = await hashPw(pw);
-  const newUser = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2),
-    name, emailOrPhone: id, passwordHash: hash, createdAt: new Date().toISOString()
-  };
-  users.push(newUser);
-  saveUsers(users);
-  saveSession(newUser);
-  location.replace('dashboard.html');
 }
 </script>

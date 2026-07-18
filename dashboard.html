@@ -291,54 +291,8 @@ button{font-family:inherit;cursor:pointer}
     <!-- LEFT COLUMN -->
     <div class="lc">
 
-      <!-- Today's case -->
-      <div class="fc">
-        <div class="fc-inner">
-          <div class="fc-ey">
-            <div class="fc-badges">
-              <span class="bx bx-accent">Profitability</span>
-              <span class="bx bx-neutral">Telecom</span>
-              <span class="bx bx-neutral">Moderate</span>
-            </div>
-            <span class="fc-num">Case #47 · Today</span>
-          </div>
-          <div class="fc-title">Declining Margins at a Telecom Operator</div>
-          <div class="fc-desc">A leading telecom company's EBITDA margin has declined from 32% to 26% over three quarters. The CEO wants to understand the root cause and identify quick wins for margin recovery.</div>
-          <div class="fc-mr">
-            <div class="mi">
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-              25–30 min
-            </div>
-            <div class="mi">
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><rect x="1" y="6" width="2.5" height="5" rx=".5" fill="currentColor"/><rect x="4.75" y="4" width="2.5" height="7" rx=".5" fill="currentColor" opacity=".65"/><rect x="8.5" y="1.5" width="2.5" height="9.5" rx=".5" fill="currentColor" opacity=".4"/></svg>
-              2 metrics to isolate
-            </div>
-            <div class="mi">
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1a5 5 0 1 0 0 10A5 5 0 0 0 6 1Z" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5l1.5 1.5 3-3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              From SPJIMR Consulting Casebook 2026–27
-            </div>
-          </div>
-          <div class="fw-used">
-            <div class="fw-lbl">Key frameworks</div>
-            <div class="fw-ts">
-              <span class="fw-t">Profitability Framework</span>
-              <span class="fw-t">Revenue Decomposition</span>
-              <span class="fw-t">Cost Structure Analysis</span>
-            </div>
-          </div>
-          <div class="fc-acts">
-            <button class="btn-start" id="btnStartCase" onclick="startTodaysCase()">
-              Start Case
-              <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4.5l3 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="btn-sec">Save for Later</button>
-          </div>
-        </div>
-        <div class="fc-foot">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 4v2.5l1.5 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          Avg solve time <strong>27 min</strong> · From SPJIMR Consulting Casebook 2026–27
-        </div>
-      </div>
+      <!-- Today's case (dynamic) -->
+      <div class="fc" id="todayCard"></div>
 
       <!-- Recent activity -->
       <div>
@@ -346,32 +300,7 @@ button{font-family:inherit;cursor:pointer}
           <div class="sec-t">Recent Activity</div>
           <a href="cases.html" class="sec-lnk">View all</a>
         </div>
-        <div class="rl">
-          <div class="ri">
-            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="var(--accent)" stroke-width="1.2" opacity=".45"/><circle cx="7" cy="7" r="2.5" fill="var(--accent)"/></svg></div>
-            <div class="ri-body">
-              <div class="ri-name">E-Pharma Market Entry in India</div>
-              <div class="ri-meta">Market Entry · Pharma</div>
-            </div>
-            <div class="ri-r"><span class="ob ob-s">Solved</span><span class="ri-ago">2 days ago</span></div>
-          </div>
-          <div class="ri">
-            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="6" r="4" stroke="var(--accent)" stroke-width="1.2"/><path d="M7 10v4M5.5 13.5h3" stroke="var(--accent)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-            <div class="ri-body">
-              <div class="ri-name">AI Usage at Business Schools</div>
-              <div class="ri-meta">Guesstimate · Estimation</div>
-            </div>
-            <div class="ri-r"><span class="ob ob-s">Solved</span><span class="ri-ago">Yesterday</span></div>
-          </div>
-          <div class="ri">
-            <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 11 5.5 7l3 2.5 4-6" stroke="var(--accent)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="ri-body">
-              <div class="ri-name">Growth Strategy for Insurance Co.</div>
-              <div class="ri-meta">Growth Strategy · BFSI</div>
-            </div>
-            <div class="ri-r"><span class="ob ob-r">Reviewed</span><span class="ri-ago">3 days ago</span></div>
-          </div>
-        </div>
+        <div class="rl" id="recentList"></div>
       </div>
 
     </div>
@@ -434,6 +363,76 @@ button{font-family:inherit;cursor:pointer}
 
 <script src="progress.js"></script>
 <script>
+// Case metadata for dashboard card
+const DC = [
+  null,
+  {id:1, cat:'profitability',label:'Profitability',  title:'Declining Margins at a Telecom Operator',     sec:'Telecom',       diff:'Moderate',   time:'25–30',src:'SPJIMR 2026–27',desc:'A leading telecom\'s EBITDA margin dropped from 32% to 26% in three quarters. Identify the root cause and quick wins.',fw:['Profitability Framework','Revenue Decomposition','Cost Structure Analysis']},
+  {id:2, cat:'market-entry', label:'Market Entry',   title:'E-Pharma Market Entry in India',               sec:'Pharma',        diff:'Moderate',   time:'30–35',src:'SPJIMR 2026–27',desc:'A global pharma player wants to enter the Indian e-pharmacy market. Assess feasibility and build a go-to-market strategy.',fw:['Market Entry Framework','Porter\'s Five Forces','Customer Segmentation']},
+  {id:3, cat:'growth',       label:'Growth Strategy',title:'Insurance Company Growth Strategy',            sec:'BFSI',          diff:'Challenging',time:'35–40',src:'SPJIMR 2026–27',desc:'A mid-size insurance company has stagnated at 8% market share for three years. Chart a growth path to 15% in five years.',fw:['Ansoff Matrix','Growth Levers','Channel Strategy']},
+  {id:4, cat:'profitability',label:'Profitability',  title:'FMCG Company Declining Profitability',         sec:'FMCG',          diff:'Moderate',   time:'20–25',src:'SPJIMR 2026–27',desc:'An FMCG conglomerate\'s net margin has halved in 18 months despite flat revenue. Diagnose the cost or revenue driver.',fw:['Profitability Framework','Product Portfolio Analysis','Cost Benchmarking']},
+  {id:5, cat:'market-entry', label:'Market Entry',   title:'EV Manufacturer Entry into India',             sec:'Automobile',    diff:'Challenging',time:'35–40',src:'IIMB 2025–26', desc:'A global EV brand is evaluating an India entry. Size the opportunity, assess competition, and recommend entry mode.',fw:['Market Entry Framework','Competitive Landscape','Investment Case']},
+  {id:6, cat:'pricing',      label:'Pricing',        title:'Premium EV Pricing Strategy',                  sec:'Automobile',    diff:'Moderate',   time:'20–25',src:'SPJIMR 2026–27',desc:'An EV startup is launching a premium SUV. Design a pricing strategy balancing premium positioning with volume targets.',fw:['Value-Based Pricing','Price Elasticity','Competitive Benchmarking']},
+  {id:7, cat:'profitability',label:'Profitability',  title:'Hospital Chain Revenue Decline',               sec:'Healthcare',    diff:'Moderate',   time:'25–30',src:'SPJIMR 2026–27',desc:'A 12-hospital chain has seen EBITDA fall 8 points over two years. Identify whether it is revenue, cost, or mix.',fw:['Profitability Framework','Revenue per Bed Analysis','Payer Mix Analysis']},
+  {id:8, cat:'ma',           label:'M&A',            title:'Refrigerator Brand Acquisition Rationale',     sec:'Manufacturing', diff:'Moderate',   time:'30–35',src:'SPJIMR 2026–27',desc:'A large appliance conglomerate wants to acquire a regional fridge brand. Assess strategic fit and synergy potential.',fw:['M&A Framework','Synergy Analysis','Due Diligence Checklist']},
+  {id:9, cat:'growth',       label:'Growth Strategy',title:"Dominos India's Growth Strategy",              sec:'QSR',           diff:'Moderate',   time:'30–35',src:'SPJIMR 2026–27',desc:"Domino's India wants to double revenue in four years. Identify growth levers across geographies, menu, and channels.",fw:['Growth Framework','Ansoff Matrix','Unit Economics']},
+  {id:10,cat:'tech',         label:'Tech Consulting',title:'Courier Company Digitization',                 sec:'Logistics',     diff:'Moderate',   time:'25–30',src:'SPJIMR 2026–27',desc:'A traditional courier company wants to digitize operations to compete with hyperlocal logistics startups.',fw:['Digital Maturity Model','Build vs Buy','Change Management']},
+  {id:11,cat:'pricing',      label:'Pricing',        title:'Industrial Expressway Toll Pricing',           sec:'Infrastructure',diff:'Moderate',   time:'20–25',src:'SPJIMR 2026–27',desc:'A highway developer must set toll prices balancing revenue recovery, traffic volume, and political sensitivity.',fw:['Demand-Based Pricing','Traffic Elasticity','Revenue Modeling']},
+  {id:12,cat:'market-entry', label:'Market Entry',   title:'Biotech Company Market Entry',                 sec:'Biotech',       diff:'Challenging',time:'35–40',src:'IIMB 2025–26', desc:'A US biotech firm wants to enter the Indian generic drug market. Navigate regulatory, IP, and distribution complexity.',fw:['Market Entry Framework','Regulatory Landscape','Distribution Strategy']},
+  {id:13,cat:'profitability',label:'Profitability',  title:'E-commerce Platform Losses',                   sec:'E-commerce',    diff:'Challenging',time:'30–35',src:'IIMB 2025–26', desc:'A leading e-commerce platform is burning ₹400 Cr/quarter. Identify the loss drivers and path to profitability.',fw:['Unit Economics','CAC/LTV Analysis','Contribution Margin Framework']},
+  {id:14,cat:'ma',           label:'M&A',            title:'IVF Chain Acquisition Due Diligence',          sec:'Healthcare',    diff:'Challenging',time:'35–40',src:'SPJIMR 2026–27',desc:'A PE fund is acquiring a 40-clinic IVF chain. Conduct due diligence on financials, clinical quality, and growth case.',fw:['Due Diligence Framework','Healthcare Unit Economics','Risk Assessment']},
+  {id:15,cat:'growth',       label:'Growth Strategy',title:'Chemical Company Expansion Strategy',          sec:'Manufacturing', diff:'Challenging',time:'35–40',src:'SPJIMR 2026–27',desc:'A specialty chemical firm wants to expand into adjacent segments. Evaluate which segments to enter and how.',fw:['Adjacency Strategy','Capability Assessment','Market Sizing']},
+  {id:16,cat:'tech',         label:'Tech Consulting',title:'PSU Bank Digital Transformation',              sec:'BFSI',          diff:'Challenging',time:'30–35',src:'SPJIMR 2026–27',desc:'A large public sector bank is losing retail customers to fintechs. Design a digital transformation roadmap.',fw:['Digital Transformation Framework','Customer Journey Mapping','Prioritization Matrix']},
+  {id:17,cat:'guesstimate',  label:'Guesstimate',    title:'EV Charging Stations on Delhi–Mumbai Highway', sec:'Estimation',    diff:'Moderate',   time:'10–15',src:'BCG',           desc:'Estimate how many EV charging stations should be installed on the Delhi–Mumbai Expressway by 2040.',fw:['Demand Estimation','Segmentation Approach','Sensitivity Analysis']},
+  {id:18,cat:'guesstimate',  label:'Guesstimate',    title:'AI Usage at Business Schools in India',        sec:'Estimation',    diff:'Moderate',   time:'10–15',src:'Accenture',      desc:'Estimate the number of students actively using AI tools across business schools in India today.',fw:['Population Sizing','Penetration Rate Estimation','Segment Breakdown']},
+];
+
+function buildTodayCard() {
+  const solved = CS.getSolved();
+  let next = null;
+  for (let i = 1; i <= 18; i++) { if (!solved.includes(i)) { next = DC[i]; break; } }
+  const el = document.getElementById('todayCard');
+  if (!next) {
+    el.innerHTML = `<div class="fc-inner" style="text-align:center;padding:32px 20px">
+      <div style="font-size:28px;margin-bottom:10px">🎉</div>
+      <div class="fc-title">All 18 Cases Complete!</div>
+      <div class="fc-desc" style="margin-top:8px">Outstanding work. Go back and master the frameworks, or tackle guesstimates and mock rounds.</div>
+      <div class="fc-acts" style="margin-top:20px">
+        <button class="btn-start" onclick="location.href='guesstimates.html'">Try Guesstimates <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4.5l3 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = `<div class="fc-inner">
+    <div class="fc-ey">
+      <div class="fc-badges">
+        <span class="bx bx-accent">${next.label}</span>
+        <span class="bx bx-neutral">${next.sec}</span>
+        <span class="bx bx-neutral">${next.diff}</span>
+      </div>
+      <span class="fc-num">Case #${next.id}</span>
+    </div>
+    <div class="fc-title">${next.title}</div>
+    <div class="fc-desc">${next.desc}</div>
+    <div class="fc-mr">
+      <div class="mi"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5V6l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>${next.time} min</div>
+      <div class="mi"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1a5 5 0 1 0 0 10A5 5 0 0 0 6 1Z" stroke="currentColor" stroke-width="1.1"/><path d="M4 6.5l1.5 1.5 3-3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>${next.src}</div>
+    </div>
+    <div class="fw-used">
+      <div class="fw-lbl">Key frameworks</div>
+      <div class="fw-ts">${next.fw.map(f=>`<span class="fw-t">${f}</span>`).join('')}</div>
+    </div>
+    <div class="fc-acts">
+      <button class="btn-start" onclick="location.href='solve.html?id=${next.id}'">
+        Start Case <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4.5l3 2.5-3 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="btn-sec" onclick="location.href='cases.html'">Browse All</button>
+    </div>
+  </div>
+  <div class="fc-foot"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" style="flex-shrink:0"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.1"/><path d="M6 4v2.5l1.5 1" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+    ${next.time} min avg · ${next.src}
+  </div>`;
+}
+
 // Greeting with user name
 const _u = CS.getUser();
 const _fname = _u ? _u.name.split(' ')[0] : 'there';
@@ -453,8 +452,9 @@ function startTodaysCase() {
   for (let i = 1; i <= 18; i++) {
     if (!solved.includes(i)) { location.href = 'solve.html?id=' + i; return; }
   }
-  location.href = 'solve.html?id=1'; // all done — restart
+  location.href = 'guesstimates.html';
 }
+buildTodayCard();
 
 // Category progress bars (dynamic)
 (function() {
@@ -501,6 +501,38 @@ function startTodaysCase() {
   document.getElementById('sv-fw').textContent     = mastered;
   document.getElementById('sv-phase').textContent  = phase + '%';
   document.getElementById('dash-streak').textContent = streak;
+})();
+
+// Recent activity from real solved data
+(function() {
+  const CM = {
+    1:['Profitability','Declining Margins at a Telecom Operator'],2:['Market Entry','E-Pharma Market Entry in India'],
+    3:['Growth Strategy','Insurance Company Growth Strategy'],4:['Profitability','FMCG Company Declining Profitability'],
+    5:['Market Entry','EV Manufacturer Entry into India'],6:['Pricing','Premium EV Pricing Strategy'],
+    7:['Profitability','Hospital Chain Revenue Decline'],8:['M&A','Refrigerator Brand Acquisition Rationale'],
+    9:['Growth Strategy',"Dominos India's Growth Strategy"],10:['Tech Consulting','Courier Company Digitization'],
+    11:['Pricing','Industrial Expressway Toll Pricing'],12:['Market Entry','Biotech Company Market Entry'],
+    13:['Profitability','E-commerce Platform Losses'],14:['M&A','IVF Chain Acquisition Due Diligence'],
+    15:['Growth Strategy','Chemical Company Expansion Strategy'],16:['Tech Consulting','PSU Bank Digital Transformation'],
+    17:['Guesstimate','EV Charging Stations on Delhi–Mumbai Highway'],18:['Guesstimate','AI Usage at Business Schools in India']
+  };
+  const solved = CS.getSolved();
+  const el = document.getElementById('recentList');
+  if (!solved.length) {
+    el.innerHTML = '<div style="font-size:13px;color:var(--ink-muted);padding:16px 0;">No cases solved yet. <a href="cases.html" style="color:var(--accent);font-weight:600;">Start your first →</a></div>';
+    return;
+  }
+  el.innerHTML = [...solved].reverse().slice(0, 5).map(id => {
+    const info = CM[id] || ['Case','Case ' + id];
+    return `<div class="ri">
+      <div class="ri-ico"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="var(--accent)" stroke-width="1.2" opacity=".45"/><circle cx="7" cy="7" r="2.5" fill="var(--accent)"/></svg></div>
+      <div class="ri-body">
+        <div class="ri-name">${info[1]}</div>
+        <div class="ri-meta">${info[0]} · Case #${id}</div>
+      </div>
+      <div class="ri-r"><span class="ob ob-s">Solved</span></div>
+    </div>`;
+  }).join('');
 })();
 
 CS.syncUser();

@@ -73,10 +73,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
 .card-progress-bar{height:3px;background:var(--border);flex-shrink:0;}
 .card-progress-fill{height:100%;background:var(--accent);transition:width .3s ease;}
 
-.card-body{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:24px 24px 16px;}
+.card-body{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;align-items:center;padding:20px 24px 12px;}
 .card-footer{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:10px 24px 16px;background:var(--bg);border-top:1px solid var(--border);}
 
-.flash-card{width:100%;max-width:700px;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);}
+
+.flash-card{width:100%;max-width:700px;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);flex:1;min-height:0;display:flex;flex-direction:column;}
+.card-inner-scroll{flex:1;min-height:0;overflow-y:auto;}
 
 .card-front{padding:32px 36px 28px;}
 .card-diff{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
@@ -173,17 +175,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-seri
     <div class="card-progress-bar"><div class="card-progress-fill" id="cl-progress"></div></div>
     <div class="card-body">
       <div class="flash-card" id="flash-card">
-        <div class="card-front" id="card-front">
-          <div class="card-diff">
-            <span id="cl-diff"></span>
-            <button class="star-btn" id="star-btn" onclick="toggleStar()" title="Star this card">☆</button>
+        <div class="card-inner-scroll">
+          <div class="card-front" id="card-front">
+            <div class="card-diff">
+              <span id="cl-diff"></span>
+              <button class="star-btn" id="star-btn" onclick="toggleStar()" title="Star this card">☆</button>
+            </div>
+            <div class="card-title" id="cl-title"></div>
+            <div class="card-question" id="cl-question"></div>
           </div>
-          <div class="card-title" id="cl-title"></div>
-          <div class="card-question" id="cl-question"></div>
-        </div>
-        <div class="card-answer" id="card-answer">
-          <div class="answer-label">Answer</div>
-          <div class="answer-body" id="cl-answer"></div>
+          <div class="card-answer" id="card-answer">
+            <div class="answer-label">Answer</div>
+            <div class="answer-body" id="cl-answer"></div>
+          </div>
         </div>
       </div>
     </div>
